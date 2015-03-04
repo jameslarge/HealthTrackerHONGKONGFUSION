@@ -42,5 +42,11 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+    
+    public User find(String username,String password){
+        //To Be Added
+        
+        return null;
+    }
    
 }
