@@ -1,3 +1,5 @@
+package Controllers;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -31,9 +33,9 @@ public class DatabaseAccess {
              */
             //Tries to make the connection
             Connection connection = DriverManager.getConnection(
-                    /*Database URL and name*/"jdbc:postgresql:postgres",
-                    /*Database username*/ "dbuser",
-                    /*Database password*/ "");
+                    /*Database URL and name*/"jdbc:postgresql://127.0.0.1/studentdb",
+                    /*Database username*/ "student",
+                    /*Database password*/ "dbpassword");
             //Returns connection if sucesful
 
             return connection;

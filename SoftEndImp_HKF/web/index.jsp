@@ -47,19 +47,19 @@
                 <form name="login" action="LoginController" method="get">
                  <p>Email:<input type="text" name="email" class="textbox"/></p>
                  <p>Password:<input type="password" name="password" id="textbox"/></p>
-                 <p><input type="button" value="Login"/>
+                 <p><input type="submit" value="Login"/>
                 <input type="reset" value="Reset"/></p>
          </form>
 
             </article>
                 <aside id="sidebar">
                 <h3>SIGN UP</h3>
-                <form name="signup" action="signup" method="get">
+                <form name="signup" action="NewUserController" method="get">
                  <p>Username:<input type="text" name="username" class="textbox"/></p>   
                  <p>Email:<input type="text" name="email" class="textbox"/></p>
                  <p>Password:<input type="password" name="password" id="textbox"/></p>
                  <p>Confirm password:<input type="password" name="passwordConfirm" id="textbox"/></p>
-                 <p><input type="button" onclick="check(this.form)" value="Sign up"/>
+                 <p><input type="submit" onclick="check(this.form)" value="Sign up"/>
                 <input type="reset" value="Reset"/></p>
                 </form>
                         <script language="javascript">
@@ -68,7 +68,7 @@
                             /*checkes whether the entered userid and password are matching*/
                             if (form.password.value != form.passwordConfirm.value)
                             {
-                                alert("Passwords you entered must match")
+                                alert("Passwords you entered must match");
                                 /*Error message for incorret username or password*/
                             }
 

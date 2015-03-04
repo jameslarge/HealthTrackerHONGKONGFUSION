@@ -13,5 +13,5 @@ CREATE TABLE userDetails
 ---------------------------------------------
 ----POPULATING DATABASE FOR TESTING PURPOSES
 
-INSERT INTO student(email, password, username)
-VALUES ('pedo', 'pedo', 'PEDO');
+INSERT INTO userDetails(email, password, username)
+	VALUES ('pedo', 'pedo', 'PEDO');
