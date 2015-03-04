@@ -43,7 +43,7 @@ public class User {
         this.email = email;
     }
     
-    public User find(String username,String password){
+    public static User find(String username,String password){
         //To Be Added
         
         return null;
