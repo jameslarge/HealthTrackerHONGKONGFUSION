@@ -3,6 +3,11 @@
  */
 package Model;
 
+import Controllers.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import javax.servlet.ServletException;
+
 /**
  * 
  * @author xfu13dcu
@@ -13,7 +18,7 @@ public class User {
    private String password;
    private String email;
    
-   User(String username, String password, String email){
+   public User(String username, String password, String email){
        this.username = username;
        this.password = password;
        this.email = email;
@@ -47,6 +52,24 @@ public class User {
         //To Be Added
         
         return null;
+    }
+    
+    /**
+     * Enter for the details for this user in the database.
+     *
+     * @throws ServletException
+     */
+    public void persist() throws ServletException {
+        try {
+            Connection con = DatabaseAccess.getConnection();
+            PreparedStatement ps = con.prepareStatement("INSERT INTO userDetails (username, password, email) VALUES(?, ?, ?)");
+            ps.setString(1, this.username);
+            ps.setString(2, this.password);
+            ps.setString(3, this.email);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            throw new ServletException("Persist Problem: registering user details ", e);
+        }
     }
    
 }
