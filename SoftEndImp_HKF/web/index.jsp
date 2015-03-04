@@ -55,6 +55,7 @@
                 <aside id="sidebar">
                 <h3>SIGN UP</h3>
                 <form name="signup" action="signup" method="get">
+                 <p>Username:<input type="text" name="username" class="textbox"/></p>   
                  <p>Email:<input type="text" name="email" class="textbox"/></p>
                  <p>Password:<input type="password" name="password" id="textbox"/></p>
                  <p>Confirm password:<input type="password" name="passwordConfirm" id="textbox"/></p>
