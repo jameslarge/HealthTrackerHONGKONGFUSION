@@ -30,6 +30,7 @@ public class NewUserController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         //Get the details the user has supplied
+        String username = request.getParameter("username");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         
@@ -52,7 +53,7 @@ public class NewUserController extends HttpServlet {
 //        }
         
         //Create a user bean, and add their details to the database.
-        User newUser = new User("dummyUsername", password, email);
+        User newUser = new User(username, password, email);
         newUser.persist();
         
         //Log the user in
