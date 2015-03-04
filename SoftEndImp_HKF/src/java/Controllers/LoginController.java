@@ -46,7 +46,7 @@ public class LoginController extends HttpServlet {
             password = request.getParameter("password");
         }
         else {
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+            request.getRequestDispatcher("home.jsp").forward(request, response);
         }
         
         //Check if the given details exist in the database

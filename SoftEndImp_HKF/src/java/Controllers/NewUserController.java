@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * A controller for creating a new user and adding them to the database.
@@ -34,11 +35,11 @@ public class NewUserController extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         
-        //Confirm the user's email and password are correct
-        if(!email.equals(request.getParameter("emailRe"))||!password.equals(request.getParameter("passwordRe"))){
-            request.setAttribute("errorMessage", "Details do not match");
-            request.getRequestDispatcher("createUser.jsp").forward(request, response);
-        }
+//        //Confirm the user's email and password are correct
+//        if(!email.equals(request.getParameter("emailRe"))||!password.equals(request.getParameter("passwordRe"))){
+//            request.setAttribute("errorMessage", "Details do not match");
+//            request.getRequestDispatcher("createUser.jsp").forward(request, response);
+//        }
         
         //Confirm the user's email and password are valid
 //        if(!User.isValidEmail(email)||password.length() < 6){

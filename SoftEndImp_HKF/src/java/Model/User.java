@@ -66,16 +66,14 @@ public class User {
                     "SELECT * FROM userDetails WHERE (username =?)");
             ps.setString(1, username);
             ResultSet result = ps.executeQuery();
-            User user;
+            User user = null;
             if (result.next()) {
-                String userRole = result.getString("userRole");
                 user = new User(result.getInt("userID"), 
                         result.getString("username"), 
                         result.getString("password"), 
                         result.getString("email"));
-                return user;
             }
-            return null;
+            return user;
         } catch (SQLException ex) {
             throw new ServletException("Find Problem: searching for user while logging in ", ex);
         }
