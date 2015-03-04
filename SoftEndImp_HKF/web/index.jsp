@@ -26,7 +26,7 @@
     <body>
         
         <% 
-            if (loggedIn) {
+            if (!loggedIn) {
         %>
         
         <div id="wrapper">
@@ -58,9 +58,25 @@
                  <p>Email:<input type="text" name="email" class="textbox"/></p>
                  <p>Password:<input type="password" name="password" id="textbox"/></p>
                  <p>Confirm password:<input type="password" name="passwordConfirm" id="textbox"/></p>
-                 <p><input type="button" value="Sign up"/>
+                 <p><input type="button" onclick="check(this.form)" value="Sign up"/>
                 <input type="reset" value="Reset"/></p>
                 </form>
+                        <script language="javascript">
+                        function check(form)/*function to check userid & password*/
+                        {
+                            /*checkes whether the entered userid and password are matching*/
+                            if (form.password.value != form.passwordConfirm.value)
+                            {
+                                alert("Passwords you entered must match")
+                                /*Error message for incorret username or password*/
+                            }
+
+                        }
+                        </script>
+            
+    
+                
+                
              
                      
             </aside>
