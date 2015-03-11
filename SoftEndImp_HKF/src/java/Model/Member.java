@@ -6,8 +6,9 @@ public class Member extends User{
     String surname;
     //Goal goals;
     //Health health;
+    
 
-    public Member(String username, String password, String email) {
+    public Member(String username, String password, String email, String forename, String surname) {
         super(username, password, email);
     }
     
