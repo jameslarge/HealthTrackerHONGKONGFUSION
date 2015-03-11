@@ -93,6 +93,10 @@
         %>
         
         <p>herro</p>
+        <h3>LOG OUT</h3>
+        <form name="logout" action="LogoutController" method="get">
+                <p><input type="submit" value="Logout"/>
+        </form>
         
         <%
             }

@@ -59,12 +59,12 @@ public class User {
         this.email = email;
     }
     
-    public static User find(String username,String password) throws ServletException{
+    public static User find(String email,String password) throws ServletException{
         try {
             Connection con = DatabaseAccess.getConnection();
             PreparedStatement ps = con.prepareStatement(
-                    "SELECT * FROM userDetails WHERE (username =?)");
-            ps.setString(1, username);
+                    "SELECT * FROM userDetails WHERE (email =?)");
+            ps.setString(1, email);
             ResultSet result = ps.executeQuery();
             User user = null;
             if (result.next()) {
