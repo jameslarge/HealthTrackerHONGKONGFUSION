@@ -68,7 +68,7 @@ public class User {
             ResultSet result = ps.executeQuery();
             User user = null;
             if (result.next()) {
-                user = new User(result.getInt("userID"), 
+                user = new User(result.getInt("id"), 
                         result.getString("username"), 
                         result.getString("password"), 
                         result.getString("email"));
@@ -87,10 +87,10 @@ public class User {
     public void persist() throws ServletException {
         try {
             Connection con = DatabaseAccess.getConnection();
-            PreparedStatement ps = con.prepareStatement("INSERT INTO userDetails (username, password, email) VALUES(?, ?, ?)");
-            ps.setString(1, this.username);
+            PreparedStatement ps = con.prepareStatement("INSERT INTO userDetails (email, password, username) VALUES(?, ?, ?)");
+            ps.setString(1, this.email);
             ps.setString(2, this.password);
-            ps.setString(3, this.email);
+            ps.setString(3, this.username);
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new ServletException("Persist Problem: registering user details ", e);

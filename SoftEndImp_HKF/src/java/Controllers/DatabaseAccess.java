@@ -61,6 +61,9 @@ public class DatabaseAccess {
             // Run the query and retrieve the results
             ResultSet resultSet = statement.executeQuery(sql);
             
+            //Step 7: Close the connection. Must always be done.
+            connection.close();
+            
             return resultSet;
 
             /* The result set represents a set of rows and columns that can
@@ -75,7 +78,7 @@ public class DatabaseAccess {
              * The getstring("") method retrieves the entry from the current
              * row and the column specified within the ""
              */
-            //Step 7: Close the connection. Must always be done.
+            
         } catch (SQLException e) {
             // Problem encountered
             return null;
@@ -99,6 +102,7 @@ public class DatabaseAccess {
             statement.executeQuery(sql);
                         
             //Step 7: Close the connection. Must always be done.
+            connection.close();
         } catch (SQLException e) {
             // Problem encountered
 

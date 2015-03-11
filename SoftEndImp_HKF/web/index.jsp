@@ -52,7 +52,7 @@
          </form>
 
             </article>
-                <aside id="sidebar">
+                <aside id="sidebar">    
                 <h3>SIGN UP</h3>
                 <form name="signup" action="NewUserController" method="get">
                  <p>Username:<input type="text" name="username" class="textbox"/></p>   

@@ -1,4 +1,4 @@
-DROP TABLE userDetails CASCADE;
+﻿DROP TABLE userDetails CASCADE;
 
 CREATE TABLE userDetails
 (
