@@ -38,7 +38,7 @@
                     <p>Forename:<input type="text" name="forename" class="textbox"/></p>
                     <p>Surname:<input type="text" name="surname" class="textbox"/></p>
                     <p>Current Weight:<input type="text" name="weight" class="textbox"/></p>
-                    <p>Current Height<input type="text" name="height" class="textbox"/></p>
+                    <p>Current Height:<input type="text" name="height" class="textbox"/></p>
                     <p><input type="submit" value="Update"/>
                     <input type="reset" value="Reset"/></p>
                 </form>

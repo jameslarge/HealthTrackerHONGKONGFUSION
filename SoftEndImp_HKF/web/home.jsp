@@ -9,6 +9,11 @@
 <%@page import ="Controllers.*"%>
 <%@page import ="Model.*"%>
 
+<%
+    User user = (User) session.getAttribute("user"); 
+    final boolean loggedIn = (user != null);
+%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -31,9 +36,16 @@
             </header>
             <article id="main">
                 <h3>
-                    Enter personal details 
+                    Your Info
                 </h3>
                 
+                <p>Username: <%=user.getUsername()%></p>   
+                <p>Email: <%=user.getEmail()%></p>
+                <!-- <p>Forename:  </p> -->
+                <!-- <p>Surname:  </p> -->
+                <!-- <p>Current Weight:  </p> -->
+                <!-- <p>Current Height:  </p> -->
+              
             </article>
                 
             <br><br>
