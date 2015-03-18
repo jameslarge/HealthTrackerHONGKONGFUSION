@@ -54,8 +54,12 @@ public class NewUserPersonalController extends HttpServlet {
             user = (User) session.getAttribute("user");
             newMember = new Member(user.getUsername(), user.getPassword(), user.getEmail(), forename, surname);
         
+            newMember.persist(); //IS ONLY USING USER.PERSIST() at the moment
             
-        
+            request.getRequestDispatcher("home.jsp").forward(request, response);
+        }
+        else {
+            request.getRequestDispatcher("index.jsp").forward(request, response);
         }
         
     }

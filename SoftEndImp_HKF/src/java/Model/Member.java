@@ -10,6 +10,8 @@ public class Member extends User{
 
     public Member(String username, String password, String email, String forename, String surname) {
         super(username, password, email);
+        this.forename = forename;
+        this.surname = surname;
     }
     
     

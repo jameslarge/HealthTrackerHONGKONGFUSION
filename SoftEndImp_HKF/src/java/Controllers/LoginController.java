@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Controls logging in from the main page.
  *
- * @author Mercury Aimnh
+ * @author
  */
 @WebServlet(name = "LoginController", urlPatterns = {"/LoginController"})
 public class LoginController extends HttpServlet {
@@ -46,7 +46,8 @@ public class LoginController extends HttpServlet {
             password = request.getParameter("password");
         }
         else {
-            request.getRequestDispatcher("home.jsp").forward(request, response);
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+            return;
         }
         
         //Check if the given details exist in the database
@@ -55,7 +56,7 @@ public class LoginController extends HttpServlet {
             session.setAttribute("user", user);
         }
         
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        request.getRequestDispatcher("home.jsp").forward(request, response);
     }
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 

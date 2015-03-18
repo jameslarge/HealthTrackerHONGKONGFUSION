@@ -57,10 +57,13 @@ public class NewUserController extends HttpServlet {
         User newUser = new User(username, password, email);
         newUser.persist();
         
+        HttpSession session = request.getSession(false);
+        session.setAttribute("user", newUser);
+        
         //Log the user in
         request.setAttribute("username", username);
         request.setAttribute("password", password);
-        request.getRequestDispatcher("LoginController").forward(request, response);
+        request.getRequestDispatcher("accountCreation.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
