@@ -16,13 +16,13 @@ import javax.servlet.ServletException;
  */
 public class User {
     
-   private int userID;
-   private String username;
-   private String password;
-   private String email;
+   private int userID; //Users ID Number
+   private String username; //User Username
+   private String password; //User Password 
+   private String email; //User Email
    
    public User(String username, String password, String email){
-       this.userID = -1;
+       this.userID = -1; 
        this.username = username;
        this.password = password;
        this.email = email;
@@ -34,7 +34,7 @@ public class User {
        this.password = password;
        this.email = email;
    }
-
+    //Getter Methods
     public String getUsername() {
         return username;
     }
@@ -46,7 +46,9 @@ public class User {
     public String getEmail() {
         return email;
     }
-
+    //End of Getter Methods
+    
+    //Setter Methods
     public void setUsername(String username) {
         this.username = username;
     }
@@ -58,15 +60,26 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+    //End of Setter Methods
     
+    /**
+     * Method to find User using email address
+     * @param email Email Address of User
+     * @param password Password of User
+     * @return User object, if found
+     * @throws ServletException Exception, User was not found
+     */
     public static User find(String email,String password) throws ServletException{
         try {
+            //Connect to Database
             Connection con = DatabaseAccess.getConnection();
+            //SQL Statement to run, where ? is email address
             PreparedStatement ps = con.prepareStatement(
                     "SELECT * FROM userDetails WHERE (email =?)");
             ps.setString(1, email);
-            ResultSet result = ps.executeQuery();
-            User user = null;
+            ResultSet result = ps.executeQuery();//Run statement
+            User user = null; //Creating a User object to set returned value to
+            //If we find User set create a new User using returned values
             if (result.next()) {
                 user = new User(result.getInt("id"), 
                         result.getString("username"), 
