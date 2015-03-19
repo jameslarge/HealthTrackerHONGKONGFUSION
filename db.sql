@@ -9,7 +9,7 @@ CREATE TABLE member
 	password		VARCHAR(20),
 	username 		VARCHAR (100),
 	name			VARCHAR (100),
-	surname			VARCHAR (100).
+	surname			VARCHAR (100),
 	
 	
 	

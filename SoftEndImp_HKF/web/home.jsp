@@ -29,8 +29,8 @@
                 <h1>HONG KONG FUSIOOOOON</h1>
                 <nav id="mainnav">
                     <ul>
-                        <li><a href="index.html" class="thispage">Home</a></li>
-                        <li><a href="sthelse.html" class="thispage">SOMETHING ELSE</a></li>                        
+                        <li><a href="home.jsp" class="thispage">Home</a></li>
+                        <li><a href="sthelse.jsp" class="thispage">SOMETHING ELSE</a></li>                        
                     </ul>
                 </nav>
             </header>
@@ -45,6 +45,14 @@
                 <!-- <p>Surname:  </p> -->
                 <!-- <p>Current Weight:  </p> -->
                 <!-- <p>Current Height:  </p> -->
+                
+                
+                <h3>
+                    LOG OUT
+                </h3>
+                <form name="logout" action="LogoutController" method="get">
+                        <p><input type="submit" value="Logout"/>
+                </form>
               
             </article>
                 
