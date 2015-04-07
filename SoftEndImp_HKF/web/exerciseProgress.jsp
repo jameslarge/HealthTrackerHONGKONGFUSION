@@ -1,14 +1,18 @@
 <%-- 
-    Document   : accountCreation
-    Created on : 11-Mar-2015, 14:54:32
+    Document   : home.jsp
+    Created on : 04-Mar-2015, 14:51:04
     Author     : xmw13bzu
 --%>
-
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@page import ="Controllers.*"%>
 <%@page import ="Model.*"%>
+
+<%
+    User user = (User) session.getAttribute("user"); 
+    final boolean loggedIn = (user != null);
+%>
 
 <!DOCTYPE html>
 <html>
@@ -32,20 +36,24 @@
             </header>
             <article id="main">
                 <h3>
-                    Enter details 
+                    Your Info
                 </h3>
-                <form name="login" action="NewUserController" method="get">
-                    <p>Username:<input type="text" name="username" class="textbox"/></p>
-                    <p>Email:<input type="text" name="email" class="textbox"/></p>
-                    <p>Password:<input type="password" name="password" id="textbox"/></p>
-                    <p>Forename:<input type="text" name="forename" class="textbox"/></p>
-                    <p>Surname:<input type="text" name="surname" class="textbox"/></p>
-                    <p>Current Weight:<input type="text" name="weight" class="textbox"/></p>
-                    <p>Current Height:<input type="text" name="height" class="textbox"/></p>
-                    <p><input type="submit" value="Update"/>
-                    <input type="reset" value="Reset"/></p>
+                
+                <p>Username: <%=user.getUsername()%></p>   
+                <p>Email: <%=user.getEmail()%></p>
+                <!-- <p>Forename:  </p> -->
+                <!-- <p>Surname:  </p> -->
+                <!-- <p>Current Weight:  </p> -->
+                <!-- <p>Current Height:  </p> -->
+                
+                
+                <h3>
+                    LOG OUT
+                </h3>
+                <form name="logout" action="LogoutController" method="get">
+                        <p><input type="submit" value="Logout"/>
                 </form>
-
+              
             </article>
                 
             <br><br>
@@ -55,4 +63,3 @@
             </footer>        </div>
     </body>
 </html>
-

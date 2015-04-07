@@ -33,4 +33,9 @@ public class Height {
     public double toFeet(double metres){
         return metres*3.2808399;
     }
+    
+    @Override
+    public String toString() { 
+        return new Double(centimetres).toString();
+    }
 }

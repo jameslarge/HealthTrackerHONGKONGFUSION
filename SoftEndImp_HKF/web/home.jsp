@@ -10,7 +10,7 @@
 <%@page import ="Model.*"%>
 
 <%
-    User user = (User) session.getAttribute("user"); 
+    Member user = (Member) session.getAttribute("user"); 
     final boolean loggedIn = (user != null);
 %>
 
@@ -41,10 +41,10 @@
                 
                 <p>Username: <%=user.getUsername()%></p>   
                 <p>Email: <%=user.getEmail()%></p>
-                <!-- <p>Forename:  </p> -->
-                <!-- <p>Surname:  </p> -->
-                <!-- <p>Current Weight:  </p> -->
-                <!-- <p>Current Height:  </p> -->
+                <p>Forename:  <%=user.getForename()%></p>
+                <p>Surname:  <%=user.getSurname()%></p>
+                <p>Current Weight:  </p>
+                <p>Current Height:  <%=user.getHeight()%></p>
                 
                 
                 <h3>

@@ -52,7 +52,7 @@ public class NewUserPersonalController extends HttpServlet {
         Member newMember = null;
         if (session != null) {
             user = (User) session.getAttribute("user");
-            newMember = new Member(user.getUsername(), user.getPassword(), user.getEmail(), forename, surname);
+            //newMember = new Member(user.getUsername(), user.getPassword(), user.getEmail(), forename, surname);
         
             newMember.persist(); //IS ONLY USING USER.PERSIST() at the moment
             

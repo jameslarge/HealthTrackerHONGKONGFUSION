@@ -34,36 +34,51 @@ public class NewUserController extends HttpServlet {
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        String forename = request.getParameter("forename");
+        String surname = request.getParameter("surname");
+        String strWeight = request.getParameter("weight");
+        String strHeight = request.getParameter("height");
         
-//        //Confirm the user's email and password are correct
+        Double height = height = Double.parseDouble(strHeight);
+        
+        
+//        try {
+//            height = Double.parseDouble(strHeight);
+//        } catch (Exception ex) { 
+//            request.setAttribute("errorMessage", "Invalid email address");
+//            request.getRequestDispatcher("createUser.jsp").forward(request, response);
+//        }
+            
+          
+//        //Confirm the user's email and password are consistent
 //        if(!email.equals(request.getParameter("emailRe"))||!password.equals(request.getParameter("passwordRe"))){
 //            request.setAttribute("errorMessage", "Details do not match");
 //            request.getRequestDispatcher("createUser.jsp").forward(request, response);
 //        }
         
         //Confirm the user's email and password are valid
-//        if(!User.isValidEmail(email)||password.length() < 6){
-//            if (!User.isValidEmail(email)) {
-//                request.setAttribute("errorMessage", "Invalid email address");
-//                request.getRequestDispatcher("createUser.jsp").forward(request, response);
-//            }
-//            else {
-//                request.setAttribute("errorMessage", "Passwords must be atleast 6 characters long");
-//                request.getRequestDispatcher("createUser.jsp").forward(request, response);
-//            }
+//        if (!User.isValidEmail(email)) {
+//            request.setAttribute("errorMessage", "Invalid email address");
+//            request.getRequestDispatcher("createUser.jsp").forward(request, response);
+//        }
+//        if (password.length() < 6) {
+//            request.setAttribute("errorMessage", "Passwords must be atleast 6 characters long");
+//            request.getRequestDispatcher("createUser.jsp").forward(request, response);
 //        }
         
         //Create a user bean, and add their details to the database.
-        User newUser = new User(username, password, email);
-        newUser.persist();
+        Member newMember = new Member (username, password, email, forename, surname);
+        //physical health  = new ... weight height...
+        
+        newMember.persist();
         
         HttpSession session = request.getSession(false);
-        session.setAttribute("user", newUser);
+        session.setAttribute("user", newMember);
         
         //Log the user in
         request.setAttribute("username", username);
         request.setAttribute("password", password);
-        request.getRequestDispatcher("accountCreation.jsp").forward(request, response);
+        request.getRequestDispatcher("home.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
