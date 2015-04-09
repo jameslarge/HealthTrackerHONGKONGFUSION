@@ -10,8 +10,8 @@
 <%@page import ="Model.*"%>
 
 <%
-    Member user = (Member) session.getAttribute("user"); 
-    final boolean loggedIn = (user != null);
+    Member member = (Member) session.getAttribute("user"); 
+    final boolean loggedIn = (member != null);
 %>
 
 <!DOCTYPE html>
@@ -34,8 +34,7 @@
                 <h1>HONG KONG FUSIOOOOON</h1>
                 <nav id="mainnav">
                     <ul>
-                        <li><a href="home.jsp" class="thispage">Home</a></li>
-                        <li><a href="sthelse.jsp" class="thispage">SOMETHING ELSE</a></li>                        
+                        <li><a href="index.jsp" class="thispage">Index</a></li>                     
                     </ul>
                 </nav>
             </header>

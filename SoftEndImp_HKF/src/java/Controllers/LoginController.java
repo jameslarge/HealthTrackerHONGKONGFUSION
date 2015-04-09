@@ -51,12 +51,16 @@ public class LoginController extends HttpServlet {
         }
         
         //Check if the given details exist in the database
-        User user = User.find(email, password);
-        if (user != null) {
-            session.setAttribute("user", user);
+        Member member = Member.find(email, password);
+        if (member != null) {
+            session.setAttribute("member", member);
+            request.getRequestDispatcher("home.jsp").forward(request, response);
+        }
+        else {
+            request.getRequestDispatcher("index.jsp").forward(request, response);
         }
         
-        request.getRequestDispatcher("home.jsp").forward(request, response);
+        
     }
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 

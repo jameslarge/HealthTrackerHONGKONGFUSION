@@ -1,6 +1,7 @@
 package Controllers;
 
 import Model.*;
+import Model.PhysicalHealth.*;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -39,8 +40,8 @@ public class NewUserController extends HttpServlet {
         String strWeight = request.getParameter("weight");
         String strHeight = request.getParameter("height");
         
-        Double height = height = Double.parseDouble(strHeight);
-        
+        Double height = Double.parseDouble(strHeight);
+        Weight weight = new Weight(Double.parseDouble(strWeight));
         
 //        try {
 //            height = Double.parseDouble(strHeight);
@@ -68,12 +69,15 @@ public class NewUserController extends HttpServlet {
         
         //Create a user bean, and add their details to the database.
         Member newMember = new Member (username, password, email, forename, surname);
-        //physical health  = new ... weight height...
-        
         newMember.persist();
         
+        newMember.setUserID(Member.findID(newMember));
+        
+        PhysicalHealth physHealth = new PhysicalHealth(newMember.getUserID(), height, weight);
+        physHealth.persist();
+        
         HttpSession session = request.getSession(false);
-        session.setAttribute("user", newMember);
+        session.setAttribute("member", newMember);
         
         //Log the user in
         request.setAttribute("username", username);

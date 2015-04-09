@@ -34,5 +34,8 @@ public class Weight {
         return pounds*0.453592;
     }
     
-    
+    @Override
+    public String toString() {
+        return ""+grams;
+    }
 }

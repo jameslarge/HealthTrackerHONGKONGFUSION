@@ -36,6 +36,6 @@ public class Height {
     
     @Override
     public String toString() { 
-        return new Double(centimetres).toString();
+        return ""+centimetres;
     }
 }

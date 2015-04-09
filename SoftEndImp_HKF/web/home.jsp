@@ -10,8 +10,8 @@
 <%@page import ="Model.*"%>
 
 <%
-    Member user = (Member) session.getAttribute("user"); 
-    final boolean loggedIn = (user != null);
+    Member member = (Member) session.getAttribute("member"); 
+    final boolean loggedIn = (member != null);
 %>
 
 <!DOCTYPE html>
@@ -30,7 +30,7 @@
                 <nav id="mainnav">
                     <ul>
                         <li><a href="home.jsp" class="thispage">Home</a></li>
-                        <li><a href="sthelse.jsp" class="thispage">SOMETHING ELSE</a></li>                        
+                        <li><a href="LogoutController" class="thispage">Log Out</a></li>                        
                     </ul>
                 </nav>
             </header>
@@ -39,13 +39,17 @@
                     Your Info
                 </h3>
                 
-                <p>Username: <%=user.getUsername()%></p>   
-                <p>Email: <%=user.getEmail()%></p>
-                <p>Forename:  <%=user.getForename()%></p>
-                <p>Surname:  <%=user.getSurname()%></p>
-                <p>Current Weight:  </p>
-                <p>Current Height:  <%=user.getHeight()%></p>
+                <p>Username: <%=member.getUsername()%></p>   
+                <p>Email: <%=member.getEmail()%></p>
+                <p>Forename:  <%=member.getForename()%></p>
+                <p>Surname:  <%=member.getSurname()%></p>              
                 
+                <h3>
+                    View Physical Details/Weight Progress
+                </h3>
+                <form name="logout" action="PhysicalHealthLogController" method="get">
+                    <p><input type="submit" value="GoGo"/>
+                </form>
                 
                 <h3>
                     LOG OUT

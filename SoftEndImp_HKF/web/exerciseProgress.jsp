@@ -8,10 +8,13 @@
 
 <%@page import ="Controllers.*"%>
 <%@page import ="Model.*"%>
+<%@page import ="Model.PhysicalHealth.*"%>
 
 <%
-    User user = (User) session.getAttribute("user"); 
-    final boolean loggedIn = (user != null);
+    Member member = (Member) session.getAttribute("member"); 
+    if (member == null) {
+        //something or other 
+    }
 %>
 
 <!DOCTYPE html>
@@ -30,30 +33,56 @@
                 <nav id="mainnav">
                     <ul>
                         <li><a href="home.jsp" class="thispage">Home</a></li>
-                        <li><a href="sthelse.jsp" class="thispage">SOMETHING ELSE</a></li>                        
+                        <li><a href="LogoutController" class="thispage">Log Out</a></li>   
                     </ul>
                 </nav>
             </header>
             <article id="main">
                 <h3>
-                    Your Info
+                    Your General Info
                 </h3>
                 
-                <p>Username: <%=user.getUsername()%></p>   
-                <p>Email: <%=user.getEmail()%></p>
-                <!-- <p>Forename:  </p> -->
-                <!-- <p>Surname:  </p> -->
-                <!-- <p>Current Weight:  </p> -->
-                <!-- <p>Current Height:  </p> -->
+                <%
+                    PhysicalHealth physHealth = (PhysicalHealth) session.getAttribute("physHealth"); 
+                %>
                 
+                <p>Username: <%=member.getUsername()%></p>   
+                <p>Email: <%=member.getEmail()%></p>
+                <p>Height: <%=physHealth.getHeight()%></p>
                 
                 <h3>
-                    LOG OUT
+                    Your Weight Log
                 </h3>
-                <form name="logout" action="LogoutController" method="get">
-                        <p><input type="submit" value="Logout"/>
-                </form>
+                
+                <!-- for each weight progress -->
+                    <!-- print date : weight --> 
+                <table>
+                    <tr>
+                         <th>Date</th> <th>Weight</th>
+                    </tr>
+                   
+                <%
+                    for (WeightProgress weightProg : physHealth.getPhysicalHealthLog()) {
+                %>
+                    <tr>
+                        <td><%=weightProg.getDate()%></td>   <td><%=weightProg.getWeight()%></td>
+                    </tr>
+                <%                        
+                    }
+                %>
+                </table>    
               
+                <h3>
+                    Log new weight 
+                </h3>
+                
+                 <form name="login" action="LogWeightController" method="get">
+                    <p>Date:<input type="date" name="date" class="textbox"/></p>
+                    <p>Weight:<input type="text" name="weight" class="textbox"/></p>
+                    <p><input type="submit" value="Enter"/>
+                    <input type="reset" value="Reset"/></p>
+                </form>
+                
             </article>
                 
             <br><br>
