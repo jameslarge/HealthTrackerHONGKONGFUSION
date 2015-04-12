@@ -50,6 +50,11 @@ public class ExerciseLogger {
         this.exerciseLog = exerciseLog;
     }
     
+    public void addExerciseProgress(ExerciseProgress ep) {
+        exerciseLog.add(ep);
+    }
+    
+    
     /**
      * Method to find User using email address
      *
