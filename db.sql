@@ -1,6 +1,8 @@
 ﻿DROP TABLE member CASCADE;
 DROP TABLE physicalHealth CASCADE;
 DROP TABLE weightProgress CASCADE;
+DROP TABLE exercise CASCADE;
+DROP TABLE exerciseProgress CASCADE;
 
 CREATE TABLE member
 (
@@ -36,6 +38,35 @@ CREATE TABLE weightProgress
 	
 	PRIMARY KEY (id)
 );
+
+
+CREATE TABLE exercise
+(
+	id				SERIAL,
+	name			VARCHAR(100),
+	exerciseType	VARCHAR(100),
+	calPerUnit		INT,
+	
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE exerciseProgress
+(
+	id				SERIAL,
+	memberID 		INT REFERENCES member(id),
+	exerciseDate	DATE,
+	amount			INT,
+	duration		INT,
+	exerciseID		INT REFERENCES exercise(id),
+	
+	
+	PRIMARY KEY (id)
+);
+
+
+	
+
+
 
 
 
