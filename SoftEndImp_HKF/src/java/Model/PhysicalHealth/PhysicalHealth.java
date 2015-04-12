@@ -79,7 +79,7 @@ public class PhysicalHealth {
     
     
     /**
-     * Method to find User using email address
+     * Method to find Users Physical Health details using members ID
      *
      * @param memberID ID of Member to find the physicalHealth data for
      * @return PhysicalHealth object, if found

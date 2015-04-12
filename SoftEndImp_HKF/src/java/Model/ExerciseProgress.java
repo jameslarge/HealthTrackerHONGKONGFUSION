@@ -2,8 +2,18 @@ package Model;
 
 import java.util.Date;
 
-public class ExciseProgress {
+public class ExerciseProgress {
     
-    Exercise exercise;
-    Date date;
+    private Exercise exercise;
+    private Date date;
+    private int duration;
+    private int amount;
+    
+    public int getAmount() {
+        return amount;
+    }
+    
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
 }

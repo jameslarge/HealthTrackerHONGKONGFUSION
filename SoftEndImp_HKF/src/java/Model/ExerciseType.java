@@ -3,40 +3,30 @@ package Model;
 
 public class ExerciseType {
     private String exerciseName;
-    private double caloriesBurned;
-    private double time;
+    private int caloriesBurned;
 
-    public ExerciseType(String exerciseName, double caloriesBurned, double time) {
+    public ExerciseType(String exerciseName, int caloriesBurned, int duration) {
         this.exerciseName = exerciseName;
         this.caloriesBurned = caloriesBurned;
-        this.time = time;
     }
 
     public String getExerciseName() {
         return exerciseName;
     }
 
-    public double getCaloriesBurned() {
+    public int getCaloriesBurned() {
         return caloriesBurned;
-    }
-
-    public double getTime() {
-        return time;
     }
 
     public void setExerciseName(String exerciseName) {
         this.exerciseName = exerciseName;
     }
 
-    public void setCaloriesBurned(double caloriesBurned) {
+    public void setCaloriesBurned(int caloriesBurned) {
         this.caloriesBurned = caloriesBurned;
     }
-
-    public void setTime(double time) {
-        this.time = time;
-    }
     
-    public double calculateCalsBurnt(){
-        return 0.0;
+    public int calculateCalsBurnt(){
+        return 0;
     }
 }
