@@ -1,20 +1,20 @@
 package Model;
 
 public class RepBasedExercise extends ExerciseType{
-    private double calsPerRep;
+    private int calsPerRep;
 
     public RepBasedExercise(String exerciseName, 
-            double caloriesBurned, double time, double calsPerRep) {
+            int caloriesBurned, int duration, int calsPerRep) {
         
-        super(exerciseName, caloriesBurned, time);
+        super(exerciseName, caloriesBurned, duration);
         this.calsPerRep = calsPerRep;
     }
 
-    public double getCalsPerRep() {
+    public int getCalsPerRep() {
         return calsPerRep;
     }
 
-    public void setCalsPerRep(double calsPerRep) {
+    public void setCalsPerRep(int calsPerRep) {
         this.calsPerRep = calsPerRep;
     }
     
@@ -23,9 +23,9 @@ public class RepBasedExercise extends ExerciseType{
      * @return Calories Burnt
      */
     @Override
-    public double calculateCalsBurnt(){
+    public int calculateCalsBurnt(){
         //Will be amount * constant from Database that corresponds to this exercise
-        return 0.0;
+        return 0;
     }
     
 }

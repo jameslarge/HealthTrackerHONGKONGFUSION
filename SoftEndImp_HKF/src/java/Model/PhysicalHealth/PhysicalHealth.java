@@ -22,7 +22,9 @@ public class PhysicalHealth {
     private Height height;
     private ArrayList<WeightProgress> physicalHealthLog; 
 
-    public PhysicalHealth() { }
+    public PhysicalHealth() { 
+        this.physicalHealthLog = new ArrayList<>();
+    }
     
     public PhysicalHealth(int ID, int memberID, double heightcm, ArrayList<WeightProgress> physicalHealthLog) {
         this.ID = ID;
@@ -79,7 +81,7 @@ public class PhysicalHealth {
     
     
     /**
-     * Method to find User using email address
+     * Method to find Users Physical Health details using members ID
      *
      * @param memberID ID of Member to find the physicalHealth data for
      * @return PhysicalHealth object, if found
