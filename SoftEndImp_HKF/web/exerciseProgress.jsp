@@ -4,6 +4,7 @@
     Author     : xmw13bzu
 --%>
 
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@page import ="Controllers.*"%>
@@ -53,8 +54,8 @@
                     Your Exercise Log
                 </h3>
                 
-                <!-- for each weight progress -->
-                    <!-- print date : weight --> 
+                <!-- for each exercise progress -->
+                    <!-- print date : exercisename, cals burned --> 
                 <table>
                     <tr>
                          <th>Date</th> <th>Exercise</th>
@@ -65,7 +66,7 @@
                 %>
                     <tr>
                         <td><%=exProg.getDate()%></td>   
-                        <td><%=exProg.getExerciseName()%></td>
+                        <td><%=exProg.getExercise()%></td>
                         <td><%=exProg.getCaloresBurned()%></td>
                     </tr>
                 <%                        
@@ -77,9 +78,25 @@
                     Log new exercise 
                 </h3>
                 
+                <%
+                    ArrayList<Exercise> exercises = Exercise.findAll();
+                    //print out all exercise names in drop down list
+                %>
+                
                  <form name="login" action="LogExerciseController" method="get">
                     <p>Date:<input type="date" name="date" class="textbox"/></p>
-                    <p>Exercise:<input type="text" name="weight" class="textbox"/></p>
+                    <!--<p>Exercise:<input type="text" name="exercise" class="textbox"/></p>-->
+                    <p>Exercise: 
+                        <select name="exercise">
+                            <%
+                                for (Exercise exercise : exercises) {
+                            %>
+                                    <option value="<%=exercise.getID()%>"><%=exercise.getExerciseName()%></option>
+                            <%                        
+                                }
+                            %>
+                        </select>
+                    </p>
                     <p><input type="submit" value="Enter"/>
                     <input type="reset" value="Reset"/></p>
                 </form>

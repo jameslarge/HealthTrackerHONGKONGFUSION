@@ -9,16 +9,29 @@ import java.util.ArrayList;
 import javax.servlet.ServletException;
 
 public class Exercise {
+    private int ID;
     private String exerciseName; //Name of the Exercise
     private String exerciseType; //Type of the Exercise
     private int calPerUnit; //How much Calories burnt per unit(e.g.duration)
 
+    public Exercise(int ID, String eName, String eType, int calPerUnit) {
+        this.ID = ID;
+        this.exerciseName = eName;
+        this.exerciseType = eType;
+        this.calPerUnit = calPerUnit;
+    }
+    
     public Exercise(String eName, String eType, int calPerUnit) {
+        this.ID = -1;
         this.exerciseName = eName;
         this.exerciseType = eType;
         this.calPerUnit = calPerUnit;
     }
 
+    public int getID(){
+       return ID;
+    }
+    
     public String getExerciseName(){
        return exerciseName;
     }
@@ -29,6 +42,10 @@ public class Exercise {
 
     public int getCalPerUnit(){
         return calPerUnit;
+    }
+    
+    public void setID(int ID){
+        this.ID = ID;
     }
     
     public void setExcerciseName(String eName){
@@ -49,7 +66,7 @@ public class Exercise {
      * @return Exercise
      * @throws ServletException 
      */
-    public Exercise find(int exerciseID) throws ServletException{
+    public static Exercise find(int exerciseID) throws ServletException{
         try{
         //Connect to Database
         Connection con = DatabaseAccess.getConnection();
@@ -78,7 +95,7 @@ public class Exercise {
      * @return ArrayList of Exercises
      * @throws ServletException 
      */
-    public ArrayList<Exercise> findAll() throws ServletException{
+    public static ArrayList<Exercise> findAll() throws ServletException{
         
         try{
         //Connect to Database
@@ -91,7 +108,8 @@ public class Exercise {
         ArrayList<Exercise> exerciseList = new ArrayList<>(); 
         //If we find ExerciseType set create a new User using returned values
         while(result.next()){
-            Exercise exercise = new Exercise(result.getString("name"),
+            Exercise exercise = new Exercise(result.getInt("id"),
+                                             result.getString("name"),
                                              result.getString("exerciseType"),
                                              result.getInt("calperUnit"));
             exerciseList.add(exercise);
