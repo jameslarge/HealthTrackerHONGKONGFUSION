@@ -63,13 +63,9 @@ public class ExerciseLogger {
      * @throws ServletException Exception, PhysicalHealth was not found for member
      */
     public static ExerciseLogger find(int memberID) throws ServletException {
-        try {
-            ExerciseLogger exlog = new ExerciseLogger(memberID);
-            exlog.setExerciseLog(ExerciseProgress.findAll(memberID));
-            return exlog;
-        } catch (SQLException ex) {
-            throw new ServletException("Find Problem: searching for exerciseLog from memberid: " + memberID, ex);
-        }
+        ExerciseLogger exlog = new ExerciseLogger(memberID);
+        exlog.setExerciseLog(ExerciseProgress.findAll(memberID));
+        return exlog;
     }
     
     /**
@@ -78,12 +74,8 @@ public class ExerciseLogger {
      * @throws ServletException
      */
     public void persist() throws ServletException {
-        try {
-            for (ExerciseProgress exProg : exerciseLog) {
-                exProg.persist(memberID); //passing this psyhicalHealthId
-            }
-        } catch (SQLException e) {
-            throw new ServletException("Persist Problem: persisting physicalhealth details", e);
+        for (ExerciseProgress exProg : exerciseLog) {
+            exProg.persist(memberID); //passing this psyhicalHealthId
         }
     }
     
@@ -93,11 +85,7 @@ public class ExerciseLogger {
      * @throws ServletException
      */
     public void persist(ExerciseProgress exProg) throws ServletException {
-        try {
-            exProg.persist(memberID); //passing this psyhicalHealthId
-        } catch (SQLException e) {
-            throw new ServletException("Persist Problem: persisting physicalhealth details", e);
-        }
+        exProg.persist(memberID); //passing this psyhicalHealthId
     }
     
 }

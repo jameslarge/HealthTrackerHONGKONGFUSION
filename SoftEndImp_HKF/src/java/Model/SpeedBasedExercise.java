@@ -5,10 +5,10 @@ public class SpeedBasedExercise extends ExerciseType{
     private int calsPerSpeed;
 
     public SpeedBasedExercise(String exerciseName, 
-            int caloriesBurned, int duration, int speed, 
+            int caloriesBurned, int speed, 
             int calsPerSpeed) {
         
-        super(exerciseName, caloriesBurned, duration);
+        super(exerciseName, caloriesBurned);
         this.speed = speed;
         this.calsPerSpeed = calsPerSpeed;
     }

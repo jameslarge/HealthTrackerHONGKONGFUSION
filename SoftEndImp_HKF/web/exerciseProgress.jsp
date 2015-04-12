@@ -67,7 +67,7 @@
                     <tr>
                         <td><%=exProg.getDate()%></td>   
                         <td><%=exProg.getExercise()%></td>
-                        <td><%=exProg.getCaloresBurned()%></td>
+                        <td><%=exProg.calculateCals()%></td>
                     </tr>
                 <%                        
                     }
