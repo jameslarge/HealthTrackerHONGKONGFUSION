@@ -88,7 +88,7 @@ public class User {
             }
             return user;
         } catch (SQLException ex) {
-            throw new ServletException("Find Problem: searching for user while logging in ", ex);
+            throw new ServletException("Find Problem: Searching for User while Logging in ", ex);
         }
     }
     

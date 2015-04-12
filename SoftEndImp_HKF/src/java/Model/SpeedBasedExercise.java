@@ -1,14 +1,14 @@
 package Model;
 
 public class SpeedBasedExercise extends ExerciseType{
-    private double speed;
-    private double calsPerSpeed;
+    private int speed;
+    private int calsPerSpeed;
 
     public SpeedBasedExercise(String exerciseName, 
-            double caloriesBurned, double time, double speed, 
-            double calsPerSpeed) {
+            int caloriesBurned, int duration, int speed, 
+            int calsPerSpeed) {
         
-        super(exerciseName, caloriesBurned, time);
+        super(exerciseName, caloriesBurned, duration);
         this.speed = speed;
         this.calsPerSpeed = calsPerSpeed;
     }
@@ -19,9 +19,9 @@ public class SpeedBasedExercise extends ExerciseType{
      * @return Calories burnt
      */
     @Override
-    public double calculateCalsBurnt(){
+    public int calculateCalsBurnt(){
         //Will be amount * constant from Database that corresponds to this exercise
-        return 0.0;
+        return 0;
     }
     
     /**
@@ -29,9 +29,9 @@ public class SpeedBasedExercise extends ExerciseType{
      * @param distance Distance travelled by user
      * @return 
      */
-    public double calculateSpeed(double distance){
-        double time = getTime();
-        
-        return (distance/time);
+    public int calculateSpeed(double distance){
+        //double time = getDuration();
+        return 0;
+        //return (distance/time);
     }
 }
