@@ -58,6 +58,12 @@ public class WeightProgress implements Comparable<WeightProgress> {
         return this.date.compareTo(t.date);
     }
 
+    /**
+     * Method to find information about Weight progress
+     * @param wpID ID of information we are looking for
+     * @return Weight Progress
+     * @throws ServletException 
+     */
     public static WeightProgress find(int wpID) throws ServletException {
         try {
             //Connect to Database
@@ -84,6 +90,12 @@ public class WeightProgress implements Comparable<WeightProgress> {
         }
     }
     
+    /**
+     * Method to get information about member using physical health ID
+     * @param physHealthID Foreign ID from Physical Health table
+     * @return ArrayList of Weight Progress information
+     * @throws ServletException 
+     */
     public static ArrayList<WeightProgress> findAll(int physHealthID) throws ServletException {
         try {
             //Connect to Database
@@ -113,6 +125,11 @@ public class WeightProgress implements Comparable<WeightProgress> {
         }
     }
     
+    /**
+     * Method to store Weight Progress information for member
+     * @param physHealthId Foreign ID from Physical Health table
+     * @throws ServletException 
+     */
     public void persist(int physHealthId) throws ServletException {
         try {
             Connection con = DatabaseAccess.getConnection();
@@ -136,4 +153,16 @@ public class WeightProgress implements Comparable<WeightProgress> {
         }
     }
 
+    /**
+     * Method to Calculate BMI using grams and cm
+     * @return value of members BMI
+     * @throws ServletException 
+     */
+    public int calulateBMI() throws ServletException{
+        PhysicalHealth ph = PhysicalHealth.find(physicalHealthID);
+        int height = ph.getHeight().getCentimetres();
+        
+        return (int) (weight.getGrams()/(height * height));
+    }
+            
 }

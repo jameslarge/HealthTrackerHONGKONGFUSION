@@ -2,17 +2,17 @@ package Model.PhysicalHealth;
 
 public class Height {
     
-    private double centimetres;
+    private int centimetres;
 
-    public Height(double centimetres) {
+    public Height(int centimetres) {
         this.centimetres = centimetres;
     }
 
-    public double getCentimetres() {
+    public int getCentimetres() {
         return centimetres;
     }
 
-    public void setCentimetres(double centimetres) {
+    public void setCentimetres(int centimetres) {
         this.centimetres = centimetres;
     }
     
@@ -21,8 +21,8 @@ public class Height {
      * @param feet value in feet
      * @return value in metres
      */
-    public double toMetres(double feet){
-        return feet*0.3048;
+    public int toMetres(int feet){
+        return (int) (feet*0.3048);
     }
     
     /**
@@ -30,8 +30,8 @@ public class Height {
      * @param metres value in metres
      * @return value in feet
      */
-    public double toFeet(double metres){
-        return metres*3.2808399;
+    public int toFeet(int metres){
+        return (int) (metres*3.2808399);
     }
     
     @Override

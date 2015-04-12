@@ -38,6 +38,7 @@ public class LogExerciseController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         HttpSession session = request.getSession(false);
+        Member member = (Member) session.getAttribute("member"); //member member member member
         
         if (session == null) 
             throw new ServletException("Attempting to log an exerciseProgress while no session is active (no user logged in)");
@@ -58,7 +59,7 @@ public class LogExerciseController extends HttpServlet {
         
         ExerciseProgress ep = new ExerciseProgress(Exercise.find(exerciseID), 
                                             date, duration, amount);
-        ep.persist();
+        ep.persist(member.getUserID());
         
         //reload weight log page, refresh data essentially
         request.getRequestDispatcher("ExerciseLogController").forward(request, response);

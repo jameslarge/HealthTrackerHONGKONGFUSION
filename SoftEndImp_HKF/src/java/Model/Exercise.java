@@ -78,7 +78,8 @@ public class Exercise {
         Exercise exercise = null; //Creating a ExerciseType object to set returned value to
         //If we find ExerciseType set create a new User using returned values
         if(result.next()){
-            exercise = new Exercise(result.getString("name"),
+            exercise = new Exercise(exerciseID,
+                                    result.getString("name"),
                                      result.getString("exerciseType"),
                                      result.getInt("calperUnit"));
         }

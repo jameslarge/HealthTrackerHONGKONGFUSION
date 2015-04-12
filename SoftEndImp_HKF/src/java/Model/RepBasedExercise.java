@@ -4,9 +4,9 @@ public class RepBasedExercise extends ExerciseType{
     private int calsPerRep;
 
     public RepBasedExercise(String exerciseName, 
-            int caloriesBurned, int duration, int calsPerRep) {
+            int caloriesBurned, int calsPerRep) {
         
-        super(exerciseName, caloriesBurned, duration);
+        super(exerciseName, caloriesBurned);
         this.calsPerRep = calsPerRep;
     }
 

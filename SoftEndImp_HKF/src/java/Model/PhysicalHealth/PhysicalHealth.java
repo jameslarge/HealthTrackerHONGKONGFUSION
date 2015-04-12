@@ -26,7 +26,7 @@ public class PhysicalHealth {
         this.physicalHealthLog = new ArrayList<>();
     }
     
-    public PhysicalHealth(int ID, int memberID, double heightcm, ArrayList<WeightProgress> physicalHealthLog) {
+    public PhysicalHealth(int ID, int memberID, int heightcm, ArrayList<WeightProgress> physicalHealthLog) {
         this.ID = ID;
         this.memberID = memberID;
         this.height = new Height(heightcm);  
@@ -34,7 +34,7 @@ public class PhysicalHealth {
     }
     
     //to be used upon account creation, when user provides their current height/weight
-    public PhysicalHealth(int memberID, double heightcm, Weight initialWeight) {
+    public PhysicalHealth(int memberID, int heightcm, Weight initialWeight) {
         this.ID = -1;
         this.memberID = memberID;
         this.height = new Height(heightcm);  
