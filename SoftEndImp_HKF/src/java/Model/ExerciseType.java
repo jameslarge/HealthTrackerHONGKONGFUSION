@@ -5,7 +5,7 @@ public class ExerciseType {
     private String exerciseName;
     private int caloriesBurned;
 
-    public ExerciseType(String exerciseName, int caloriesBurned, int duration) {
+    public ExerciseType(String exerciseName, int caloriesBurned) {
         this.exerciseName = exerciseName;
         this.caloriesBurned = caloriesBurned;
     }

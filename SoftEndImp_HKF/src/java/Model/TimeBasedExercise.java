@@ -2,20 +2,20 @@ package Model;
 
 public class TimeBasedExercise extends ExerciseType{
     
-    private double calsPerHour;
+    private int calsPerHour;
 
     public TimeBasedExercise(String exerciseName, 
-            double caloriesBurned, double time, double calsPerHour) {
+            int caloriesBurned, int calsPerHour) {
         
-        super(exerciseName, caloriesBurned, time);
+        super(exerciseName, caloriesBurned);
         this.calsPerHour = calsPerHour;
     }
 
-    public double getCalsPerHour() {
+    public int getCalsPerHour() {
         return calsPerHour;
     }
 
-    public void setCalsPerHour(double calsPerHour) {
+    public void setCalsPerHour(int calsPerHour) {
         this.calsPerHour = calsPerHour;
     }
     
@@ -24,8 +24,8 @@ public class TimeBasedExercise extends ExerciseType{
      * @return Calories Burnt
      */
     @Override
-    public double calculateCalsBurnt(){
+    public int calculateCalsBurnt(){
         //Will be amount * constant from Database that corresponds to this exercise
-        return 0.0;
+        return 0;
     }
 }
