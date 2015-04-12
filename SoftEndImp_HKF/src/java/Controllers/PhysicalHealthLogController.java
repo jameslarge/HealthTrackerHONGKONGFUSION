@@ -47,7 +47,7 @@ public class PhysicalHealthLogController extends HttpServlet {
         PhysicalHealth ph = PhysicalHealth.find(member.getUserID());
         session.setAttribute("physHealth", ph);
         
-        request.getRequestDispatcher("exerciseProgress.jsp").forward(request, response);
+        request.getRequestDispatcher("weightProgress.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
