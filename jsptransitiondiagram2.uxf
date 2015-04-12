@@ -1,0 +1,714 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.1">
+  <zoom_level>6</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>246</x>
+      <y>498</y>
+      <w>108</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>bg=green
+index.jsp
+--
+/essentially a splash screen/
+description of site
+log in
+signup</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>600</x>
+      <y>714</y>
+      <w>138</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>bg=orange
+manageUser.jsp
+--
+/edit user's account/
+login info
+personal info
+biography/picture</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>246</x>
+      <y>600</y>
+      <w>108</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>bg=green
+accountCreation.jsp
+--
+/create an account/</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>654</x>
+      <y>270</y>
+      <w>102</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>Nav bar links (logged out)
+--
+
+
+bg=gray
+fg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>672</x>
+      <y>294</y>
+      <w>66</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>index.jsp</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>810</x>
+      <y>246</y>
+      <w>210</w>
+      <h>174</h>
+    </coordinates>
+    <panel_attributes>Nav bar links (logged in)
+--
+
+
+bg=gray
+fg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>822</x>
+      <y>306</y>
+      <w>72</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>userHome.jsp</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>822</x>
+      <y>270</y>
+      <w>72</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>index.jsp
+--
+/(logout)/</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>858</x>
+      <y>456</y>
+      <w>198</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>bg=green
+physicalProgress.jsp
+--
+/height/weight logs, bmi/
+current status
+if goal related to height/weight set
+    show snapshots of them
+
+detailed complete log, expandable by e.g month</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1110</x>
+      <y>774</y>
+      <w>240</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>bg=orange
+logMood.jsp
+--
+/add a new Mood to the mood log/
+
+enter date / scores for each mood metric</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1110</x>
+      <y>456</y>
+      <w>240</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>bg=green
+logWeight.jsp
+--
+/add a new WeightProgress to the physical health log/
+
+enter date / weight
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1110</x>
+      <y>558</y>
+      <w>240</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>bg=green
+logExercise.jsp
+--
+/add a new Activity to the exercise log/
+
+search for exercise in database (and set 'amount')
+OR 
+create new exercise (and set 'amount')
+
+amount meaning time spent or whatever metric being used</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1110</x>
+      <y>660</y>
+      <w>240</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>bg=green
+logMeal.jsp
+--
+/add a new Meal to the diet log/
+
+search for meal in database (and set 'amount')
+OR 
+create new meal (and set 'amount')
+
+amount meaning portion sizes (grams), discrete counts, etc</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>432</x>
+      <y>714</y>
+      <w>150</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>bg=green
+goalProgress.jsp
+--
+/view progress towards existing goals/
+list goals and their
+    target
+    start/end dates (if applicable)
+    progress towards
+    options to cancel/update</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>432</x>
+      <y>852</y>
+      <w>222</w>
+      <h>78</h>
+    </coordinates>
+    <panel_attributes>bg=green
+manageGoals.jsp
+--
+/set, cancel or update goals/
+if link to update/cancel goal clicked from goalProgerss.jsp
+     show goal snapshot
+     form for updating/cancelling
+if link to create new goal clicked
+     form for new goal</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>456</x>
+      <y>510</y>
+      <w>156</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>bg=green
+userHome.jsp
+--
+/user's homepage/
+notifications 
+        goals reached/failed
+        messages
+groups a member of 
+        snapshots of each
+        links to groupHome.jsp for each
+'health algorithm' results
+biography/picture
+personal info
+snapshots of goal progress</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>858</x>
+      <y>558</y>
+      <w>198</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>bg=green
+exerciseProgress.jsp
+--
+/exercise logs/
+stats, e.g 
+    calories burned this week 
+if goal related to exercise set
+    show snapshots of them
+
+detailed complete log, expandable by e.g month</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>858</x>
+      <y>660</y>
+      <w>198</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>bg=green
+dietProgress.jsp
+--
+/meal logs/
+stats, e.g 
+    average calories consumed daily (overall)
+    average calories consumed daily (this week)
+if goals related to diet set
+    show snapshots of them
+
+detailed complete log, expandable by e.g month</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>858</x>
+      <y>774</y>
+      <w>198</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>bg=orange
+moodProgress.jsp
+--
+/mood logs/
+stats, e.g 
+    'current happiness'
+if goal related to mood set
+    show snapshots of them
+
+detailed complete log, expandable by e.g month</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1086</x>
+      <y>294</y>
+      <w>54</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>MUST
+bg=green</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1086</x>
+      <y>318</y>
+      <w>54</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>SHOULD
+bg=orange</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1086</x>
+      <y>342</y>
+      <w>54</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>COULD
+bg=red</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1074</x>
+      <y>270</y>
+      <w>90</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>MoSCoW colour key
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>276</x>
+      <y>714</y>
+      <w>138</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>bg=red
+groupHome.jsp
+--
+/a group's homepage/
+notifications 
+        group goals reached/failed
+        group messages
+group biography/picture
+snapshots of group goal progress</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>228</x>
+      <y>852</y>
+      <w>186</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>bg=red
+manageGroup.jsp
+--
+/ credit group / edit group details / disband group /
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>822</x>
+      <y>330</y>
+      <w>72</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>search.jsp
+--
+/search function/
+users
+groups
+exercises
+meals</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>672</x>
+      <y>324</y>
+      <w>66</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>search.jsp
+--
+/search function/
+users
+groups
+exercises
+meals</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>912</x>
+      <y>270</y>
+      <w>90</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>physicalProgress.jsp
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>912</x>
+      <y>294</y>
+      <w>90</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>exerciseProgress.jsp
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>912</x>
+      <y>318</y>
+      <w>90</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>dietProgress.jsp
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>912</x>
+      <y>342</y>
+      <w>90</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>moodProgress.jsp
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>912</x>
+      <y>366</y>
+      <w>90</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>goalProgress.jsp
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>912</x>
+      <y>390</y>
+      <w>90</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>manageUser.jsp.jsp
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>294</x>
+      <y>552</y>
+      <w>18</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>348</x>
+      <y>606</y>
+      <w>120</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>180.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>348</x>
+      <y>534</y>
+      <w>120</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>180.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>342</x>
+      <y>630</y>
+      <w>168</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;140.0;10.0;60.0;260.0;60.0;260.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>516</x>
+      <y>630</y>
+      <w>18</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;140.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>546</x>
+      <y>630</y>
+      <w>120</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-&gt;&gt;&gt;</panel_attributes>
+    <additional_attributes>180.0;140.0;180.0;60.0;10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>342</x>
+      <y>792</y>
+      <w>18</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-&gt;&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>516</x>
+      <y>792</y>
+      <w>18</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-&gt;&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>606</x>
+      <y>492</y>
+      <w>264</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>420.0;10.0;370.0;10.0;370.0;70.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>606</x>
+      <y>552</y>
+      <w>264</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>420.0;80.0;370.0;80.0;370.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>606</x>
+      <y>576</y>
+      <w>264</w>
+      <h>138</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>420.0;210.0;330.0;210.0;330.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>606</x>
+      <y>600</y>
+      <w>264</w>
+      <h>222</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>420.0;350.0;280.0;350.0;280.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1050</x>
+      <y>810</y>
+      <w>72</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-&gt;&gt;&gt;</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1050</x>
+      <y>696</y>
+      <w>72</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-&gt;&gt;&gt;</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1050</x>
+      <y>594</y>
+      <w>72</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-&gt;&gt;&gt;</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1050</x>
+      <y>492</y>
+      <w>72</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-&gt;&gt;&gt;</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>474</x>
+      <y>258</y>
+      <w>126</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>Notes...
+
+-Some indivual aspects of a 'must' page may be shoulds/coulds, refer to official MoSCoW for specifics
+
+-Most pages will be accessible from most other pages via the navigation bar, the lines simply indicate intended paths and links that will explicitely appear (in one form or another) in the body of the page</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
