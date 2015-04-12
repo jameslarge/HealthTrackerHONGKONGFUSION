@@ -2,7 +2,7 @@ package Model;
 
 import java.util.Date;
 
-public class ExciseProgress {
+public class ExerciseProgress {
     
     Exercise exercise;
     Date date;

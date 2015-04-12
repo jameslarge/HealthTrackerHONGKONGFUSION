@@ -22,7 +22,9 @@ public class PhysicalHealth {
     private Height height;
     private ArrayList<WeightProgress> physicalHealthLog; 
 
-    public PhysicalHealth() { }
+    public PhysicalHealth() { 
+        this.physicalHealthLog = new ArrayList<>();
+    }
     
     public PhysicalHealth(int ID, int memberID, double heightcm, ArrayList<WeightProgress> physicalHealthLog) {
         this.ID = ID;
