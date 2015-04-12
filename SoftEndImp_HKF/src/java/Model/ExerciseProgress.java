@@ -151,7 +151,7 @@ public class ExerciseProgress {
             Connection con = DatabaseAccess.getConnection();
 
             PreparedStatement ps = con.prepareStatement(
-                    "INSERT INTO exceriseProgress (memberID, exceriseDate, amount, duration, exerciseID) VALUES(?, ?, ?, ?, ?)");
+                    "INSERT INTO exerciseProgress (memberID, exerciseDate, amount, duration, exerciseID) VALUES(?, ?, ?, ?, ?)");
             
             ps.setInt(1, memberID);
 
@@ -167,7 +167,7 @@ public class ExerciseProgress {
             
         } catch (SQLException ex) {
             throw new ServletException(
-                    "Persist Problem: persisting weightProgress details, physicalHealthID: " + memberID, ex);
+                    "Persist Problem: persisting exerciseProgress details, memberID: " + memberID, ex);
         }
     }
     

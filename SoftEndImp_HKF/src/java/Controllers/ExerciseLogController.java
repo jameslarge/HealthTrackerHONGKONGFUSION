@@ -45,7 +45,7 @@ public class ExerciseLogController extends HttpServlet {
         
         
         ExerciseLogger exLog = new ExerciseLogger();
-        exLog.find(member.getUserID());
+        exLog = ExerciseLogger.find(member.getUserID());
         session.setAttribute("exerciseLog", exLog);
         
         request.getRequestDispatcher("exerciseProgress.jsp").forward(request, response);

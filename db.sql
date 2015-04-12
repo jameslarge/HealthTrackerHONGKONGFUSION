@@ -145,5 +145,5 @@ CREATE TABLE member_goals
 INSERT INTO member(email, password, username, forename, surname)
 	VALUES ('t_email', 't_pass', 't_user', 't_fname', 't_sname');
 INSERT INTO exercise(name, exerciseType, calPerUnit)
-	VALUE ('fucking pedo', 'FUN STUFF', 300);
+	VALUES ('fucking pedo', 'FUN STUFF', 300);
 	
