@@ -47,8 +47,15 @@
                 <h3>
                     View Physical Details/Weight Progress
                 </h3>
-                <form name="logout" action="PhysicalHealthLogController" method="get">
-                    <p><input type="submit" value="GoGo"/>
+                <form name="physical" action="PhysicalHealthLogController" method="get">
+                    <p><input type="submit" value="GoGoPhysical"/>
+                </form>
+                
+                <h3>
+                    View Exercise Details/Progress
+                </h3>
+                <form name="exercise" action="ExerciseLogController" method="get">
+                    <p><input type="submit" value="GoGoExercise"/>
                 </form>
                 
                 <h3>
