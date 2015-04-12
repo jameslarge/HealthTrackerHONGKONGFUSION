@@ -3,9 +3,7 @@ DROP TABLE physicalHealth CASCADE;
 DROP TABLE weightProgress CASCADE;
 DROP TABLE exercise CASCADE;
 DROP TABLE exerciseProgress CASCADE;
-DROP TABLE foodItem CASCADE;
 DROP TABLE meal CASCADE;
-DROP TABLE meal_ingredient CASCADE;
 DROP TABLE mealProgress CASCADE;
 DROP TABLE goal CASCADE;
 DROP TABLE member_goals CASCADE;
@@ -84,26 +82,20 @@ CREATE TABLE  meal
 (
 	id				SERIAL,
 	name			VARCHAR(100),
-	mealType		VARCHAR(100),
+	calPerUnit		INT,
 	
 	PRIMARY KEY (id)
 );
 
-CREATE TABLE meal_ingredient
-(
-	id				SERIAL,
-	mealID			INT REFERENCES meal(id),
-	foodItemID		INT REFERENCES foodItem(id),
-	
-	PRIMARY KEY (id)
-);
 
 CREATE TABLE mealProgress
 (
 	id				SERIAL,
 	memberID		INT REFERENCES member(id),
 	mealID			INT REFERENCES meal(id),
+	mealTime		VARCHAR(100),
 	mealDate		DATE,
+	amount			INT,
 	
 	PRIMARY KEY (id)
 );
@@ -114,6 +106,7 @@ CREATE TABLE goal
 	id				SERIAL,
 	goalType		VARCHAR(100),
 	goalDate		DATE,
+	goalStart		DATE,
 	goalDeadline	DATE,
 	target			INT,
 	
