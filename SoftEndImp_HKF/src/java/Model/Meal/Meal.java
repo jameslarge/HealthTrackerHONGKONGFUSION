@@ -37,6 +37,10 @@ public class Meal {
         this.calsPerUnit = calsPerUnit;
     }
 
+    public int getID() {
+        return ID;
+    }
+    
     public String getMealName() {
         return mealName;
     }
@@ -45,6 +49,10 @@ public class Meal {
         return calsPerUnit;
     }
 
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+    
     public void setMealName(String mealName) {
         this.mealName = mealName;
     }
@@ -71,7 +79,8 @@ public class Meal {
         Meal meal = null; //Creating a Meal object to set returned value to
         //If we find Meal set create a new Meal using returned values
         if(result.next()){
-            meal = new Meal(result.getString("name"),
+            meal = new Meal(mealID,
+                            result.getString("name"),
                             result.getInt("calperUnit"));
         }
         
