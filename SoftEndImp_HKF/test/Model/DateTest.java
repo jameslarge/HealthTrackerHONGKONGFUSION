@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
  * @author xfu13dcu
  */
 public class DateTest {
-    
+        
     public DateTest() {
     }
     
@@ -39,58 +39,14 @@ public class DateTest {
     }
 
     /**
-     * Test of getDay method, of class Date.
-     */
-    @Test
-    public void testGetDay() {
-        System.out.println("getDay");
-        Date instance = null;
-        int expResult = 0;
-        int result = instance.getDay();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getMonth method, of class Date.
-     */
-    @Test
-    public void testGetMonth() {
-        System.out.println("getMonth");
-        Date instance = null;
-        int expResult = 0;
-        int result = instance.getMonth();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getYear method, of class Date.
-     */
-    @Test
-    public void testGetYear() {
-        System.out.println("getYear");
-        Date instance = null;
-        int expResult = 0;
-        int result = instance.getYear();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of setDay method, of class Date.
      */
     @Test
     public void testSetDay() {
         System.out.println("setDay");
-        int day = 0;
-        Date instance = null;
-        instance.setDay(day);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        int day = -3;
+        Date instance = new Date();
+        instance.setDay(day);        
     }
 
     /**
@@ -99,11 +55,9 @@ public class DateTest {
     @Test
     public void testSetMonth() {
         System.out.println("setMonth");
-        int month = 0;
-        Date instance = null;
+        int month = 13;
+        Date instance = new Date();
         instance.setMonth(month);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -112,11 +66,21 @@ public class DateTest {
     @Test
     public void testSetYear() {
         System.out.println("setYear");
-        int year = 0;
-        Date instance = null;
+        int year = 2013;
+        Date instance = new Date();
         instance.setYear(year);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of monthSize method, of class Date.
+     */
+    @Test
+    public void testMonthSize() {
+        System.out.println("monthSize");
+        Date instance = new Date(1,1,1111);
+        int expResult = 31;
+        int result = instance.monthSize();
+        assertEquals(expResult, result);
     }
 
     /**
@@ -125,12 +89,10 @@ public class DateTest {
     @Test
     public void testToString() {
         System.out.println("toString");
-        Date instance = null;
-        String expResult = "";
+        Date instance = new Date(2,3,2015);
+        String expResult = "2015-3-2";
         String result = instance.toString();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -139,13 +101,11 @@ public class DateTest {
     @Test
     public void testCompareTo() {
         System.out.println("compareTo");
-        Date t = null;
-        Date instance = null;
+        Date t = new Date(5,3,2014);
+        Date instance = new Date(3,3,2014);
         int expResult = 0;
         int result = instance.compareTo(t);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(result);
     }
     
 }

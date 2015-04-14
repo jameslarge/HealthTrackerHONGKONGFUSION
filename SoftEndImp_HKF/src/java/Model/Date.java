@@ -5,6 +5,8 @@ public class Date implements Comparable<Date>{
     private int day;
     private int month;
     private int year;
+    
+    public Date(){}
 
     public Date(int day, int month, int year) {
         this.day = day;
@@ -24,56 +26,22 @@ public class Date implements Comparable<Date>{
         return year;
     }
 
-    public void setDay(int day) {
-        if((month == 1 || month == 3 || month == 5 || month == 7 
-                || month == 8 || month == 10 || month == 12)){
-            if(day > 31){
-                this.day = 1;
-                setMonth(this.month + 1); //Means we use the error checking in setMonth
-            }else if (day <= 0) {
-                this.day = 31;
-                setMonth(this.month-1);
-            }
-        }
-        else if ((month == 4 || month == 6 
-                || month == 9 || month == 11)){
-            if(day > 30){
-                this.day = 1;
-                setMonth(this.month + 1); //Means we use the error checking in setMonth
-            }else if (day <= 0) {
-                this.day = 30;
-                setMonth(this.month-1);
-            }
-        }
-        else{
-            //Its Feburary, Consider Leap Years
-            if(((this.year%4 == 0 && this.year%100 != 0) 
-                || (this.year%4 == 0 && this.year%100 == 0 && this.year%400 == 0))){
-                //It is a leap year, Feburary has 29 days
-                if(day > 29){
-                    this.day = 1;
-                    setMonth(this.month + 1);
-                } else if (day <= 0){
-                    this.day = 29;
-                    setMonth(this.month - 1);
-                }
-            }
-            else {
-                if(day > 28){
-                    this.day = 1;
-                    setMonth(this.month + 1);
-                } else if (day <= 0){
-                    this.day = 28;
-                    setMonth(this.month - 1);
-                }
-            }
-        }
+    public void setDay(int day) {        
+        if(day > monthSize()){
+            this.day = day - monthSize();
+            setMonth(this.month + 1);
+        }else if (day <= 0){
+            setMonth(this.month - 1);
+            this.day = monthSize() + day;
+        }else {
+            this.day = day;
+        } 
+        
     }
 
     public void setMonth(int month) {
         if(month > 12)
-        {
-            
+        {            
             this.month = 1;
             this.year = this.year + (month/12);
         }
@@ -81,12 +49,34 @@ public class Date implements Comparable<Date>{
         {
             this.month = 12;
             this.year = this.year - (month/12);
+        }else {
+            this.month = month;
         }
     }
 
     public void setYear(int year) {
         this.year = year;
-    }    
+    }   
+    
+    public int monthSize(){
+        if((month == 1 || month == 3 || month == 5 || month == 7 
+                || month == 8 || month == 10 || month == 12)){
+            return 31;
+        }
+        else if((month == 4 || month == 6 
+                || month == 9 || month == 11)){
+            return 30;
+        }
+        else{
+            if(((this.year%4 == 0 && this.year%100 != 0) 
+                || (this.year%4 == 0 && this.year%100 == 0 
+                && this.year%400 == 0))){
+                return 29;
+            }else {
+                return 28;
+            }
+        }
+    }
 
     @Override
     public String toString() {
@@ -108,9 +98,9 @@ public class Date implements Comparable<Date>{
                 return 1;
             } else {
                 //same month
-                if(t.day < t.day) {
+                if(t.day < day) {
                     return -1;
-                } else if (t.day > t.day) {
+                } else if (t.day > day) {
                     return 1;
                 } else {
                     //same day
