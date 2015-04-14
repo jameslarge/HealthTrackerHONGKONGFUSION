@@ -40,7 +40,7 @@ public class NewUserController extends HttpServlet {
         String strWeight = request.getParameter("weight");
         String strHeight = request.getParameter("height");
         
-        Double height = Double.parseDouble(strHeight);
+        int height = Integer.parseInt(strHeight);
         Weight weight = new Weight(Double.parseDouble(strWeight));
         
 //        try {

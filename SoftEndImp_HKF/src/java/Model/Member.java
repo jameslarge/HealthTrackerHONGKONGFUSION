@@ -195,4 +195,30 @@ public class Member {
             throw new ServletException("Persist Problem: registering user details ", e);
         }
     }
+    
+    
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Member)   {
+            Member t = (Member) o;
+        
+            return forename.equals(t.forename)
+                && surname.equals(t.surname)
+                && username.equals(t.username)
+                && password.equals(t.password)
+                && email.equals(t.email)
+                && userID == t.userID;
+        }
+        return false;
+    }
+    
+    @Override
+    public String toString() {
+        return "MemberID: " + userID + 
+                "\nUsername: " + username +
+                "\nForename: " + forename +
+                "\nSurname: " + surname +
+                "\nEmail: " + email +
+                "\nPassword: " + password; 
+    }
 }

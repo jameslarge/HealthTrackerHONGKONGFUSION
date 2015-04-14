@@ -49,9 +49,14 @@ public class MemberTest {
         Member expResult = new Member(1, "t_user", "t_pass", "t_email",
             "t_fname", "t_sname");
         Member result = Member.find(email, password);
+        
+        System.out.println("expresult " + expResult + "\nresult" + result);
+        
         assertEquals(expResult, result);
+        
+  
         // TODO review the generated test code and remove the default call to fail.
-        fail("testFind() failed");
+        //fail("testFind() failed");
     }
 
     /**
@@ -64,9 +69,13 @@ public class MemberTest {
             "t_fname", "t_sname");
         int expResult = 1;
         int result = Member.findID(member);
+        
+        System.out.println("expresult " + expResult + "\nresult" + result + "\nmember" + member);
+        
         assertEquals(expResult, result);
+
         // TODO review the generated test code and remove the default call to fail.
-        fail("findID() failed");
+        //fail("testFindID() failed");
     }
 
     /**
@@ -75,10 +84,34 @@ public class MemberTest {
     @Test
     public void testPersist() throws Exception {
         System.out.println("persist");
-        Member instance = new Member();
+        Member instance = new Member("t1 user", "t1 pass", "t1 email",
+            "t1 fname", "t1 sname");
         instance.persist();
+        
+        Member instance2 = Member.find("t1 email", "t1 pass");
+        instance.setUserID(instance2.getUserID());
+     
+        assertEquals(instance, instance2);
+        
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //fail("testPersist() failed");
+    }
+    
+    /**
+     * Test of equals method, of class Member.
+     */
+    @Test
+    public void testEquals() throws Exception {
+        System.out.println("equals");
+        Member instance = new Member("t1 user", "t1 pass", "t1 email",
+            "t1 fname", "t1 sname");
+        Member instance2 = new Member("t1 user", "t1 pass", "t1 email",
+            "t1 fname", "t1 sname");
+        
+        assertEquals(instance, instance2);
+        
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("testPersist() failed");
     }
     
 }
