@@ -70,7 +70,44 @@
                 <%                        
                     }
                 %>
-                </table>    
+                </table>
+                
+                 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+                 <script type="text/javascript">
+    google.load('visualization', '1.1', {packages: ['line']});
+    google.setOnLoadCallback(drawChart);
+    
+    function drawChart() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('date', 'Date');
+      data.addColumn('number', 'Me');
+      data.addColumn('number', 'James the Fatass');
+      data.addColumn('number', 'Pedo');
+      
+      data.addRows([
+        [new Date(2014,0,28),  60.8, 100, 30],
+        [new Date(2014,1,28),  64.8, 120, 35],
+        [new Date(2014,2,28),  56.8, 80, 70,],
+        [new Date(2014,3,28),  68.8, 160, 100]
+      ]);
+
+      var options = {
+        chart: {
+          title: 'Your Weight Over Time Compared to Your Friends',
+          subtitle: 'in kilograms (kg)'
+        },
+        width: 900,
+        height: 500
+      };
+
+      var chart = new google.charts.Line(document.getElementById('linechart_material'));
+
+      chart.draw(data, options);
+    }
+  </script>
+  
+                <div id="linechart_material"></div>
               
                 <h3>
                     Log new weight 
