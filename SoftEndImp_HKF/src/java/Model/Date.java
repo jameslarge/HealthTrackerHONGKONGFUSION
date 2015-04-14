@@ -26,27 +26,46 @@ public class Date implements Comparable<Date>{
 
     public void setDay(int day) {
         if((month == 1 || month == 3 || month == 5 || month == 7 
-                || month == 8 || month == 10 || month == 12) && day > 31){
-            this.day = 1;
-            setMonth(this.month + 1); //Means we use the error checking in setMonth
+                || month == 8 || month == 10 || month == 12)){
+            if(day > 31){
+                this.day = 1;
+                setMonth(this.month + 1); //Means we use the error checking in setMonth
+            }else if (day <= 0) {
+                this.day = 31;
+                setMonth(this.month-1);
+            }
         }
         else if ((month == 4 || month == 6 
-                || month == 9 || month == 11) && day > 30){
-            this.day = 1;
-            setMonth(this.month + 1);
+                || month == 9 || month == 11)){
+            if(day > 30){
+                this.day = 1;
+                setMonth(this.month + 1); //Means we use the error checking in setMonth
+            }else if (day <= 0) {
+                this.day = 30;
+                setMonth(this.month-1);
+            }
         }
         else{
             //Its Feburary, Consider Leap Years
             if(((this.year%4 == 0 && this.year%100 != 0) 
-                || (this.year%4 == 0 && this.year%100 == 0 && this.year%400 == 0))
-                     && day > 29){
+                || (this.year%4 == 0 && this.year%100 == 0 && this.year%400 == 0))){
                 //It is a leap year, Feburary has 29 days
-                this.day = 1;
-                setMonth(this.month + 1);
+                if(day > 29){
+                    this.day = 1;
+                    setMonth(this.month + 1);
+                } else if (day <= 0){
+                    this.day = 29;
+                    setMonth(this.month - 1);
+                }
             }
-            else if (day > 28){
-                this.day = 1;
-                setMonth(this.month + 1);
+            else {
+                if(day > 28){
+                    this.day = 1;
+                    setMonth(this.month + 1);
+                } else if (day <= 0){
+                    this.day = 28;
+                    setMonth(this.month - 1);
+                }
             }
         }
     }
