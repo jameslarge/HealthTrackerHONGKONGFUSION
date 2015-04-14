@@ -10,6 +10,8 @@ import Model.*;
 import Model.PhysicalHealth.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import javax.servlet.ServletException;
@@ -52,20 +54,22 @@ public class LogWeightController extends HttpServlet {
         String sdate = request.getParameter("date");
         String [] parts = sdate.split("-");
         
-//        Calendar cal = Calendar.getInstance();
-//        cal.set(Integer.parseInt(parts[0]), 
-//                Integer.parseInt(parts[1]), 
-//                Integer.parseInt(parts[2]));
+        Calendar cal = Calendar.getInstance();
+        
+        cal.set(Calendar.YEAR, Integer.parseInt(parts[0]));
+            cal.set(Calendar.MONTH, Integer.parseInt(parts[1]));
+        cal.set(Calendar.DATE, Integer.parseInt(parts[2]));
+        
         
         //depricated but meh
-        Date date = new Date(Integer.parseInt(parts[0]) - 1900,  //because reasons
-                        Integer.parseInt(parts[1]),
-                        Integer.parseInt(parts[2]));
+//        Date date = new Date(Integer.parseInt(parts[0]) - 1900,  //because reasons
+//                        Integer.parseInt(parts[1]),
+//                        Integer.parseInt(parts[2]));
         
         String sweight = request.getParameter("weight");
         Weight weight = new Weight(Double.parseDouble(sweight));
         
-        WeightProgress wp = new WeightProgress(weight, date);
+        WeightProgress wp = new WeightProgress(weight, cal.getTime());
         wp.persist(physHealth.getID());
         
         
