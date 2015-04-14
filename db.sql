@@ -94,7 +94,7 @@ CREATE TABLE mealProgress
 	id				SERIAL,
 	memberID		INT REFERENCES member(id),
 	mealID			INT REFERENCES meal(id),
-	mealTime		VARCHAR(100),
+	mealTime		INT,
 	mealDate		DATE,
 	amount			INT,
 	

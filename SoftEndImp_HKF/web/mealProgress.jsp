@@ -9,7 +9,7 @@
 
 <%@page import ="Controllers.*"%>
 <%@page import ="Model.*"%>
-<%@page import ="Model.PhysicalHealth.*"%>
+<%@page import ="Model.Meal.*"%>
 
 <%
     Member member = (Member) session.getAttribute("member"); 
@@ -62,12 +62,12 @@
                     </tr>
                    
                 <%
-                    for (MealProgress mealProg : dietLog.getExerciseLog()) {
+                    for (MealProgress mealProg : dietLog.getMealLog()) {
                 %>
                     <tr>
                         <td><%=mealProg.getDate()%></td>   
-                        <td><%=mealProg.getName()%></td>
-                        <td><%=mealProg.calculateCals()%></td>
+                        <td><%=mealProg.getMeal().getMealName()%></td>
+                        <td><%=mealProg.calcCalories()%></td>
                     </tr>
                 <%                        
                     }
@@ -80,7 +80,6 @@
                 
                 <%
                     ArrayList<Meal> meals = Meal.findAll();
-                    ArrayList<MealProgress.MealType> mealTypes = MealProgress.MealType.values();
                 %>
                 
                  <form name="login" action="LogMealController" method="get">
@@ -91,7 +90,7 @@
                             <%
                                 for (Meal meal : meals) {
                             %>
-                                    <option value="<%=meal.getID()%>"><%=meal.getName()%></option>
+                                    <option value="<%=meal.getID()%>"><%=meal.getMealName()%></option>
                             <%                        
                                 }
                             %>
@@ -103,7 +102,7 @@
                     <p>Meal Type:
                         <select name="mealType">
                             <%
-                                for (MealType type : mealTypes) {
+                                for (MealProgress.MealTime type : MealProgress.MealTime.values()) {
                             %>
                                     <option value="<%=type%>"><%=type.toString()%></option>
                             <%                        

@@ -7,9 +7,8 @@
 package Controllers;
 
 import Model.*;
-import Model.PhysicalHealth.*;
+import Model.Meal.*;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -46,7 +45,7 @@ public class LogMealController extends HttpServlet {
         if (session == null) 
             throw new ServletException("Attempting to log a mealProgress while no session is active (no user logged in)");
         
-        MealLogger mealLog = (MealLogger) session.getAttribute("mealLog");
+        DietLogger dietLog = (DietLogger) session.getAttribute("dietLog");
         
         
         //should be  YYYY-MM-DD, i.e is shit and doesnt enforce any formatting 
@@ -65,15 +64,14 @@ public class LogMealController extends HttpServlet {
                         Integer.parseInt(parts[2]));
         
         
-        String mtype = request.getParameter("mealType");
+        int mtype = Integer.parseInt(request.getParameter("mealType"));
   
-        MealProgress.MealType mealType = MealProgress.MealType.getValue(mtype);
         int mealID = Integer.parseInt(request.getParameter("meal"));
         int amount = Integer.parseInt(request.getParameter("amount"));
         
         
-        MealProgress mp = new MealProgress(member.getUserID(), mealID, mealType, date, amount);
-        mp.persist();
+        MealProgress mp = new MealProgress(Meal.find(mealID), date, amount, mtype);
+        mp.persist(member.getUserID());
         
         
         //reload weight log page, refresh data essentially

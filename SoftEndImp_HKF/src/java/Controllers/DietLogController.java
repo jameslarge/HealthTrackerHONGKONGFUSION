@@ -6,8 +6,7 @@
 
 package Controllers;
 
-import Model.ExerciseLogger;
-import Model.Member;
+import Model.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -45,8 +44,7 @@ public class DietLogController extends HttpServlet {
         Member member = (Member) session.getAttribute("member"); //member member member member
         
         
-        DietLogger dietLog = new DietLogger();
-        dietLog = DietLogger.find(member.getUserID());
+        DietLogger dietLog = DietLogger.find(member.getUserID());
         session.setAttribute("dietLog", dietLog);
         
         request.getRequestDispatcher("mealProgress.jsp").forward(request, response);

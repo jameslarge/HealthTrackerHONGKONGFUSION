@@ -7,7 +7,7 @@
 package Model;
 
 import Controllers.DatabaseAccess;
-import Model.PhysicalHealth.*;
+import Model.Meal.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -60,9 +60,9 @@ public class DietLogger {
      * @throws ServletException Exception, PhysicalHealth was not found for member
      */
     public static DietLogger find(int memberID) throws ServletException {
-        DietLogger exlog = new DietLogger(memberID);
-        mealLog.setMealLog(MealProgress.findAll(memberID));
-        return exlog;
+        DietLogger dietlog = new DietLogger(memberID);
+        dietlog.setMealLog(MealProgress.findAll(memberID));
+        return dietlog;
     }
     
     /**
@@ -79,6 +79,7 @@ public class DietLogger {
     /**
      * Log a new exercise progress in the database.
      *
+     * @param mealProg
      * @throws ServletException
      */
     public void persist(MealProgress mealProg) throws ServletException {

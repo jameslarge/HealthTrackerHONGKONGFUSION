@@ -7,8 +7,6 @@
 package Model.Meal;
 
 import Controllers.DatabaseAccess;
-import Model.Exercise;
-import Model.ExerciseProgress;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,6 +36,39 @@ public class MealProgress {
         MealTime(int value) {
             this.value = value;
         }    
+         
+        /**
+        * Method to convert a string to a MealTime
+        * @param str string to convert
+        * @return relevant mealtime
+        * @throws ServletException 
+        */
+        public static MealTime toMealTime(String str) {
+            switch (str) {
+                case "breakfast":
+                    return BREAKFAST;
+                case "lunch":
+                    return LUNCH;
+                case "dinner":
+                    return DINNER;
+                default:
+                    return SNACK;
+            }          
+        }
+        
+        @Override
+        public String toString() {
+            switch (value) {
+                case 0:
+                    return "breakfast";
+                case 1:
+                    return "lunch";
+                case 2:
+                    return "dinner";
+                default:
+                    return "snack"; 
+            }            
+        }
     }
 
     public MealProgress(int ID, Meal meal, Date date, int amount, int mealTime) {
@@ -104,6 +135,10 @@ public class MealProgress {
     
     //End of Setter Methods
     
+    public int calcCalories() {
+        return meal.getCalsPerUnit() * amount;
+    }
+    
     /**
      * Method to find MealProgress using ID 
      * @param mpID
@@ -169,4 +204,35 @@ public class MealProgress {
         }
     }
     
+    
+    /**
+     * Method to add information to the mealProgress table
+     * @param memberID ID of member that we are adding information for
+     * @throws ServletException 
+     */
+    public void persist(int memberID) throws ServletException {
+        try {
+            Connection con = DatabaseAccess.getConnection();
+
+            PreparedStatement ps = con.prepareStatement(
+                        "INSERT INTO mealProgress (memberID, mealID, mealTime, mealDate, amount) VALUES(?, ?, ?, ?, ?)");
+            
+            ps.setInt(1, memberID);
+
+            //http://stackoverflow.com/questions/530012/how-to-convert-java-util-date-to-java-sql-date
+            
+            ps.setInt(2, meal.getID());
+            ps.setInt(3, mealTime.ordinal());
+            ps.setDate(4, new java.sql.Date(date.getTime()));
+            ps.setInt(5, amount);
+
+            ps.executeUpdate();
+            
+            con.close();
+            
+        } catch (SQLException ex) {
+            throw new ServletException(
+                    "Persist Problem: persisting mealProgress details, memberID: " + memberID, ex);
+        }
+    }
 }
