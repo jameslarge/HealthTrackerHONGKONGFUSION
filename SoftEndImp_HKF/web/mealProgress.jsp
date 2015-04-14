@@ -104,7 +104,7 @@
                             <%
                                 for (MealProgress.MealTime type : MealProgress.MealTime.values()) {
                             %>
-                                    <option value="<%=type%>"><%=type.toString()%></option>
+                                    <option value="<%=type.getValue()%>"><%=type.toString()%></option>
                             <%                        
                                 }
                             %>

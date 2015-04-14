@@ -37,6 +37,10 @@ public class MealProgress {
             this.value = value;
         }    
          
+        public int getValue() {
+            return value;
+        }
+        
         /**
         * Method to convert a string to a MealTime
         * @param str string to convert
@@ -166,7 +170,7 @@ public class MealProgress {
             return mProgress;
         } catch (SQLException ex) {
             throw new ServletException(
-                    "Find Problem: searching for exerciseProgess from mealProgressID: "
+                    "Find Problem: searching for mealProgress from mealProgressID: "
                     + mpID, ex);
         }
     }
@@ -183,7 +187,7 @@ public class MealProgress {
             Connection con = DatabaseAccess.getConnection();
             //SQL Statement to run, where ? is email address
             PreparedStatement ps = con.prepareStatement(
-                    "SELECT * FROM exerciseProgress WHERE (memberID = ?)");
+                    "SELECT * FROM mealProgress WHERE (memberID = ?)");
             ps.setInt(1, memberID);
             ResultSet result = ps.executeQuery();//Run statement
             ArrayList<MealProgress> mpList = new ArrayList<>(); //Creating a User object to set returned value to
@@ -199,7 +203,7 @@ public class MealProgress {
             return mpList;
         } catch (SQLException ex) {
             throw new ServletException(
-                    "Find Problem: searching for exerciseProgess for memberID: "
+                    "Find Problem: searching for mealProgess for memberID: "
                     + memberID, ex);
         }
     }

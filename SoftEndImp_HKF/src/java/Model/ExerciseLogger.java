@@ -54,6 +54,26 @@ public class ExerciseLogger {
         exerciseLog.add(ep);
     }
     
+    public void findTotalCalsBurned() {
+        //TODO
+    }
+    
+    public void findAverageWeeklyCalsBurned() {
+        //TODO
+    }
+    
+    public void findTotalCalsBurnedThisWeek() {
+        //todo
+    }
+   
+    public void findAverageDailyCalsBurned() {
+        //TODO
+    }
+    
+    public void findTotalCalsBurnedToday() {
+        //TODO
+    }
+    
     
     /**
      * Method to find User using email address

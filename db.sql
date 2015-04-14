@@ -150,6 +150,14 @@ INSERT INTO foodItem(name, foodType, calPerUnit)
 	VALUES ('t_name', 't_ftype', -1);
 INSERT INTO meal(name, calPerUnit)
 	VALUES ('t_name', -1);
+INSERT INTO meal(name, calPerUnit)
+	VALUES ('Pizza', 500);
+INSERT INTO meal(name, calPerUnit)
+	VALUES ('Cereal', 200);
+INSERT INTO meal(name, calPerUnit)
+	VALUES ('Burger', 400);
+INSERT INTO meal(name, calPerUnit)
+	VALUES ('Sandwich', 300);
 INSERT INTO mealProgress(memberID, mealID, mealDate, amount)
 	VALUES (1, 1, '2015-04-14', -1);
 INSERT INTO goal(goalType, goalDate, goalStart, goalDeadline, target)

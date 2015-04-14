@@ -51,6 +51,25 @@ public class DietLogger {
         mealLog.add(ep);
     }
     
+    public void findTotalCalsConsumed() {
+        //TODO
+    }
+    
+    public void findAverageWeeklyCalsConsumed() {
+        //TODO
+    }
+    
+    public void findTotalCalsConsumedThisWeek() {
+        //todo
+    }
+   
+    public void findAverageDailyCalsConsumed() {
+        //TODO
+    }
+    
+    public void findTotalCalsConsumedToday() {
+        //TODO
+    }
     
     /**
      * Method to find a Member's DietLogger using their id
