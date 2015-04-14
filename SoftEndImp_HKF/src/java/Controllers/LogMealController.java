@@ -7,9 +7,10 @@
 package Controllers;
 
 import Model.*;
+import Model.PhysicalHealth.*;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,8 +22,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author xmw13bzu
  */
-@WebServlet(name = "ExerciseLogController", urlPatterns = {"/ExerciseLogController"})
-public class ExerciseLogController extends HttpServlet {
+@WebServlet(name = "LogMealController", urlPatterns = {"/LogMealController"})
+public class LogMealController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,19 +37,47 @@ public class ExerciseLogController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession(false);
         
-        if (session == null) 
-            throw new ServletException("Attempting to access exercise logs page while no session is active (no user logged in)");
+         
+        HttpSession session = request.getSession(false);
         
         Member member = (Member) session.getAttribute("member"); //member member member member
         
+        if (session == null) 
+            throw new ServletException("Attempting to log a mealProgress while no session is active (no user logged in)");
         
-        ExerciseLogger exLog = new ExerciseLogger();
-        exLog = ExerciseLogger.find(member.getUserID());
-        session.setAttribute("exerciseLog", exLog);
+        MealLogger mealLog = (MealLogger) session.getAttribute("mealLog");
         
-        request.getRequestDispatcher("exerciseProgress.jsp").forward(request, response);
+        
+        //should be  YYYY-MM-DD, i.e is shit and doesnt enforce any formatting 
+        //on user in input type=date, deal with it later
+        String sdate = request.getParameter("date");
+        String [] parts = sdate.split("-");
+        
+//        Calendar cal = Calendar.getInstance();
+//        cal.set(Integer.parseInt(parts[0]), 
+//                Integer.parseInt(parts[1]), 
+//                Integer.parseInt(parts[2]));
+        
+        //depricated but meh
+        Date date = new Date(Integer.parseInt(parts[0]) - 1900,  //because reasons
+                        Integer.parseInt(parts[1]),
+                        Integer.parseInt(parts[2]));
+        
+        
+        String mtype = request.getParameter("mealType");
+  
+        MealProgress.MealType mealType = MealProgress.MealType.getValue(mtype);
+        int mealID = Integer.parseInt(request.getParameter("meal"));
+        int amount = Integer.parseInt(request.getParameter("amount"));
+        
+        
+        MealProgress mp = new MealProgress(member.getUserID(), mealID, mealType, date, amount);
+        mp.persist();
+        
+        
+        //reload weight log page, refresh data essentially
+        request.getRequestDispatcher("DietLogController").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

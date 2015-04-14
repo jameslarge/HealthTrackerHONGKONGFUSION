@@ -1,6 +1,6 @@
 <%-- 
-    Document   : exerciseProgress
-    Created on : 12-Apr-2015, 14:24:45
+    Document   : mealProgress
+    Created on : 14-Apr-2015, 12:10:25
     Author     : xmw13bzu
 --%>
 
@@ -44,30 +44,30 @@
                 </h3>
                 
                 <%
-                    ExerciseLogger exLog = (ExerciseLogger) session.getAttribute("exerciseLog"); 
+                    DietLogger dietLog = (DietLogger) session.getAttribute("dietLog"); 
                 %>
                 
                 <p>Username: <%=member.getUsername()%></p>   
                 <p>Email: <%=member.getEmail()%></p>
                 
                 <h3>
-                    Your Exercise Log
+                    Your Meal Log
                 </h3>
                 
                 <!-- for each exercise progress -->
                     <!-- print date : exercisename, cals burned --> 
                 <table>
                     <tr>
-                         <th>Date</th> <th>Exercise</th> <th>Calories Burned</th>
+                         <th>Date</th> <th>Meal</th> <th>Calories Consumed</th>
                     </tr>
                    
                 <%
-                    for (ExerciseProgress exProg : exLog.getExerciseLog()) {
+                    for (MealProgress mealProg : dietLog.getExerciseLog()) {
                 %>
                     <tr>
-                        <td><%=exProg.getDate()%></td>   
-                        <td><%=exProg.getExercise().getExerciseName()%></td>
-                        <td><%=exProg.calculateCals()%></td>
+                        <td><%=mealProg.getDate()%></td>   
+                        <td><%=mealProg.getName()%></td>
+                        <td><%=mealProg.calculateCals()%></td>
                     </tr>
                 <%                        
                     }
@@ -75,30 +75,44 @@
                 </table>    
               
                 <h3>
-                    Log new exercise 
+                    Log new meal 
                 </h3>
                 
                 <%
-                    ArrayList<Exercise> exercises = Exercise.findAll();
-                    //print out all exercise names in drop down list
+                    ArrayList<Meal> meals = Meal.findAll();
+                    ArrayList<MealProgress.MealType> mealTypes = MealProgress.MealType.values();
                 %>
                 
-                 <form name="login" action="LogExerciseController" method="get">
+                 <form name="login" action="LogMealController" method="get">
                     <p>Date:<input type="date" name="date" class="textbox"/></p>
                     <!--<p>Exercise:<input type="text" name="exercise" class="textbox"/></p>-->
-                    <p>Exercise: 
-                        <select name="exercise">
+                    <p>Meal: 
+                        <select name="meal">
                             <%
-                                for (Exercise exercise : exercises) {
+                                for (Meal meal : meals) {
                             %>
-                                    <option value="<%=exercise.getID()%>"><%=exercise.getExerciseName()%></option>
+                                    <option value="<%=meal.getID()%>"><%=meal.getName()%></option>
                             <%                        
                                 }
                             %>
                         </select>
                     </p>
-                    <p>Duration(if applicable):<input type="text" name="duration" class="textbox"/></p>
-                    <p>Amount(if applicable):<input type="text" name="amount" class="textbox"/></p>
+                    
+
+                    
+                    <p>Meal Type:
+                        <select name="mealType">
+                            <%
+                                for (MealType type : mealTypes) {
+                            %>
+                                    <option value="<%=type%>"><%=type.toString()%></option>
+                            <%                        
+                                }
+                            %>
+                        </select>
+                    </p>
+                            
+                    <p>Amount:<input type="text" name="amount" class="textbox"/></p>
                     <p><input type="submit" value="Enter"/>
                     <input type="reset" value="Reset"/></p>
                 </form>
