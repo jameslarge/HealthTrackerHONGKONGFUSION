@@ -6,10 +6,10 @@
 
 package Controllers;
 
-import Model.*;
+import Model.ExerciseLogger;
+import Model.Member;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,8 +21,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author xmw13bzu
  */
-@WebServlet(name = "ExerciseLogController", urlPatterns = {"/ExerciseLogController"})
-public class ExerciseLogController extends HttpServlet {
+@WebServlet(name = "DietLogController", urlPatterns = {"/DietLogController"})
+public class DietLogController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,19 +36,21 @@ public class ExerciseLogController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
         HttpSession session = request.getSession(false);
         
         if (session == null) 
-            throw new ServletException("Attempting to access exercise logs page while no session is active (no user logged in)");
+            throw new ServletException("Attempting to access meal logs page while no session is active (no user logged in)");
         
         Member member = (Member) session.getAttribute("member"); //member member member member
         
         
-        ExerciseLogger exLog = new ExerciseLogger();
-        exLog = ExerciseLogger.find(member.getUserID());
-        session.setAttribute("exerciseLog", exLog);
+        DietLogger dietLog = new DietLogger();
+        dietLog = DietLogger.find(member.getUserID());
+        session.setAttribute("dietLog", dietLog);
         
-        request.getRequestDispatcher("exerciseProgress.jsp").forward(request, response);
+        request.getRequestDispatcher("mealProgress.jsp").forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
