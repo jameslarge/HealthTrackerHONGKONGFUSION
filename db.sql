@@ -138,16 +138,32 @@ CREATE TABLE member_goals
 
 INSERT INTO member(email, password, username, forename, surname)
 	VALUES ('t_email', 't_pass', 't_user', 't_fname', 't_sname');
+
 INSERT INTO physicalHealth(heightcm, memberID)
 	VALUES (-1, 1);
+
 INSERT INTO weightProgress(physicalHealthID, weightDate, weight)
 	VALUES (1, '2015-04-14', -1);
+
 INSERT INTO exercise(name, exerciseType, calPerUnit)
 	VALUES ('t_name', 't_exercise', -1);
+INSERT INTO exercise(name, exerciseType, calPerUnit)
+	VALUES ('Running', 'time', 5);
+INSERT INTO exercise(name, exerciseType, calPerUnit)
+	VALUES ('Swimming', 'time', 8);
+INSERT INTO exercise(name, exerciseType, calPerUnit)
+	VALUES ('Cycling', 'time', 5);
+INSERT INTO exercise(name, exerciseType, calPerUnit)
+	VALUES ('Football', 'time', 6);
+INSERT INTO exercise(name, exerciseType, calPerUnit)
+	VALUES ('Weight Lifting', 'time', 10);
+
 INSERT INTO exerciseProgress(memberID, exerciseDate, amount, duration, exerciseID)
 	VALUES (1, '2015-04-14', -1, -1, 1);
+
 INSERT INTO foodItem(name, foodType, calPerUnit)
 	VALUES ('t_name', 't_ftype', -1);
+
 INSERT INTO meal(name, calPerUnit)
 	VALUES ('t_name', -1);
 INSERT INTO meal(name, calPerUnit)
@@ -158,10 +174,13 @@ INSERT INTO meal(name, calPerUnit)
 	VALUES ('Burger', 400);
 INSERT INTO meal(name, calPerUnit)
 	VALUES ('Sandwich', 300);
+
 INSERT INTO mealProgress(memberID, mealID, mealDate, amount)
 	VALUES (1, 1, '2015-04-14', -1);
+
 INSERT INTO goal(goalType, goalDate, goalStart, goalDeadline, target)
 	VALUES ('weight', '2015-04-14', '2015-04-14', '2015-04-14', -1);
+
 INSERT INTO member_goals(memberID, goalID)
 	VALUES (1, 1);
 	
