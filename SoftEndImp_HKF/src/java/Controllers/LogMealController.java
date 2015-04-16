@@ -8,6 +8,7 @@ package Controllers;
 
 import Model.*;
 import Model.Meal.*;
+import View.Validator;
 import java.io.IOException;
 import java.util.Date;
 import javax.servlet.ServletException;
@@ -36,17 +37,10 @@ public class LogMealController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-         
+          
         HttpSession session = request.getSession(false);
-        
-        Member member = (Member) session.getAttribute("member"); //member member member member
-        
         if (session == null) 
             throw new ServletException("Attempting to log a mealProgress while no session is active (no user logged in)");
-        
-        DietLogger dietLog = (DietLogger) session.getAttribute("dietLog");
-        
         
         //should be  YYYY-MM-DD, i.e is shit and doesnt enforce any formatting 
         //on user in input type=date, deal with it later
@@ -64,18 +58,38 @@ public class LogMealController extends HttpServlet {
                         Integer.parseInt(parts[2]));
         
         
-        int mtype = Integer.parseInt(request.getParameter("mealType"));
+        
+        //Validate all the info and make type conversions where needed
+        Validator validator = new Validator();
   
-        int mealID = Integer.parseInt(request.getParameter("meal"));
-        int amount = Integer.parseInt(request.getParameter("amount"));
+        String mtypeString = request.getParameter("mealType");
+        String mealIDString = request.getParameter("meal");
+        String amountString = request.getParameter("amount");
         
+        //Since these two are selected by a drop down list, should not be possible
+        //to enter incorrect value, but will have them just in case. Could also find the 
+        //specific range available and test against that too.
+        int mtype = validator.validatePositiveInt("Invalid meal time entered: " + mtypeString, mtypeString);
+        int mealID = validator.validatePositiveInt("Invalid meal entered: " + mealIDString, mealIDString);
         
-        MealProgress mp = new MealProgress(Meal.find(mealID), date, amount, mtype);
-        mp.persist(member.getUserID());
+        int amount = validator.validatePositiveInt("Invalid amount entered: " + amountString, amountString);
         
+        //If valid, create and persist the mealProgress
+        if (validator.isValid()) {
+            Member member = (Member) session.getAttribute("member");
+            DietLogger dietLog = (DietLogger) session.getAttribute("dietLog");
         
-        //reload weight log page, refresh data essentially
-        request.getRequestDispatcher("DietLogController").forward(request, response);
+            MealProgress mp = new MealProgress(Meal.find(mealID), date, amount, mtype);
+            mp.persist(member.getUserID());
+
+            //Reload diet log page, refresh data essentially
+            request.getRequestDispatcher("DietLogController").forward(request, response);
+        }
+        //Else send user back with the error messages produced by the validator
+        else {
+            request.setAttribute("errorMessage", validator.getErrMsg());
+            request.getRequestDispatcher("mealProgress.jsp").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

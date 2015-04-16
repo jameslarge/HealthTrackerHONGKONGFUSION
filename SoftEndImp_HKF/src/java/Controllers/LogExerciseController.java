@@ -7,6 +7,7 @@
 package Controllers;
 
 import Model.*;
+import View.Validator;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
@@ -37,9 +38,7 @@ public class LogExerciseController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        HttpSession session = request.getSession(false);
-        Member member = (Member) session.getAttribute("member"); //member member member member
-        
+        HttpSession session = request.getSession(false);        
         if (session == null) 
             throw new ServletException("Attempting to log an exerciseProgress while no session is active (no user logged in)");
         
@@ -53,16 +52,31 @@ public class LogExerciseController extends HttpServlet {
                         Integer.parseInt(parts[1]),
                         Integer.parseInt(parts[2]));
         
-        int duration = Integer.parseInt(request.getParameter("duration"));
-        int amount = Integer.parseInt(request.getParameter("amount"));
-        int exerciseID = Integer.parseInt(request.getParameter("exercise"));
+        //Validate all the info and make type conversions where needed
+        Validator validator = new Validator();
         
-        ExerciseProgress ep = new ExerciseProgress(Exercise.find(exerciseID), 
-                                            date, duration, amount);
-        ep.persist(member.getUserID());
+        String durationString = request.getParameter("duration");
+        String amountString = request.getParameter("amount");
+        String exerciseIDString = request.getParameter("exerciseID");
         
-        //reload weight log page, refresh data essentially
-        request.getRequestDispatcher("ExerciseLogController").forward(request, response);
+        int duration = validator.validatePositiveInt("Invalid meal time entered: " + durationString, durationString);
+        int amount = validator.validatePositiveInt("Invalid meal entered: " + amountString, amountString);
+        int exerciseID = validator.validatePositiveInt("Invalid amount entered: " + exerciseIDString, exerciseIDString);
+        
+        if (validator.isValid()) {
+            Member member = (Member) session.getAttribute("member");
+            ExerciseProgress ep = new ExerciseProgress(Exercise.find(exerciseID), 
+                                                date, duration, amount);
+            ep.persist(member.getUserID());
+
+            //reload weight log page, refresh data essentially
+            request.getRequestDispatcher("ExerciseLogController").forward(request, response);
+        }
+        //Else send user back with the error messages produced by the validator
+        else {
+            request.setAttribute("errorMessage", validator.getErrMsg());
+            request.getRequestDispatcher("exerciseProgress.jsp").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

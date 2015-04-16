@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import View.*;
+
 
 /**
  * A controller for creating a new user and adding them to the database.
@@ -30,59 +32,56 @@ public class NewUserController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        //Get the details the user has supplied
+            
+        //Get the details the user has supplied in the form
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String forename = request.getParameter("forename");
         String surname = request.getParameter("surname");
-        String strWeight = request.getParameter("weight");
-        String strHeight = request.getParameter("height");
+        String weightString = request.getParameter("weight");
+        String heightString = request.getParameter("height");
         
-        int height = Integer.parseInt(strHeight);
-        Weight weight = new Weight(Double.parseDouble(strWeight));
+        //Validate all the info and make type conversions where needed
+        Validator validator = new Validator();
         
-//        try {
-//            height = Double.parseDouble(strHeight);
-//        } catch (Exception ex) { 
-//            request.setAttribute("errorMessage", "Invalid email address");
-//            request.getRequestDispatcher("createUser.jsp").forward(request, response);
-//        }
+        //Just validates, leaves as a string.
+        validator.validateEmail("Invalid email entered: " + email, email);
+        validator.validateUsername(
+                "Invalid username entered, must be between 3 and 12 characters long containing only letters, numbers and underscores, and starting with a letter: " + username, username);
+        validator.validatePassword(
+                "Invalid password entered, must be between 6 and 12 characters long containing only letters, numbers and underscores: " + password, password);
+        validator.validateName("Invalid forename entered: " + forename, forename);
+        validator.validateName("Invalid surname entered: " + surname, surname);
+       
+        //Validates AND CONVERTS TO INT.
+        Weight weight = new Weight(validator.validatePositiveInt("Invalid weight entered: " + weightString, weightString));  
+        int height = validator.validatePositiveInt("Invalid weight entered: " + heightString, heightString);
             
-          
-//        //Confirm the user's email and password are consistent
-//        if(!email.equals(request.getParameter("emailRe"))||!password.equals(request.getParameter("passwordRe"))){
-//            request.setAttribute("errorMessage", "Details do not match");
-//            request.getRequestDispatcher("createUser.jsp").forward(request, response);
-//        }
-        
-        //Confirm the user's email and password are valid
-//        if (!User.isValidEmail(email)) {
-//            request.setAttribute("errorMessage", "Invalid email address");
-//            request.getRequestDispatcher("createUser.jsp").forward(request, response);
-//        }
-//        if (password.length() < 6) {
-//            request.setAttribute("errorMessage", "Passwords must be atleast 6 characters long");
-//            request.getRequestDispatcher("createUser.jsp").forward(request, response);
-//        }
-        
-        //Create a user bean, and add their details to the database.
-        Member newMember = new Member (username, password, email, forename, surname);
-        newMember.persist();
-        
-        newMember.setUserID(Member.findID(newMember));
-        
-        PhysicalHealth physHealth = new PhysicalHealth(newMember.getUserID(), height, weight);
-        physHealth.persist();
-        
-        HttpSession session = request.getSession(false);
-        session.setAttribute("member", newMember);
-        
-        //Log the user in
-        request.setAttribute("username", username);
-        request.setAttribute("password", password);
-        request.getRequestDispatcher("home.jsp").forward(request, response);
+        //If valid, create and persist the new member, send them to their new homepage
+        if (validator.isValid()) {
+            //Create a user bean, and add their details to the database.
+            Member newMember = new Member (username, password, email, forename, surname);
+            newMember.persist();
+
+            newMember.setUserID(Member.findID(newMember));
+
+            PhysicalHealth physHealth = new PhysicalHealth(newMember.getUserID(), height, weight);
+            physHealth.persist();
+
+            HttpSession session = request.getSession(false);
+            session.setAttribute("member", newMember);
+
+            //Log the user in
+            request.setAttribute("username", username);
+            request.setAttribute("password", password);
+            request.getRequestDispatcher("home.jsp").forward(request, response);
+        }
+        //Else send user back with the error messages produced by the validator
+        else {
+            request.setAttribute("errorMessage", validator.getErrMsg());
+            request.getRequestDispatcher("accountCreation.jsp").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
