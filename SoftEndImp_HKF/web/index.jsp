@@ -39,48 +39,33 @@
                 </nav>
             </header>
             <article id="main">
+                
+                <%
+                    String errorMessage = (String) request.getAttribute("errorMessage");
+                    if (errorMessage != null) {
+                %>
+                        <p class="error"><%=errorMessage%></p>
+                <%
+                    }
+                %>
+                
                 <h3>LOG IN</h3>
-                 <h2>
-            Enter email and password:
-              </h2>
+                 
+                <h2> Enter email and password: </h2>
                 <form name="login" action="LoginController" method="get">
-                 <p>Email:<input type="text" name="email" class="textbox"/></p>
-                 <p>Password:<input type="password" name="password" id="textbox"/></p>
-                 <p><input type="submit" value="Login"/>
-                <input type="reset" value="Reset"/></p>
-         </form>
+                    <p>Email:<input type="text" name="email" class="textbox"/></p>
+                    <p>Password:<input type="password" name="password" id="textbox"/></p>
+                    <p><input type="submit" value="Login"/>
+                    <input type="reset" value="Reset"/></p>
+                </form>
 
             </article>
-                <aside id="sidebar">    
+            <aside id="sidebar">    
                 <h3>SIGN UP</h3>
-                <!-- <form name="signup" action="NewUserController" method="get">
-                 <p>Username:<input type="text" name="username" class="textbox"/></p>   
-                 <p>Email:<input type="text" name="email" class="textbox"/></p>
-                 <p>Password:<input type="password" name="password" id="textbox"/></p>
-                 <p>Confirm password:<input type="password" name="passwordConfirm" id="textbox"/></p>
-                 <p><input type="submit" onclick="check(this.form)" value="Sign up"/>
-                <input type="reset" value="Reset"/></p>
-                </form>
-                        <script language="javascript">
-                        function check(form)/*function to check userid & password*/
-                        {
-                            /*checkes whether the entered userid and password are matching*/
-                            if (form.password.value != form.passwordConfirm.value)
-                            {
-                                alert("Passwords you entered must match");
-                                /*Error message for incorret username or password*/
-                            }
-
-                        }
-                        </script> -->
-            
-                
                 <form name="signup" action="accountCreation.jsp" method="get">
                     <input type="submit" value="Sign up"/>
                 </form>
-                
-             
-                     
+           
             </aside>
             <br><br>
             <footer>

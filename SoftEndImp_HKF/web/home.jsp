@@ -35,6 +35,16 @@
                 </nav>
             </header>
             <article id="main">
+                
+                <%
+                    String errorMessage = (String) request.getAttribute("errorMessage");
+                    if (errorMessage != null) {
+                %>
+                        <p class="error"><%=errorMessage%></p>
+                <%
+                    }
+                %>
+                
                 <h3>
                     Your Info
                 </h3>
