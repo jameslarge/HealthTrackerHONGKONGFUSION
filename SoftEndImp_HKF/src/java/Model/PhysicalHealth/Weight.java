@@ -2,17 +2,17 @@ package Model.PhysicalHealth;
 
 public class Weight {
     
-    private double grams;
+    private int grams;
 
-    public Weight(double grams) {
-        this.grams = grams;
+    public Weight(double kg) {
+        this.grams = (int)kg*1000;
     }
 
     public double getGrams() {
         return grams;
     }
 
-    public void setGrams(double grams) {
+    public void setGrams(int grams) {
         this.grams = grams;
     }
     
@@ -36,11 +36,15 @@ public class Weight {
     
     @Override
     public String toString() {
-        return Double.toString(grams);
+        return Double.toString(toKg());
     }
     
     public String forGraph(){
         return Integer.toString((int)grams);
+    }
+    
+    public double toKg(){
+        return grams/1000;
     }
     
     
