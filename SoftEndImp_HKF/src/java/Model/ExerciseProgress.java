@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.servlet.ServletException;
 
-public class ExerciseProgress {
+public class ExerciseProgress implements Comparable<ExerciseProgress> {
     private int ID;
     private Exercise exercise;
     private Date date;
@@ -181,5 +181,15 @@ public class ExerciseProgress {
         }else{
             return exercise.getCalPerUnit() * duration;
         }
+    }
+
+    /**
+     * Method to be used to sort Exercise Progress using date
+     * @param t Exercise Progress Object
+     * @return 1,0 or -1
+     */
+    @Override
+    public int compareTo(ExerciseProgress t) {
+        return (this.date.compareTo(t.date));
     }
 }

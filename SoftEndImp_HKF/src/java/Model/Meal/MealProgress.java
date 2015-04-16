@@ -19,7 +19,7 @@ import javax.servlet.ServletException;
  *
  * @author xfu13dcu
  */
-public class MealProgress {
+public class MealProgress implements Comparable<MealProgress> {
     private int ID;
     private Meal meal;
     private Date date;
@@ -234,5 +234,28 @@ public class MealProgress {
             throw new ServletException(
                     "Persist Problem: persisting mealProgress details, memberID: " + memberID, ex);
         }
+    }
+    
+    /**
+     * Method to sort Meal Progress into order using date
+     * if date are same use Meal Time
+     * @param t MealProgress Object
+     * @return 1,0,-1
+     */
+    @Override
+    public int compareTo(MealProgress t) {
+        if( t.date.compareTo(t.date) == 0){
+            if(this.mealTime.equals(t.mealTime)) {
+                return 0;
+            }
+            else if (this.mealTime.value > t.mealTime.value) {
+                return 1;
+            }
+            else {
+                return -1;
+            }
+        } else {
+            return 0;
+        } 
     }
 }
