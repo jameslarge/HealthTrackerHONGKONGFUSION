@@ -4,8 +4,8 @@ public class Weight {
     
     private int grams;
 
-    public Weight(double kg) {
-        this.grams = (int)kg*1000;
+    public Weight(int grams) {
+        this.grams = grams;
     }
 
     public double getGrams() {
