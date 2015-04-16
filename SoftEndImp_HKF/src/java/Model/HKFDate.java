@@ -32,6 +32,10 @@ public class HKFDate implements Comparable<HKFDate>{
     public int getMonth() {
         return month;
     }
+    
+    public int getMonthForGraph(){
+        return month - 1;
+    }
 
     public int getYear() {
         return year;
@@ -76,6 +80,7 @@ public class HKFDate implements Comparable<HKFDate>{
         String [] parts = dateString.split("-");
         
         setYear(Integer.parseInt(parts[0]));
+        System.out.println(parts[1]);
         setMonth(Integer.parseInt(parts[1]));
         setDay(Integer.parseInt(parts[2]));
     }

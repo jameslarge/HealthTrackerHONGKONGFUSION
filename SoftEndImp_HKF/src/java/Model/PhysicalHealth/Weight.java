@@ -44,7 +44,7 @@ public class Weight {
     }
     
     public double toKg(){
-        return grams/1000;
+        return grams/1000.0;
     }
     
     

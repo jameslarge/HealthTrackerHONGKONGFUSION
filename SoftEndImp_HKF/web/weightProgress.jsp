@@ -78,12 +78,12 @@
                       data.addColumn('number', 'Your Weight')
                       
                       
-                      <%for (WeightProgress weightProg : physHealth.getPhysicalHealthLog()){
+                      <%for (WeightProgress weightProg : physHealth.sortDate()){
                           HKFDate date = weightProg.getDate();
                           Weight weight = weightProg.getWeight();
                           
                       %>                      
-                        data.addRow([new Date(<%=date.getYear()%>,<%=date.getMonth()%>,<%=date.getDay()%>), <%=weight.forGraph()%>]);
+                        data.addRow([new Date(<%=date.getYear()%>,<%=date.getMonthForGraph()%>,<%=date.getDay()%>), <%=weight.toString()%>]);
                        <%}%>  
 
                       var options = {
@@ -94,6 +94,10 @@
                         'legend': 'none',
                         
                       };
+                      
+                      var formatter = new google.visualization.NumberFormat(
+                      {suffix: 'kg', fractionDigits: 1});
+                      formatter.format(data, 1); // Apply formatter to second column
 
                       var chart = new google.visualization.LineChart(document.getElementById('linechart'));
 
