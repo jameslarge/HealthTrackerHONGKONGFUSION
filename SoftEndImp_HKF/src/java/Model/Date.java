@@ -77,6 +77,14 @@ public class Date implements Comparable<Date>{
             }
         }
     }
+    
+    public void splitString(String dateString) {
+        String [] parts = dateString.split("-");
+        
+        setYear(Integer.parseInt(parts[0]));
+        setMonth(Integer.parseInt(parts[1]));
+        setDay(Integer.parseInt(parts[2]));
+    }
 
     @Override
     public String toString() {
