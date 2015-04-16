@@ -68,9 +68,11 @@ public class ExerciseLogger {
     
     /**
      * Method to Sort information so that Date is in ascending order
+     * @return Sorted ArrayList of ExerciseProgress
      */
-    public void sortDate() {
-        Collections.sort(exerciseLog);
+    public ArrayList<ExerciseProgress> sortDate() {
+        Collections.sort(exerciseLog);        
+        return exerciseLog;
     }
     
     /**

@@ -95,9 +95,11 @@ public class PhysicalHealth {
     
     /**
      * Method to Sort information so that Date is in ascending order
+     * @return Sorted ArrayList of WeightProgress
      */
-    public void sortDate() {
+    public ArrayList<WeightProgress> sortDate() {
         Collections.sort(physicalHealthLog);
+        return physicalHealthLog;
     }
     
     /**

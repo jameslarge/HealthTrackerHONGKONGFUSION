@@ -69,9 +69,11 @@ public class DietLogger {
     
     /**
      * Method to Sort information so that Date is in ascending order
+     * @return Sorted ArrayList of Meal Progress
      */
-    public void sortDate() {
+    public ArrayList<MealProgress> sortDate() {
         Collections.sort(mealLog);
+        return mealLog;
     }
     
     /**
