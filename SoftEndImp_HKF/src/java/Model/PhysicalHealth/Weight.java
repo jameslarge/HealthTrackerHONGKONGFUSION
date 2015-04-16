@@ -36,6 +36,14 @@ public class Weight {
     
     @Override
     public String toString() {
-        return ""+grams;
+        return Double.toString(grams);
     }
+    
+    public String forGraph(){
+        return Integer.toString((int)grams);
+    }
+    
+    
+    
+   
 }

@@ -4,6 +4,7 @@
     Author     : xmw13bzu
 --%>
 
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@page import ="Controllers.*"%>
@@ -62,7 +63,12 @@
                     </tr>
                    
                 <%
+                    ArrayList<Weight> weightArray = new ArrayList<Weight>();
+                    ArrayList<java.util.Date> dateArray = new ArrayList<java.util.Date>();
+                    
                     for (WeightProgress weightProg : physHealth.getPhysicalHealthLog()) {
+                        weightArray.add(weightProg.getWeight());
+                        dateArray.add(weightProg.getDate());
                 %>
                     <tr>
                         <td><%=weightProg.getDate()%></td>   <td><%=weightProg.getWeight()%></td>
@@ -72,42 +78,50 @@
                 %>
                 </table>
                 
-                 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-                 <script type="text/javascript">
-    google.load('visualization', '1.1', {packages: ['line']});
-    google.setOnLoadCallback(drawChart);
-    
-    function drawChart() {
+              <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
 
-      var data = new google.visualization.DataTable();
-      data.addColumn('date', 'Date');
-      data.addColumn('number', 'Me');
-      data.addColumn('number', 'James the Fatass');
-      data.addColumn('number', 'Pedo');
-      
-      data.addRows([
-        [new Date(2014,0,28),  60.8, 100, 30],
-        [new Date(2014,1,28),  64.8, 120, 35],
-        [new Date(2014,2,28),  56.8, 80, 70,],
-        [new Date(2014,3,28),  68.8, 160, 100]
-      ]);
+      // Load the Visualization API and the piechart package.
+      google.load('visualization', '1.0', {'packages':['corechart']});
 
-      var options = {
-        chart: {
-          title: 'Your Weight Over Time Compared to Your Friends',
-          subtitle: 'in kilograms (kg)'
-        },
-        width: 900,
-        height: 500
-      };
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(drawChart);
 
-      var chart = new google.charts.Line(document.getElementById('linechart_material'));
 
-      chart.draw(data, options);
-    }
-  </script>
+                    
+                    function drawChart() {
+                      
+                      var data = new google.visualization.DataTable();
+                      data.addColumn('date', 'Date');
+                      data.addColumn('number', 'Your Weight')
+                      
+                      
+                      <%for (WeightProgress weightProg : physHealth.getPhysicalHealthLog()){
+                          java.util.Date date = weightProg.getDate();
+                          Weight weight = weightProg.getWeight();
+                          int year = date.getYear() + 1900;
+                      %>                      
+                        data.addRow([new Date(<%=year%>,<%=date.getMonth()%>,<%=date.getDay()%>), <%=weight.forGraph()%>]);
+                       <%}%>  
+
+                      var options = {
+                        'title': 'Your Weight Over Time [kg]',                                              
+                        'width': 900,
+                        'height': 500,
+                        'pointSize': 20,
+                        'legend': 'none',
+                        
+                      };
+
+                      var chart = new google.visualization.LineChart(document.getElementById('linechart'));
+
+                      chart.draw(data, options);
+                    }
+                                       
+                </script>
   
-                <div id="linechart_material"></div>
+                <div id="linechart"></div>
               
                 <h3>
                     Log new weight 

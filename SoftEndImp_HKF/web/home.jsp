@@ -59,6 +59,13 @@
                 </form>
                 
                 <h3>
+                    View Diet Details/Progress
+                </h3>
+                <form name="diet" action="DietLogController" method="get">
+                    <p><input type="submit" value="GoGoDiet"/>
+                </form>
+                
+                <h3>
                     LOG OUT
                 </h3>
                 <form name="logout" action="LogoutController" method="get">

@@ -79,6 +79,22 @@ public class PhysicalHealth {
         physicalHealthLog.add(wp);
     }
     
+    public int findTotalWeightDifferenceVersusDate(Date dateToCompareAgainst) {
+        //TODO
+        return 1;
+    }
+    
+    public double findAverageWeightDifferencePerWeekVersusDate(Date dateToCompareAgainst) {
+        //TODO
+        return 1.0;
+    }
+    
+    public double findAverageWeightDifferencePerMonthVersusDate(Date dateToCompareAgainst) {
+        //TODO
+        return 1.0;
+    }
+    
+
     
     /**
      * Method to find Users Physical Health details using members ID
