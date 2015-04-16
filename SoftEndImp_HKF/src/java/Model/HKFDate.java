@@ -1,20 +1,27 @@
 package Model;
+import java.util.Date;
 
-public class Date implements Comparable<Date>{
+public class HKFDate implements Comparable<HKFDate>{
     
     private int day;
     private int month;
     private int year;
     
-    public Date(){}
+    public HKFDate(){
+        Date currentDate = new Date();
 
-    public Date(int day, int month, int year) {
+        this.day = currentDate.getDay();
+        this.month = currentDate.getMonth() + 1; //to be tested
+        this.year = currentDate.getYear() + 1900; //fuck that shit
+    }
+
+    public HKFDate(int day, int month, int year) {
         this.day = day;
         this.month = month;
         this.year = year;
     }
     
-    public Date(String dateStr){
+    public HKFDate(String dateStr){
         splitString(dateStr);
     }
 
@@ -75,11 +82,12 @@ public class Date implements Comparable<Date>{
 
     @Override
     public String toString() {
-        return year + "-" + (month+1) + "-" + day;
+        //return year + "-" + (month) + "-" + day;
+        return String.format("%4d-%02d-%02d", year, month, day);
     }   
 
     @Override
-    public int compareTo(Date t) {
+    public int compareTo(HKFDate t) {
         if(t.year < year) {
             return -1;
         }else if (t.year > year) {

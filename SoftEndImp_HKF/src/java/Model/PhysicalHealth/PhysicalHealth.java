@@ -1,8 +1,7 @@
 package Model.PhysicalHealth;
 
 import Controllers.*;
-import Model.*;
-import java.util.Date;
+import Model.HKFDate;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,7 +37,7 @@ public class PhysicalHealth {
         this.ID = -1;
         this.memberID = memberID;
         this.height = new Height(heightcm);  
-        WeightProgress currentWeight = new WeightProgress(initialWeight, new Date());
+        WeightProgress currentWeight = new WeightProgress(initialWeight, new HKFDate());
         this.physicalHealthLog = new ArrayList<>();
         physicalHealthLog.add(currentWeight);
     }
@@ -79,17 +78,17 @@ public class PhysicalHealth {
         physicalHealthLog.add(wp);
     }
     
-    public int findTotalWeightDifferenceVersusDate(Date dateToCompareAgainst) {
+    public int findTotalWeightDifferenceVersusDate(HKFDate dateToCompareAgainst) {
         //TODO
         return 1;
     }
     
-    public double findAverageWeightDifferencePerWeekVersusDate(Date dateToCompareAgainst) {
+    public double findAverageWeightDifferencePerWeekVersusDate(HKFDate dateToCompareAgainst) {
         //TODO
         return 1.0;
     }
     
-    public double findAverageWeightDifferencePerMonthVersusDate(Date dateToCompareAgainst) {
+    public double findAverageWeightDifferencePerMonthVersusDate(HKFDate dateToCompareAgainst) {
         //TODO
         return 1.0;
     }

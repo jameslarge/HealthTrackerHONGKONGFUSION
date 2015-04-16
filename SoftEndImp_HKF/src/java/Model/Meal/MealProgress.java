@@ -12,7 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
+import Model.HKFDate;
 import javax.servlet.ServletException;
 
 /**
@@ -22,7 +22,7 @@ import javax.servlet.ServletException;
 public class MealProgress implements Comparable<MealProgress> {
     private int ID;
     private Meal meal;
-    private Date date;
+    private HKFDate date;
     //private String mealTime;
     private int amount;
     private MealTime mealTime;
@@ -75,7 +75,7 @@ public class MealProgress implements Comparable<MealProgress> {
         }
     }
 
-    public MealProgress(int ID, Meal meal, Date date, int amount, int mealTime) {
+    public MealProgress(int ID, Meal meal, HKFDate date, int amount, int mealTime) {
         this.ID = ID;
         this.meal = meal;
         this.date = date;
@@ -83,7 +83,7 @@ public class MealProgress implements Comparable<MealProgress> {
         setMealTime(mealTime);
     }
     
-    public MealProgress(Meal meal, Date date, int amount, int mealTime) {
+    public MealProgress(Meal meal, HKFDate date, int amount, int mealTime) {
         this.ID = -1;
         this.meal = meal;
         this.date = date;
@@ -101,7 +101,7 @@ public class MealProgress implements Comparable<MealProgress> {
         return meal;
     }
 
-    public Date getDate() {
+    public HKFDate getDate() {
         return date;
     }
 
@@ -125,7 +125,7 @@ public class MealProgress implements Comparable<MealProgress> {
         this.meal = meal;
     }
 
-    public void setDate(Date date) {
+    public void setDate(HKFDate date) {
         this.date = date;
     }
 
@@ -162,7 +162,7 @@ public class MealProgress implements Comparable<MealProgress> {
             //If we find User set create a new User using returned values
             if (result.next()) {
                 mProgress = new MealProgress(Meal.find(result.getInt("mealID")),
-                                             result.getDate("mealDate"),
+                                             new HKFDate(result.getString("mealDate")),
                                              result.getInt("amount"),
                                              result.getInt("mealTime"));
             }
@@ -194,7 +194,7 @@ public class MealProgress implements Comparable<MealProgress> {
             //If we find User set create a new User using returned values
             while (result.next()) {
                 MealProgress mProgress = new MealProgress(Meal.find(result.getInt("mealID")),
-                                             result.getDate("mealDate"),
+                                             new HKFDate(result.getString("mealDate")),
                                              result.getInt("amount"),
                                              result.getInt("mealTime"));
                 
@@ -227,7 +227,7 @@ public class MealProgress implements Comparable<MealProgress> {
             
             ps.setInt(2, meal.getID());
             ps.setInt(3, mealTime.ordinal());
-            ps.setDate(4, new java.sql.Date(date.getTime()));
+            ps.setString(4, date.toString());
             ps.setInt(5, amount);
 
             ps.executeUpdate();

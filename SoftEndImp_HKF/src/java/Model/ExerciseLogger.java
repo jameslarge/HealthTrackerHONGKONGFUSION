@@ -6,18 +6,9 @@
 
 package Model;
 
-import Controllers.DatabaseAccess;
-import Model.PhysicalHealth.Height;
-import Model.PhysicalHealth.PhysicalHealth;
-import Model.PhysicalHealth.Weight;
-import Model.PhysicalHealth.WeightProgress;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
+
 import javax.servlet.ServletException;
 
 /**

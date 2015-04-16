@@ -8,22 +8,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
+import Model.HKFDate;
 import javax.servlet.ServletException;
 
 public class WeightProgress implements Comparable<WeightProgress> {
 
     private int physicalHealthID;
     private Weight weight;
-    private Date date;
+    private HKFDate date;
 
-    public WeightProgress(int physicalHealthID, Weight weight, Date date) {
+    public WeightProgress(int physicalHealthID, Weight weight, HKFDate date) {
         this.physicalHealthID = physicalHealthID;
         this.weight = weight;
         this.date = date;
     }
     
-    public WeightProgress(Weight weight, Date date) {
+    public WeightProgress(Weight weight, HKFDate date) {
         this.physicalHealthID = -1;
         this.weight = weight;
         this.date = date;
@@ -37,7 +37,7 @@ public class WeightProgress implements Comparable<WeightProgress> {
         return weight;
     }
 
-    public Date getDate() {
+    public HKFDate getDate() {
         return date;
     }
 
@@ -49,7 +49,7 @@ public class WeightProgress implements Comparable<WeightProgress> {
         this.weight = weight;
     }
 
-    public void setDate(Date date) {
+    public void setDate(HKFDate date) {
         this.date = date;
     }
 
@@ -79,7 +79,7 @@ public class WeightProgress implements Comparable<WeightProgress> {
                 wp = new WeightProgress(
                         result.getInt("physicalHealthID"),
                         new Weight(result.getInt("weight")), 
-                        result.getDate("weightDate"));
+                        new HKFDate(result.getString("weightDate")));
             }
             
             return wp;
@@ -112,7 +112,7 @@ public class WeightProgress implements Comparable<WeightProgress> {
                 WeightProgress tempWP = new WeightProgress(
                         result.getInt("physicalHealthID"),
                         new Weight(result.getInt("weight")), 
-                        result.getDate("weightDate"));
+                        new HKFDate(result.getString("weightDate")));
                 
                 resultsLog.add(tempWP);
             }
@@ -140,7 +140,7 @@ public class WeightProgress implements Comparable<WeightProgress> {
             ps.setInt(1, physHealthId);
 
             //http://stackoverflow.com/questions/530012/how-to-convert-java-util-date-to-java-sql-date
-            ps.setDate(2, new java.sql.Date(date.getTime()));
+            ps.setString(2, date.toString());
             ps.setInt(3, (int) weight.getGrams());
 
             ps.executeUpdate();
