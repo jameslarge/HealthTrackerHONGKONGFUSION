@@ -96,6 +96,44 @@ public class Member {
     //End of Setter Methods
 
     /**
+     * Method to find Member using memberID
+     *
+     * @param memberID
+     * @return Member object, if found
+     * @throws ServletException Exception, Member was not found
+     */
+    public static Member find(int memberID) throws ServletException {
+        try {
+            //Connect to Database
+            Connection con = DatabaseAccess.getConnection();
+            //SQL Statement to run, where ? is email address
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT * FROM member WHERE (id = ?)");
+            ps.setInt(1, memberID);
+            
+            ResultSet result = ps.executeQuery();//Run statement
+            Member member = null; //Creating a Member object to set returned value to
+            //If we find Member set create a new Member using returned values
+            if (result.next()) {
+                member = new Member(memberID,
+                        result.getString("username"),
+                        result.getString("password"),
+                        result.getString("email"),
+                        result.getString("forename"),
+                        result.getString("surname")
+                    );
+            }
+            
+            con.close();
+            
+            return member;
+        } catch (SQLException ex) {
+            throw new ServletException("Find Problem: searching for member by memberID: " + memberID, ex);
+        }
+    }
+    
+    
+    /**
      * Method to find Member using email address and password
      *
      * @param email Email Address of User

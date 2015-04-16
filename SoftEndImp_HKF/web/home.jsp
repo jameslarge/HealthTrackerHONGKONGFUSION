@@ -75,6 +75,13 @@
                     <p><input type="submit" value="GoGoDiet"/>
                 </form>
                 
+                 <h3>
+                    View Goal Details/Progress
+                </h3>
+                <form name="goal" action="GoalsController" method="get">
+                    <p><input type="submit" value="GoGoGoals"/>
+                </form>
+                
                 <h3>
                     LOG OUT
                 </h3>

@@ -105,7 +105,7 @@ CREATE TABLE mealProgress
 CREATE TABLE goal
 (
 	id				SERIAL,
-	goalType		VARCHAR(100),
+	goalType		INT,
 	goalDate		VARCHAR(10),
 	goalStart		VARCHAR(10),
 	goalDeadline		VARCHAR(10),
@@ -226,7 +226,7 @@ INSERT INTO mealProgress(memberID, mealID, mealDate, amount)
 	VALUES (1, 1, '2015-04-14', -1);
 
 INSERT INTO goal(goalType, goalDate, goalStart, goalDeadline, target)
-	VALUES ('weight', '2015-04-14', '2015-04-14', '2015-04-14', -1);
+	VALUES (0, '2015-04-14', '2015-04-14', '2015-04-14', -1);
 
 INSERT INTO member_goals(memberID, goalID)
 	VALUES (1, 1);
