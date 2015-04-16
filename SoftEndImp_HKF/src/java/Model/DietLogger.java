@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import javax.servlet.ServletException;
 
@@ -69,6 +70,13 @@ public class DietLogger {
     
     public void findTotalCalsConsumedToday() {
         //TODO
+    }
+    
+    /**
+     * Method to Sort information so that Date is in ascending order
+     */
+    public void sortDate() {
+        Collections.sort(mealLog);
     }
     
     /**

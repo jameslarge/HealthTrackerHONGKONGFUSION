@@ -94,7 +94,12 @@ public class PhysicalHealth {
         return 1.0;
     }
     
-
+    /**
+     * Method to Sort information so that Date is in ascending order
+     */
+    public void sortDate() {
+        Collections.sort(physicalHealthLog);
+    }
     
     /**
      * Method to find Users Physical Health details using members ID
