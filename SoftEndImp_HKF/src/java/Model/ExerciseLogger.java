@@ -46,24 +46,29 @@ public class ExerciseLogger {
         exerciseLog.add(ep);
     }
     
-    public void findTotalCalsBurned() {
+    public int findTotalCalsBurned() {
         //TODO
+        return 1;
     }
     
-    public void findAverageWeeklyCalsBurned() {
+    public double findAverageWeeklyCalsBurned() {
         //TODO
+        return 1;
     }
     
-    public void findTotalCalsBurnedThisWeek() {
+    public int findTotalCalsBurnedThisWeek() {
         //todo
+        return 1;
     }
    
-    public void findAverageDailyCalsBurned() {
+    public double findAverageDailyCalsBurned() {
         //TODO
+        return 1;
     }
     
-    public void findTotalCalsBurnedToday() {
+    public int findTotalCalsBurnedToday() {
         //TODO
+        return 1;
     }
     
     /**
