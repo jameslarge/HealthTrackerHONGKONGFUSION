@@ -89,10 +89,16 @@ public class HKFDateTest {
     @Test
     public void testToString() {
         System.out.println("toString");
-        HKFDate instance = new HKFDate(2,3,2015);
-        String expResult = "2015-3-2";
-        String result = instance.toString();
-        assertEquals(expResult, result);
+        HKFDate instance1 = new HKFDate(2,3,2015);
+        String expResult1 = "2015-03-02";
+        String result1 = instance1.toString();
+        
+        String expResult2 = "2015-05-27";
+        HKFDate instance2 = new HKFDate(expResult2);
+        String result2 = instance2.toString();
+        
+        assertEquals(expResult1, result1);
+        assertEquals(expResult2, result2);
     }
 
     /**
