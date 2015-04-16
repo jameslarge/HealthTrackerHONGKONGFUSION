@@ -13,6 +13,10 @@ public class Date implements Comparable<Date>{
         this.month = month;
         this.year = year;
     }
+    
+    public Date(String dateStr){
+        splitString(dateStr);
+    }
 
     public int getDay() {
         return day;
@@ -27,31 +31,14 @@ public class Date implements Comparable<Date>{
     }
 
     public void setDay(int day) {        
-        if(day > monthSize()){
-            this.day = day - monthSize();
-            setMonth(this.month + 1);
-        }else if (day <= 0){
-            setMonth(this.month - 1);
-            this.day = monthSize() + day;
-        }else {
-            this.day = day;
-        } 
+        this.day = day;
+        
         
     }
 
     public void setMonth(int month) {
-        if(month > 12)
-        {            
-            this.month = 1;
-            this.year = this.year + (month/12);
-        }
-        else if(month <= 0)
-        {
-            this.month = 12;
-            this.year = this.year - (month/12);
-        }else {
-            this.month = month;
-        }
+        this.month = month;
+        
     }
 
     public void setYear(int year) {
