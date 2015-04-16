@@ -10,11 +10,6 @@ import Model.*;
 import Model.PhysicalHealth.*;
 import View.Validator;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -46,23 +41,6 @@ public class LogWeightController extends HttpServlet {
         if (session == null) 
             throw new ServletException("Attempting to log a weightProgress while no session is active (no user logged in)");
         
-        //should be  YYYY-MM-DD, i.e is shit and doesnt enforce any formatting 
-        //on user in input type=date, deal with it later
-        String sdate = request.getParameter("date");
-        String [] parts = sdate.split("-");
-        
-        Calendar cal = Calendar.getInstance();
-        
-        cal.set(Calendar.YEAR, Integer.parseInt(parts[0]));
-            cal.set(Calendar.MONTH, Integer.parseInt(parts[1]));
-        cal.set(Calendar.DATE, Integer.parseInt(parts[2]));
-        
-        
-        //depricated but meh
-//        Date date = new Date(Integer.parseInt(parts[0]) - 1900,  //because reasons
-//                        Integer.parseInt(parts[1]),
-//                        Integer.parseInt(parts[2]));
-        
         //Validate all the info and make type conversions where needed
         Validator validator = new Validator();
         
@@ -70,11 +48,17 @@ public class LogWeightController extends HttpServlet {
         //Validates AND CONVERTS TO INT.
         Weight weight = new Weight(validator.validatePositiveInt("Invalid weight entered: " + weightString, weightString));  
         
+        //should be  YYYY-MM-DD, i.e is shit and doesnt enforce any formatting 
+        //on user in input type=date, deal with it later
+        String dateString = request.getParameter("date");
+        validator.validateDate("Invalid date entered, must be in YYYY-MM-DD format: " + dateString, dateString);
+        HKFDate date = new HKFDate(dateString);
+        
         //If valid, create and persist the mealProgress
         if (validator.isValid()) {              
             PhysicalHealth physHealth = (PhysicalHealth) session.getAttribute("physHealth");
        
-            WeightProgress wp = new WeightProgress(weight, cal.getTime());
+            WeightProgress wp = new WeightProgress(weight, date);
             wp.persist(physHealth.getID());
             
             //Reload weight log page, refresh data essentially

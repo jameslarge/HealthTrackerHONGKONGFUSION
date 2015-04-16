@@ -6,18 +6,9 @@
 
 package Model;
 
-import Controllers.DatabaseAccess;
-import Model.PhysicalHealth.Height;
-import Model.PhysicalHealth.PhysicalHealth;
-import Model.PhysicalHealth.Weight;
-import Model.PhysicalHealth.WeightProgress;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
+
 import javax.servlet.ServletException;
 
 /**
@@ -77,9 +68,11 @@ public class ExerciseLogger {
     
     /**
      * Method to Sort information so that Date is in ascending order
+     * @return Sorted ArrayList of ExerciseProgress
      */
-    public void sortDate() {
-        Collections.sort(exerciseLog);
+    public ArrayList<ExerciseProgress> sortDate() {
+        Collections.sort(exerciseLog);        
+        return exerciseLog;
     }
     
     /**

@@ -8,17 +8,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
+import Model.HKFDate;
 import javax.servlet.ServletException;
 
 public class ExerciseProgress implements Comparable<ExerciseProgress> {
     private int ID;
     private Exercise exercise;
-    private Date date;
+    private HKFDate date;
     private int duration;
     private int amount;
 
-    public ExerciseProgress(int ID, Exercise exercise, Date date, int duration, int amount) {
+    public ExerciseProgress(int ID, Exercise exercise, HKFDate date, int duration, int amount) {
         this.ID = ID;
         this.exercise = exercise;
         this.date = date;
@@ -26,7 +26,7 @@ public class ExerciseProgress implements Comparable<ExerciseProgress> {
         this.amount = amount;
     }
     
-    public ExerciseProgress(Exercise exercise, Date date, int duration, int amount) {
+    public ExerciseProgress(Exercise exercise, HKFDate date, int duration, int amount) {
         this.ID = -1;
         this.exercise = exercise;
         this.date = date;
@@ -42,7 +42,7 @@ public class ExerciseProgress implements Comparable<ExerciseProgress> {
         return exercise;
     }
 
-    public Date getDate() {
+    public HKFDate getDate() {
         return date;
     }
 
@@ -62,7 +62,7 @@ public class ExerciseProgress implements Comparable<ExerciseProgress> {
         this.exercise = exercise;
     }
 
-    public void setDate(Date date) {
+    public void setDate(HKFDate date) {
         this.date = date;
     }
 
@@ -94,7 +94,7 @@ public class ExerciseProgress implements Comparable<ExerciseProgress> {
             if (result.next()) {
                 eProgress = new ExerciseProgress(
                         Exercise.find(result.getInt("exerciseID")),
-                        result.getDate("exerciseDate"),
+                        new HKFDate(result.getString("exerciseDate")),
                         result.getInt("duration"),
                         result.getInt("amount"));
             }
@@ -127,7 +127,7 @@ public class ExerciseProgress implements Comparable<ExerciseProgress> {
             while (result.next()) {
                 ExerciseProgress eProgress = new ExerciseProgress(
                         Exercise.find(result.getInt("exerciseID")),
-                        result.getDate("exerciseDate"),
+                        new HKFDate(result.getString("exerciseDate")),
                         result.getInt("duration"),
                         result.getInt("amount"));
                 
@@ -156,7 +156,7 @@ public class ExerciseProgress implements Comparable<ExerciseProgress> {
             ps.setInt(1, memberID);
 
             //http://stackoverflow.com/questions/530012/how-to-convert-java-util-date-to-java-sql-date
-            ps.setDate(2, new java.sql.Date(date.getTime()));
+            ps.setString(2, date.toString());
             ps.setInt(3, amount);
             ps.setInt(4, duration);
             ps.setInt(5, exercise.getID());

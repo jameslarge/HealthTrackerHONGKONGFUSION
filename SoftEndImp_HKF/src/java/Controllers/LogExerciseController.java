@@ -9,8 +9,6 @@ package Controllers;
 import Model.*;
 import View.Validator;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,26 +40,26 @@ public class LogExerciseController extends HttpServlet {
         if (session == null) 
             throw new ServletException("Attempting to log an exerciseProgress while no session is active (no user logged in)");
         
-        //should be  YYYY-MM-DD, i.e is shit and doesnt enforce any formatting 
-        //on user in input type=date, deal with it later
-        String sdate = request.getParameter("date");
-        String [] parts = sdate.split("-");
-
-        //depricated but meh
-        Date date = new Date(Integer.parseInt(parts[0]) - 1900,  //because reasons
-                        Integer.parseInt(parts[1]),
-                        Integer.parseInt(parts[2]));
-        
+              
         //Validate all the info and make type conversions where needed
         Validator validator = new Validator();
+        
+        
         
         String durationString = request.getParameter("duration");
         String amountString = request.getParameter("amount");
         String exerciseIDString = request.getParameter("exerciseID");
         
+       
         int duration = validator.validatePositiveInt("Invalid meal time entered: " + durationString, durationString);
         int amount = validator.validatePositiveInt("Invalid meal entered: " + amountString, amountString);
         int exerciseID = validator.validatePositiveInt("Invalid amount entered: " + exerciseIDString, exerciseIDString);
+        
+        //should be  YYYY-MM-DD, i.e is shit and doesnt enforce any formatting 
+        //on user in input type=date, deal with it later
+        String dateString = request.getParameter("date");
+        validator.validateDate("Invalid date entered, must be in YYYY-MM-DD format: " + dateString, dateString);
+        HKFDate date = new HKFDate(dateString);
         
         if (validator.isValid()) {
             Member member = (Member) session.getAttribute("member");

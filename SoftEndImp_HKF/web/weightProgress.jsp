@@ -57,27 +57,8 @@
                 
                 <!-- for each weight progress -->
                     <!-- print date : weight --> 
-                <table>
-                    <tr>
-                         <th>Date</th> <th>Weight</th>
-                    </tr>
-                   
-                <%
-                    ArrayList<Weight> weightArray = new ArrayList<Weight>();
-                    ArrayList<java.util.Date> dateArray = new ArrayList<java.util.Date>();
-                    
-                    for (WeightProgress weightProg : physHealth.getPhysicalHealthLog()) {
-                        weightArray.add(weightProg.getWeight());
-                        dateArray.add(weightProg.getDate());
-                %>
-                    <tr>
-                        <td><%=weightProg.getDate()%></td>   <td><%=weightProg.getWeight()%></td>
-                    </tr>
-                <%                        
-                    }
-                %>
-                </table>
-                
+                                  
+                           
               <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
@@ -98,11 +79,11 @@
                       
                       
                       <%for (WeightProgress weightProg : physHealth.getPhysicalHealthLog()){
-                          java.util.Date date = weightProg.getDate();
+                          HKFDate date = weightProg.getDate();
                           Weight weight = weightProg.getWeight();
-                          int year = date.getYear() + 1900;
+                          
                       %>                      
-                        data.addRow([new Date(<%=year%>,<%=date.getMonth()%>,<%=date.getDay()%>), <%=weight.forGraph()%>]);
+                        data.addRow([new Date(<%=date.getYear()%>,<%=date.getMonth()%>,<%=date.getDay()%>), <%=weight.forGraph()%>]);
                        <%}%>  
 
                       var options = {

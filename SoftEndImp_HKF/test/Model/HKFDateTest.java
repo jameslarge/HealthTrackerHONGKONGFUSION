@@ -17,9 +17,9 @@ import static org.junit.Assert.*;
  *
  * @author xfu13dcu
  */
-public class DateTest {
+public class HKFDateTest {
         
-    public DateTest() {
+    public HKFDateTest() {
     }
     
     @BeforeClass
@@ -39,70 +39,70 @@ public class DateTest {
     }
 
     /**
-     * Test of setDay method, of class Date.
+     * Test of setDay method, of class HKFDate.
      */
     @Test
     public void testSetDay() {
         System.out.println("setDay");
         int day = -3;
-        Date instance = new Date();
+        HKFDate instance = new HKFDate();
         instance.setDay(day);        
     }
 
     /**
-     * Test of setMonth method, of class Date.
+     * Test of setMonth method, of class HKFDate.
      */
     @Test
     public void testSetMonth() {
         System.out.println("setMonth");
         int month = 13;
-        Date instance = new Date();
+        HKFDate instance = new HKFDate();
         instance.setMonth(month);
     }
 
     /**
-     * Test of setYear method, of class Date.
+     * Test of setYear method, of class HKFDate.
      */
     @Test
     public void testSetYear() {
         System.out.println("setYear");
         int year = 2013;
-        Date instance = new Date();
+        HKFDate instance = new HKFDate();
         instance.setYear(year);
     }
 
     /**
-     * Test of monthSize method, of class Date.
+     * Test of monthSize method, of class HKFDate.
      */
     @Test
     public void testMonthSize() {
         System.out.println("monthSize");
-        Date instance = new Date(1,1,1111);
+        HKFDate instance = new HKFDate(1,1,1111);
         int expResult = 31;
         int result = instance.monthSize();
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of toString method, of class Date.
+     * Test of toString method, of class HKFDate.
      */
     @Test
     public void testToString() {
         System.out.println("toString");
-        Date instance = new Date(2,3,2015);
+        HKFDate instance = new HKFDate(2,3,2015);
         String expResult = "2015-3-2";
         String result = instance.toString();
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of compareTo method, of class Date.
+     * Test of compareTo method, of class HKFDate.
      */
     @Test
     public void testCompareTo() {
         System.out.println("compareTo");
-        Date t = new Date(5,3,2014);
-        Date instance = new Date(3,3,2014);
+        HKFDate t = new HKFDate(5,3,2014);
+        HKFDate instance = new HKFDate(3,3,2014);
         int expResult = 0;
         int result = instance.compareTo(t);
         System.out.println(result);
