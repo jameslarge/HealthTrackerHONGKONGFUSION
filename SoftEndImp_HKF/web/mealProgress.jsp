@@ -72,7 +72,7 @@
                     </tr>
                    
                 <%
-                    for (MealProgress mealProg : dietLog.getMealLog()) {
+                    for (MealProgress mealProg : dietLog.sortDate()) {
                 %>
                     <tr>
                         <td><%=mealProg.getDate()%></td>   
@@ -82,6 +82,56 @@
                 <%                        
                     }
                 %>
+                
+                          <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+
+      // Load the Visualization API and the piechart package.
+      google.load('visualization', '1.0', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(drawChart);
+
+
+                    
+                    function drawChart() {
+                      
+                      var data = new google.visualization.DataTable();
+                      data.addColumn('date', 'Date');
+                     // data.addColumn('string', 'Meal name');
+                      data.addColumn('number', 'Calories')
+                      
+                      
+                      <%for (MealProgress mealProg : dietLog.sortDate()){
+                          HKFDate date = mealProg.getDate();
+                          String mealName = mealProg.getMeal().getMealName();
+                          int calories = mealProg.calcCalories();
+                          
+                          
+                      %>                      
+                        data.addRow([new Date(<%=date.getYear()%>,<%=date.getMonthForGraph()%>,<%=date.getDay()%>),<%=calories%>]);
+                       <%}%>  
+
+                      var options = {
+                        title: 'Blabla',                                              
+                        width: 900,
+                        height: 500,
+                        legend: 'none',
+                        
+                        
+                       
+                      };
+                      
+                                    var chart = new google.visualization.LineChart(document.getElementById('linechart'));
+
+                      chart.draw(data, options);
+                    }
+                                       
+                </script>
+                
+                 <div id="linechart"></div>
+                
                 </table>    
               
                 <h3>

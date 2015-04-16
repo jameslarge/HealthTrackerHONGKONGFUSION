@@ -248,7 +248,7 @@ public class MealProgress implements Comparable<MealProgress> {
      */
     @Override
     public int compareTo(MealProgress t) {
-        if( t.date.compareTo(t.date) == 0){
+        if( this.date.compareTo(t.date) == 0){
             if(this.mealTime.equals(t.mealTime)) {
                 return 0;
             }
@@ -259,7 +259,7 @@ public class MealProgress implements Comparable<MealProgress> {
                 return -1;
             }
         } else {
-            return 0;
+            return this.date.compareTo(t.date);
         } 
     }
 }
