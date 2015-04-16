@@ -8,6 +8,7 @@ package Controllers;
 
 import Model.*;
 import Model.PhysicalHealth.*;
+import View.Validator;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
@@ -41,13 +42,9 @@ public class LogWeightController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
          
-        HttpSession session = request.getSession(false);
-        
+        HttpSession session = request.getSession(false); 
         if (session == null) 
             throw new ServletException("Attempting to log a weightProgress while no session is active (no user logged in)");
-        
-        PhysicalHealth physHealth = (PhysicalHealth) session.getAttribute("physHealth");
-        
         
         //should be  YYYY-MM-DD, i.e is shit and doesnt enforce any formatting 
         //on user in input type=date, deal with it later
@@ -66,15 +63,28 @@ public class LogWeightController extends HttpServlet {
 //                        Integer.parseInt(parts[1]),
 //                        Integer.parseInt(parts[2]));
         
-        String sweight = request.getParameter("weight");
-        Weight weight = new Weight(Double.parseDouble(sweight));
+        //Validate all the info and make type conversions where needed
+        Validator validator = new Validator();
         
-        WeightProgress wp = new WeightProgress(weight, cal.getTime());
-        wp.persist(physHealth.getID());
+        String weightString = request.getParameter("weight");
+        //Validates AND CONVERTS TO INT.
+        Weight weight = new Weight(validator.validatePositiveInt("Invalid weight entered: " + weightString, weightString));  
         
-        
-        //reload weight log page, refresh data essentially
-        request.getRequestDispatcher("PhysicalHealthLogController").forward(request, response);
+        //If valid, create and persist the mealProgress
+        if (validator.isValid()) {              
+            PhysicalHealth physHealth = (PhysicalHealth) session.getAttribute("physHealth");
+       
+            WeightProgress wp = new WeightProgress(weight, cal.getTime());
+            wp.persist(physHealth.getID());
+            
+            //Reload weight log page, refresh data essentially
+            request.getRequestDispatcher("PhysicalHealthLogController").forward(request, response);
+        }
+        //Else send user back with the error messages produced by the validator
+        else {
+            request.setAttribute("errorMessage", validator.getErrMsg());
+            request.getRequestDispatcher("weightProgress.jsp").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
