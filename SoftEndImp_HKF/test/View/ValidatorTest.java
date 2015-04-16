@@ -198,7 +198,7 @@ public class ValidatorTest {
 
         assertTrue(instance.validateUsername(errMsg, username1));
         assertFalse(instance.validateUsername(errMsg, username2));   
-        assertFalse(instance.validateUsername(errMsg, username3));
+        assertTrue(instance.validateUsername(errMsg, username3));
         assertFalse(instance.validateUsername(errMsg, username4));
         assertFalse(instance.validateUsername(errMsg, username5));
         assertFalse(instance.validateUsername(errMsg, username6));
@@ -218,7 +218,7 @@ public class ValidatorTest {
         String name3 = "asd_asd";
         String name4 = "asd1123";
         String name5 = "asdasd@:ASD";
-        String name6 = "averylonghuseasdasdasdasdrname";
+        String name6 = "averylonghuseas dasdasdasdrname";
         String name7 = null;
         
         Validator instance = new Validator();
@@ -228,7 +228,7 @@ public class ValidatorTest {
         assertFalse(instance.validateName(errMsg, name3));
         assertFalse(instance.validateName(errMsg, name4));
         assertFalse(instance.validateName(errMsg, name5));
-        assertFalse(instance.validateName(errMsg, name6));
+        assertTrue(instance.validateName(errMsg, name6));
         assertFalse(instance.validateName(errMsg, name7));
     }
 
@@ -253,7 +253,7 @@ public class ValidatorTest {
         assertTrue(instance.validatePassword(errMsg, password1));
         assertFalse(instance.validatePassword(errMsg, password2));   
         assertTrue(instance.validatePassword(errMsg, password3));
-        assertFalse(instance.validatePassword(errMsg, password4));
+        assertTrue(instance.validatePassword(errMsg, password4));
         assertFalse(instance.validatePassword(errMsg, password5));
         assertFalse(instance.validatePassword(errMsg, password6));
         assertFalse(instance.validatePassword(errMsg, password7));
