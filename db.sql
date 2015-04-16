@@ -39,7 +39,7 @@ CREATE TABLE weightProgress
 (
 	id				 SERIAL,
 	physicalHealthID INT	REFERENCES physicalHealth(id),
-	weightDate 		 DATE,
+	weightDate 		 VARCHAR(10),
 	weight			 INT,
 	
 	PRIMARY KEY (id)
@@ -60,7 +60,7 @@ CREATE TABLE exerciseProgress
 (
 	id				SERIAL,
 	memberID 		INT REFERENCES member(id),
-	exerciseDate		DATE,
+	exerciseDate		VARCHAR(10),
 	amount			INT,
 	duration		INT,
 	exerciseID		INT REFERENCES exercise(id),
@@ -95,7 +95,7 @@ CREATE TABLE mealProgress
 	memberID		INT REFERENCES member(id),
 	mealID			INT REFERENCES meal(id),
 	mealTime		INT,
-	mealDate		DATE,
+	mealDate		VARCHAR(10),
 	amount			INT,
 	
 	PRIMARY KEY (id)
@@ -106,9 +106,9 @@ CREATE TABLE goal
 (
 	id				SERIAL,
 	goalType		VARCHAR(100),
-	goalDate		DATE,
-	goalStart		DATE,
-	goalDeadline	DATE,
+	goalDate		VARCHAR(10),
+	goalStart		VARCHAR(10),
+	goalDeadline		VARCHAR(10),
 	target			INT,
 	
 	PRIMARY KEY (id)
@@ -138,12 +138,42 @@ CREATE TABLE member_goals
 
 INSERT INTO member(email, password, username, forename, surname)
 	VALUES ('t_email', 't_pass', 't_user', 't_fname', 't_sname');
-
+INSERT INTO member(email, password, username, forename, surname)
+	VALUES ('j.smith@foo.bar', 'smithj', 'smithj', 'Jon', 'Smith');
+INSERT INTO member(email, password, username, forename, surname)
+	VALUES ('gable@fake.mail', 'moneyman', 'moneyman', 'Mark', 'Gable');
+INSERT INTO member(email, password, username, forename, surname)
+	VALUES ('hrm@no-mail.xyz', 'henmar', 'henmar', 'Hendry', 'Marcus');
+INSERT INTO member(email, password, username, forename, surname)
+	VALUES ('nida@oplc.yada', 'daniel1', 'daniel1', 'Nigel', 'Danielson');
+INSERT INTO member(email, password, username, forename, surname)
+	VALUES ('Af82@msn.aurora', 'amanda99', 'amanda99', 'Amanda', 'Flatly');
+	
 INSERT INTO physicalHealth(heightcm, memberID)
 	VALUES (-1, 1);
+INSERT INTO physicalHealth(heightcm, memberID)
+	VALUES (188, 2);
+INSERT INTO physicalHealth(heightcm, memberID)
+	VALUES (210, 3);
+INSERT INTO physicalHealth(heightcm, memberID)
+	VALUES (160, 4);
+INSERT INTO physicalHealth(heightcm, memberID)
+	VALUES (185, 5);
+INSERT INTO physicalHealth(heightcm, memberID)
+	VALUES (180, 6);
 
 INSERT INTO weightProgress(physicalHealthID, weightDate, weight)
 	VALUES (1, '2015-04-14', -1);
+INSERT INTO weightProgress(physicalHealthID, weightDate, weight)
+	VALUES (2, '2015-04-14', 86182);
+INSERT INTO weightProgress(physicalHealthID, weightDate, weight)
+	VALUES (3, '2015-04-14', 10400);
+INSERT INTO weightProgress(physicalHealthID, weightDate, weight)
+	VALUES (4, '2015-04-14', 81646);
+INSERT INTO weightProgress(physicalHealthID, weightDate, weight)
+	VALUES (5, '2015-04-14', 65500);
+INSERT INTO weightProgress(physicalHealthID, weightDate, weight)
+	VALUES (6, '2015-04-14', 82000);
 
 INSERT INTO exercise(name, exerciseType, calPerUnit)
 	VALUES ('t_name', 't_exercise', -1);
@@ -157,6 +187,12 @@ INSERT INTO exercise(name, exerciseType, calPerUnit)
 	VALUES ('Football', 'time', 6);
 INSERT INTO exercise(name, exerciseType, calPerUnit)
 	VALUES ('Weight Lifting', 'time', 10);
+INSERT INTO exercise(name, exerciseType, calPerUnit)
+	VALUES ('Tennis', 'time', 7);
+INSERT INTO exercise(name, exerciseType, calPerUnit)
+	VALUES ('Coding', 'time', 12);
+INSERT INTO exercise(name, exerciseType, calPerUnit)
+	VALUES ('Walking', 'time', 3);
 
 INSERT INTO exerciseProgress(memberID, exerciseDate, amount, duration, exerciseID)
 	VALUES (1, '2015-04-14', -1, -1, 1);
@@ -174,6 +210,17 @@ INSERT INTO meal(name, calPerUnit)
 	VALUES ('Burger', 400);
 INSERT INTO meal(name, calPerUnit)
 	VALUES ('Sandwich', 300);
+INSERT INTO meal(name, calPerUnit)
+	VALUES ('Porridge', 200);
+INSERT INTO meal(name, calPerUnit)
+	VALUES ('Lasagna', 400);
+INSERT INTO meal(name, calPerUnit)
+	VALUES ('Joost's Special Saucy Sauce with Chips', 500);
+INSERT INTO meal(name, calPerUnit)
+	VALUES ('Chocolate Bar', 50);
+INSERT INTO meal(name, calPerUnit)
+	VALUES ('HongKong Fusion Special Rice', 9001);
+
 
 INSERT INTO mealProgress(memberID, mealID, mealDate, amount)
 	VALUES (1, 1, '2015-04-14', -1);
