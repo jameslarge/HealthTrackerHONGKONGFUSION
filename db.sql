@@ -215,7 +215,7 @@ INSERT INTO meal(name, calPerUnit)
 INSERT INTO meal(name, calPerUnit)
 	VALUES ('Lasagna', 400);
 INSERT INTO meal(name, calPerUnit)
-	VALUES ('Joost''s Special Saucy Sauce with Chips', 500);
+	VALUES ('Sauce of Joost with Chips', 500);
 INSERT INTO meal(name, calPerUnit)
 	VALUES ('Chocolate Bar', 50);
 INSERT INTO meal(name, calPerUnit)
