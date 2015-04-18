@@ -57,6 +57,8 @@ public class CreateGoalController extends HttpServlet {
         HKFDate startDate = new HKFDate();
         if (validator.validateDate("Invalid start date entered, must be in YYYY-MM-DD format: " + startDateString, startDateString)) {
             startDate = new HKFDate(startDateString);
+            startDate.setHours(0);
+            startDate.setMinutes(0);
         }
         
         String endDateString = request.getParameter("endDate");
