@@ -57,6 +57,10 @@
                     DietLogger dietLog = (DietLogger) session.getAttribute("dietLog"); 
                 %>
                 
+                  <%
+                    ArrayList<Meal> meals = Meal.findAll();
+                %>
+                
                 <p>Username: <%=member.getUsername()%></p>   
                 <p>Email: <%=member.getEmail()%></p>
                 
@@ -98,32 +102,111 @@
                     function drawChart() {
                       
                       var data = new google.visualization.DataTable();
-                      data.addColumn('date', 'Date');
+                      data.addColumn('string', 'Date');
                      // data.addColumn('string', 'Meal name');
-                      data.addColumn('number', 'Calories')
                       
                       
-                      <%for (MealProgress mealProg : dietLog.sortDate()){
+                      // index in array corresponds to (meal.Id)
+                      // i.e. Pizza.id = 2, 
+                      <%for (Meal meal: meals){%>
+                        data.addColumn('number', '<%=meal.getMealName()%>');
+                         
+                      <%}%>
+                      
+                      
+                      
+                      <%
+                      //******************JSP***************//
+                        
+                        ArrayList<Object> row = new ArrayList<Object>();
+                      
+                      
+                        //create a temporary row containg 
+                        //date and calories per all possible meals initialised to 0                        
+                        row.add(new HKFDate());
+                        int mealSize = 0;
+                        for (Meal meal : meals){
+                              mealSize++;
+                              row.add(Integer.valueOf(0));
+                          }
+                        
+                        
+                          int counter = 0;
+                          HKFDate prevDate = null;
+                          ArrayList<MealProgress> mealProgresses =  dietLog.sortDate();
+                      for (MealProgress mealProg :mealProgresses){
+                          
+                         
+                          
                           HKFDate date = mealProg.getDate();
-                          String mealName = mealProg.getMeal().getMealName();
-                          int calories = mealProg.calcCalories();
+                          
+                          if(counter==0){
+                              prevDate = date;
+                          }
+                          
+                          row.set(0, date);
+                          
+                          int mealIndex = mealProg.getMeal().getID();
                           
                           
-                      %>                      
-                        data.addRow([new Date(<%=date.getYear()%>,<%=date.getMonthForGraph()%>,<%=date.getDay()%>),<%=calories%>]);
-                       <%}%>  
+                          boolean sameDay = date.compareTo(prevDate)==0;
+                          //if the date is the same modify the values by adding to appropriate fields
+                          if (sameDay){
+                              
+                              //add to whatever is already there (might be 0, might be a value)                                                           
+                              Integer valueToStore = Integer.valueOf(mealProg.calcCalories());
+                              Integer valueStored = (Integer) row.get(mealIndex);
+                                      
+                              row.set(mealProg.getMeal().getID(), valueStored + valueToStore);
+                          }
+                          if (!sameDay || counter == mealProgresses.size() - 1){
+                             
+                             //output row to GOOGLE GRAPHS
+                             %>   
+                                 data.addRow([new Date(<%=prevDate.getYear()%>,<%=prevDate.getMonthForGraph()%>,<%=prevDate.getDay()%>).toDateString()
+                                     <%
+                                     String mealCell;
+                                     for(int i = 1; i<=mealSize; i++){
+                                         mealCell = ", " + ((Integer)row.get(i)).intValue();
+                                         %>
+                                                     <%=mealCell%>
+                                                         
+                                     <%
+                                     }
+                                     %>                               
+                                ]);     
+                             <% 
+                              //reload row (clean it up)
+                              for (int j = 1; j<=mealSize; j++){
+                                   row.set(j,Integer.valueOf(0));
+                               }
+                              //start a new one
+                             row.set(mealIndex, Integer.valueOf(mealProg.calcCalories()));
+                             
+                             
+                          }
+                          if(counter!=0){
+                            prevDate = date;
+                          }
+                         counter++;
+                        }%>  
+                                
+                        
+                                                  
+                          
+                                     
 
                       var options = {
                         title: 'Blabla',                                              
                         width: 900,
                         height: 500,
                         legend: 'none',
-                        
+                        isStacked: 'true',
                         
                        
                       };
                       
-                                    var chart = new google.visualization.LineChart(document.getElementById('linechart'));
+                       var chart = new google.visualization.BarChart(document.getElementById('linechart'));
 
                       chart.draw(data, options);
                     }
@@ -138,9 +221,7 @@
                     Log new meal 
                 </h3>
                 
-                <%
-                    ArrayList<Meal> meals = Meal.findAll();
-                %>
+              
                 
                  <form name="login" action="LogMealController" method="get">
                     <p>Date:<input type="date" name="date" class="textbox"/></p>
