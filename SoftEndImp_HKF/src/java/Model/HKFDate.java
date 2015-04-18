@@ -152,7 +152,17 @@ public class HKFDate implements Comparable<HKFDate>{
     public String toString() {
         //return year + "-" + (month) + "-" + day;
         return String.format("%4d-%02d-%02d", year, month, day);
-    }   
+    }
+    
+    
+    public String forGraphWithTime(){
+        return this.getYear() + ", " + this.getMonthForGraph() + ", " + this.getDay() + ", " + this.getHours() + ", " + this.getMinutes();
+    }
+    
+    public String forGraphWithoutTime(){
+         return this.getYear() + ", " + this.getMonthForGraph() + ", " + this.getDay();
+    }
+        
 
 
     @Override
