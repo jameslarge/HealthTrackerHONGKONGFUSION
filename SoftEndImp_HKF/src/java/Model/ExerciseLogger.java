@@ -7,6 +7,7 @@
 package Model;
 
 import Controllers.DatabaseAccess;
+import Goals.Goal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -73,6 +74,16 @@ public class ExerciseLogger {
     public int findTotalCalsBurnedToday() {
         //TODO
         return 1;
+    }
+    
+     public ArrayList<ExerciseProgress> findProgressesBetweenDates(HKFDate start, HKFDate end) {
+            ArrayList<ExerciseProgress> eps = new ArrayList<>();
+
+            for (ExerciseProgress ep : exerciseLog)
+                 if (ep.getDate().compareTo(start) >= 0 && ep.getDate().compareTo(start) <= 0)
+                    eps.add(ep);
+
+            return eps;
     }
     
     public int findExerciseTimeBetweenDates(HKFDate start, HKFDate end) {

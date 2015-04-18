@@ -78,6 +78,16 @@ public class DietLogger {
         return totalCals;
     }
     
+    public ArrayList<MealProgress> findProgressesBetweenDates(HKFDate start, HKFDate end) {
+       ArrayList<MealProgress> mps = new ArrayList<>();
+
+       for (MealProgress mp : mealLog)
+            if (mp.getDate().compareTo(start) >= 0 && mp.getDate().compareTo(start) <= 0)
+               mps.add(mp);
+
+       return mps;
+    }
+    
     /**
      * Method to Sort information so that Date is in ascending order
      * @return Sorted ArrayList of Meal Progress
