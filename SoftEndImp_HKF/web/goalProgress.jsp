@@ -106,6 +106,7 @@
                     <tr>
                          <th>Goal</th> 
                          <th>Target</th> 
+                         <th>Date Due</th>
                          <th>Current Progress</th>
                     </tr>
                    
@@ -115,6 +116,7 @@
                             <tr>
                                 <td><%=upcomingGoals.get(i).getGoalType().toString()%></td>   
                                 <td><%=upcomingGoals.get(i).getTarget()%></td>
+                                <td><%=upcomingGoals.get(i).getEndDate()%></td>
                                 <td><%=upcomingGoalsProgress.get(i)%></td>
                             </tr>
                     <%                        

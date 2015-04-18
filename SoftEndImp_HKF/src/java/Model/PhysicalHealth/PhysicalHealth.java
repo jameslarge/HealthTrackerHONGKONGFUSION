@@ -87,7 +87,7 @@ public class PhysicalHealth {
        ArrayList<WeightProgress> wps = new ArrayList<>();
        
        for (WeightProgress wp : physicalHealthLog)
-            if (wp.getDate().compareTo(start) >= 0 && wp.getDate().compareTo(start) <= 0)
+            if (wp.getDate().compareTo(start) >= 0 && wp.getDate().compareTo(end) <= 0)
                wps.add(wp);
 
        return wps;
