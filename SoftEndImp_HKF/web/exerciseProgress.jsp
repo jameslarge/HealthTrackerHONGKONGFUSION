@@ -91,16 +91,18 @@
               <!--Load the AJAX API-->
                 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
                 <script type="text/javascript">
-                google.load('visualization', '1', {packages: ['timeline']});
+                google.load('visualization', '1', {packages: ['timeline','corechart']});
                 google.setOnLoadCallback(startChart);   
                 
+               
                 
-                function prepareData() {
+                
+                function prepareDataForTimeline() {
                       
-                      data = new google.visualization.DataTable();
-                      data.addColumn('string', 'Activity');
-                      data.addColumn('date', 'startDate');
-                      data.addColumn('date', 'endDate');
+                      data_TL = new google.visualization.DataTable();
+                      data_TL.addColumn('string', 'Activity');
+                      data_TL.addColumn('date', 'startDate');
+                      data_TL.addColumn('date', 'endDate');
                       
                       
                       <%for (ExerciseProgress exProg : exLog.sortDate()){
@@ -110,13 +112,50 @@
                          
                           
                       %>                      
-                        data.addRow(['<%=exerciseName%>', new Date(<%=startDate.forGraphWithTime()%>), new Date(<%=endDate.forGraphWithTime()%>)]);
+                        data_TL.addRow(['<%=exerciseName%>', new Date(<%=startDate.forGraphWithTime()%>), new Date(<%=endDate.forGraphWithTime()%>)]);
                        <%}%>  
 
                     }
                     
-                    function prepareChart(){
-                         options = {
+                    function prepareTimeline(){
+                         options_TL = {
+                             title: 'Your Weight Over Time [kg]',                                              
+                           width: 900,
+                            height: 500,                                                         
+                          };
+
+                                                 
+                       
+                          chart_TL = new google.visualization.Timeline(document.getElementById('timeline'));
+                    }
+                   
+                    
+                    function drawTimeline(){
+                      chart_TL.draw(data_TL, options_TL);
+                    }
+                    
+                    function prepareDataForGraph() {
+                      
+                      data_GR = new google.visualization.DataTable();
+                      data_GR.addColumn('string', 'Activity Date');
+                      data_GR.addColumn('number', 'startDate');
+                      data_GR.addColumn('date', 'endDate');
+                      
+                       
+                      <%for (ExerciseProgress exProg : exLog.sortDate()){
+                          HKFDate startDate = exProg.getDate();
+                          HKFDate endDate = startDate.getEndDate(exProg.getDuration());
+                          String exerciseName = exProg.getExercise().getExerciseName();
+                         
+                          
+                      %>                      
+                        data_GR.addRow(['<%=exerciseName%>', new Date(<%=startDate.forGraphWithTime()%>), new Date(<%=endDate.forGraphWithTime()%>)]);
+                       <%}%>  
+
+                    }
+                    
+                    function prepareGraph(){
+                         options_GR = {
                              title: 'Your Weight Over Time [kg]',                                              
                             width: 900,
                             height: 500,                                                         
@@ -124,22 +163,38 @@
 
                                                  
                        
-                          chart = new google.visualization.Timeline(document.getElementById('timeline'));
+                          chart_GR = new google.visualization.Timeline(document.getElementById('timeline'));
                     }
                    
                     
-                    function drawChart(){
-                      chart.draw(data, options);
+                    function drawGraph(){
+                      chart_GR.draw(data_GR, options_GR);
                     }
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     
                     function startChart(){
-                      prepareData();
-                      prepareChart();
-                      drawChart();
+                      prepareDataForTimeline();
+                      prepareTimeline();
+                      drawTimeline();
+                      
+                      //prepareDataForGraph();
+                      //prepareGraph();
+                      //drawGraph();
+                      
                     }
                     
-                    drawChart();
-                    
+                    drawTimeline();
+                    //drawGraph();
                 </script>
                 
                 <div id="timeline"></div>
