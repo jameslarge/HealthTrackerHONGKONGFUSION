@@ -86,7 +86,7 @@
                 <%                        
                     }
                 %>
-                
+                </table> 
                           <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
@@ -207,7 +207,16 @@
                       };
                       
                        var chart = new google.visualization.BarChart(document.getElementById('linechart'));
-
+                       
+                       //getting the total amount of calories consumed per date
+                       rowValues;
+                       for(r = 0; r< data.getNumberOfRows(); r++){
+                           var value = 0;
+                           for(c = 1; c<data.getNumberOfColumns();c++){
+                              value = value + data.getValue(r,c);
+                           }
+                           rowValues[rowValues.length] = value;
+                       }
                       chart.draw(data, options);
                     }
                                        
@@ -215,8 +224,7 @@
                 
                  <div id="linechart"></div>
                 
-                </table>    
-              
+                             
                 <h3>
                     Log new meal 
                 </h3>

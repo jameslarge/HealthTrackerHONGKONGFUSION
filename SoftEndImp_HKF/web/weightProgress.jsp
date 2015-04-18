@@ -77,13 +77,13 @@
       google.load('visualization', '1.0', {'packages':['corechart']});
 
       // Set a callback to run when the Google Visualization API is loaded.
-      google.setOnLoadCallback(drawChart);
-
+      google.setOnLoadCallback(startChart);
 
                     
-                    function drawChart() {
+                    
+                    function prepareData() {
                       
-                      var data = new google.visualization.DataTable();
+                      data = new google.visualization.DataTable();
                       data.addColumn('date', 'Date');
                       data.addColumn('number', 'Your Weight')
                       
@@ -96,27 +96,53 @@
                         data.addRow([new Date(<%=date.getYear()%>,<%=date.getMonthForGraph()%>,<%=date.getDay()%>), <%=weight.toString()%>]);
                        <%}%>  
 
-                      var options = {
-                        'title': 'Your Weight Over Time [kg]',                                              
-                        'width': 900,
-                        'height': 500,
-                        'pointSize': 20,
-                        'legend': 'none',
-                        
-                      };
-                      
-                      var formatter = new google.visualization.NumberFormat(
-                      {suffix: 'kg', fractionDigits: 1});
-                      formatter.format(data, 1); // Apply formatter to second column
+                    }
+                    
+                    function prepareChart(){
+                         options = {
+                             title: 'Your Weight Over Time [kg]',                                              
+                            width: 900,
+                            height: 500,
+                            pointSize: 20,
+                            legend: 'none',
+                             hAxis: {title: 'Day'},
+                             vAxis: {title: 'Weight [kg]'},
+                             crosshair: { 
+                                          trigger: 'both',
+                                          orientation: 'horizontal',
+                                          color: 'red'                                                                                   
+                                        }
+                           
+                            
+                          };
 
-                      var chart = new google.visualization.LineChart(document.getElementById('linechart'));
-
+                          var formatter = new google.visualization.NumberFormat(
+                          {suffix: ' kg', fractionDigits: 1});
+                          formatter.format(data, 1); // Apply formatter to second column
+                          
+                       
+                          chart = new google.visualization.LineChart(document.getElementById('linechart'));
+                    }
+                    var button = document.getElementById('b1');
+                    
+                    function drawChart(){
                       chart.draw(data, options);
                     }
+                    
+                    function startChart(){
+                      prepareData();
+                      prepareChart();
+                      drawChart();
+                    }
+                    
+                    drawChart();
+                    
+                
                                        
                 </script>
   
                 <div id="linechart"></div>
+                <button id='b1'>click</button>
               
                 <h3>
                     Log new weight 
