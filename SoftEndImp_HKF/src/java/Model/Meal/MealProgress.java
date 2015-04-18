@@ -252,7 +252,7 @@ public class MealProgress implements Comparable<MealProgress> {
             if(this.mealTime.equals(t.mealTime)) {
                 return 0;
             }
-            else if (this.mealTime.value > t.mealTime.value) {
+            else if (this.mealTime.value < t.mealTime.value) {
                 return 1;
             }
             else {

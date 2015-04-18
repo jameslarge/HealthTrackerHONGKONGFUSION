@@ -150,11 +150,11 @@ public class WeightProgress implements Comparable<WeightProgress> {
                     "INSERT INTO weightProgress (physicalHealthID, weightDate, weight) VALUES(?, ?, ?)");
             
             ps.setInt(1, physHealthId);
-
+            
             //http://stackoverflow.com/questions/530012/how-to-convert-java-util-date-to-java-sql-date
             ps.setString(2, date.toString());
             ps.setInt(3, (int) weight.getGrams());
-
+           
             ps.executeUpdate();
             
             con.close();

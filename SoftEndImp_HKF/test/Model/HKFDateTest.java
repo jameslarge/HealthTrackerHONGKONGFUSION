@@ -107,11 +107,18 @@ public class HKFDateTest {
     @Test
     public void testCompareTo() {
         System.out.println("compareTo");
-        HKFDate t = new HKFDate(5,3,2014);
-        HKFDate instance = new HKFDate(3,3,2014);
-        int expResult = 0;
-        int result = instance.compareTo(t);
-        System.out.println(result);
+        HKFDate equal = new HKFDate(5,3,2014);
+        HKFDate greater = new HKFDate(15,3,2014);
+        HKFDate lessThan = new HKFDate(15,2,2014);
+        HKFDate instance = new HKFDate(5,3,2014);
+        
+        int equalResult = instance.compareTo(equal);
+        int gtResult = instance.compareTo(greater);
+        int ltResult = instance.compareTo(lessThan);
+        
+        assertEquals(0, equalResult);
+        assertEquals(1, gtResult);
+        assertEquals(-1, ltResult);
     }
     
 }
