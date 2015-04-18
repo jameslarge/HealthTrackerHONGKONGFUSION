@@ -6,6 +6,10 @@
 
 package Model;
 
+import Controllers.DatabaseAccess;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -123,6 +127,32 @@ public class ExerciseLogger {
      */
     public void persist(ExerciseProgress exProg) throws ServletException {
         exProg.persist(memberID); //passing this psyhicalHealthId
+    }
+    
+    /**
+     * Method to find specific ExerciseProgress Object and delete it
+     * @param epID ID of ExerciseProgress we are going to Delete
+     * @throws ServletException 
+     */
+    public void delete(int epID) throws ServletException {
+             
+        for(int i = 0; i < exerciseLog.size(); i++) {
+            if(exerciseLog.get(i).getID() == epID) {
+                exerciseLog.get(i).delete();
+                exerciseLog.remove(i);
+            }
+        }
+    }
+    
+    /**
+     * Method to Delete all ExerciseProgress
+     * @throws ServletException 
+     */
+    public void deleteAll() throws ServletException {
+        for(ExerciseProgress exProg : exerciseLog) {
+            exProg.delete();
+        }
+        exerciseLog.clear();
     }
     
 }

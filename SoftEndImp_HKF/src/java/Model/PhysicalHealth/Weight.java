@@ -3,6 +3,8 @@ package Model.PhysicalHealth;
 public class Weight {
     
     private int grams;
+    
+    public Weight() {}
 
     public Weight(int grams) {
         this.grams = grams;

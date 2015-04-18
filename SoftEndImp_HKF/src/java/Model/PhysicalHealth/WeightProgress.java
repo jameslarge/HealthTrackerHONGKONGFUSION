@@ -13,22 +13,28 @@ import javax.servlet.ServletException;
 
 public class WeightProgress implements Comparable<WeightProgress> {
 
+    private int ID;
     private int physicalHealthID;
     private Weight weight;
     private HKFDate date;
 
-    public WeightProgress(int physicalHealthID, Weight weight, HKFDate date) {
+    public WeightProgress(int ID, int physicalHealthID, Weight weight, HKFDate date) {
         this.physicalHealthID = physicalHealthID;
         this.weight = weight;
         this.date = date;
     }
     
     public WeightProgress(Weight weight, HKFDate date) {
+        this.ID = -1;
         this.physicalHealthID = -1;
         this.weight = weight;
         this.date = date;
     }
 
+    public int getID() {
+        return ID;
+    }
+    
     public int getPhysicalHealthID() { 
         return physicalHealthID;
     }
@@ -39,6 +45,10 @@ public class WeightProgress implements Comparable<WeightProgress> {
 
     public HKFDate getDate() {
         return date;
+    }
+    
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public void setPhysicalHealthID(int physicalHealthID) {
@@ -77,6 +87,7 @@ public class WeightProgress implements Comparable<WeightProgress> {
             //If we find User set create a new User using returned values
             if (result.next()) {
                 wp = new WeightProgress(
+                        result.getInt("id"),
                         result.getInt("physicalHealthID"),
                         new Weight(result.getInt("weight")), 
                         new HKFDate(result.getString("weightDate")));
@@ -110,6 +121,7 @@ public class WeightProgress implements Comparable<WeightProgress> {
             
             while (result.next()) {
                 WeightProgress tempWP = new WeightProgress(
+                        result.getInt("id"),
                         result.getInt("physicalHealthID"),
                         new Weight(result.getInt("weight")), 
                         new HKFDate(result.getString("weightDate")));
@@ -163,6 +175,28 @@ public class WeightProgress implements Comparable<WeightProgress> {
         int height = ph.getHeight().getCentimetres();
         
         return (int) (weight.getGrams()/(height * height));
+    }
+    
+    /**
+     * Method to delete all information related to ID
+     * @param epID ID for ExerciseProgress we are deleting
+     * @throws ServletException 
+     */
+    public void delete() throws ServletException {
+        try {
+            Connection con = DatabaseAccess.getConnection();
+
+            PreparedStatement ps = con.prepareStatement(
+                    "DELETE * FROM weightProgress WHERE (id = ?)");
+            
+            ps.setInt(1, ID);
+            ps.executeUpdate();
+            
+            con.close();
+            
+        } catch (SQLException ex) {
+            throw new ServletException("Delete Problem: Deleting weightProgress details: " + ID, ex);
+        }
     }
             
 }
