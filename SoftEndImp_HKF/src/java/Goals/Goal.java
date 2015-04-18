@@ -1,7 +1,10 @@
 package Goals;
 
 import Controllers.DatabaseAccess;
-import Model.HKFDate;
+import Model.*;
+import Model.PhysicalHealth.PhysicalHealth;
+import Model.PhysicalHealth.Weight;
+import Model.PhysicalHealth.WeightProgress;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +16,7 @@ import javax.servlet.ServletException;
  *
  * @author xmw13bzu
  */
-public class Goal {
+public class Goal implements Comparable<Goal> {
 
     int goalID;
     HKFDate dateSet;
@@ -21,10 +24,11 @@ public class Goal {
     HKFDate endDate;
     GoalType goalType;
     int target;
+    boolean notified;
 
     public enum GoalType {
 
-        WEIGHT(0), CALORIES_BURNED(1), CALORIES_CONSUMED_HIGH(2), CALORIES_CONSUMED_LOW(3);
+        WEIGHT_HIGH(0), WEIGHT_LOW(1), CALORIES_BURNED(2), ACTIVITY_TIME(3), CALORIES_CONSUMED_HIGH(4), CALORIES_CONSUMED_LOW(5);
         final int value;
 
         GoalType(int value) {
@@ -43,25 +47,30 @@ public class Goal {
         public String toString() {
             switch (value) {
                 case 0:
-                    return "Weight";
+                    return "Weight Gain";
                 case 1:
-                    return "Calories Burned";
+                    return "Weight Loss";
                 case 2:
-                    return "Calories Consumed High";
+                    return "Calorie Burn";
+                case 3:
+                    return "Exercise Time";
+                case 4:
+                    return "Min Calorie Consumption";
                 default:
-                    return "Calories Consumed Low";
+                    return "Max Calorie Consumption";
             }
         }
     }
 
     //All data available: getting goal from database
-    public Goal(int goalID, HKFDate dateSet, HKFDate startDate, HKFDate endDate, GoalType goalType, int target) {
+    public Goal(int goalID, HKFDate dateSet, HKFDate startDate, HKFDate endDate, GoalType goalType, int target, boolean notified) {
         this.goalID = goalID;
         this.dateSet = dateSet;
         this.startDate = startDate;
         this.endDate = endDate;
         this.goalType = goalType;
         this.target = target;
+        this.notified = notified;
     }
 
     //User creating a goal
@@ -72,6 +81,7 @@ public class Goal {
         this.endDate = endDate;
         this.goalType = goalType;
         this.target = target;
+        this.notified = false;
     }
 
     public int getGoalID() {
@@ -93,6 +103,11 @@ public class Goal {
     public HKFDate getStartDate() {
         return startDate;
     }
+    
+    public boolean isNotified () {
+        return notified;
+    }
+
 
     public void setStartDate(HKFDate startDate) {
         this.startDate = startDate;
@@ -121,6 +136,10 @@ public class Goal {
     public void setTarget(int target) {
         this.target = target;
     }
+    
+    public void setNotified(boolean notified) {
+        this.notified = notified;
+    }
 
     @Override
     public String toString() {
@@ -137,7 +156,8 @@ public class Goal {
                     && startDate == g.startDate
                     && endDate == g.endDate
                     && goalType == g.goalType
-                    && target == g.target;
+                    && target == g.target
+                    && notified == g.notified;
         }
 
         return false;
@@ -167,7 +187,8 @@ public class Goal {
                         new HKFDate(result.getString("goalStart")),
                         new HKFDate(result.getString("goalDeadline")),
                         GoalType.toGoalType(result.getInt("goalType")),
-                        result.getInt("target"));
+                        result.getInt("target"),
+                        result.getBoolean("notified"));
             }
 
             con.close(); //Close Connection
@@ -193,12 +214,13 @@ public class Goal {
             Connection con = DatabaseAccess.getConnection();
             //SQL Statement to run
             PreparedStatement ps = con.prepareStatement(
-                    "SELECT id FROM goal WHERE (goalType = ? AND goalDate = ? AND goalStart = ? AND goalDeadline = ? AND target = ?)");
+                    "SELECT id FROM goal WHERE (goalType = ? AND goalDate = ? AND goalStart = ? AND goalDeadline = ? AND target = ? AND notified = ?)");
             ps.setInt(1, goal.goalType.ordinal());
             ps.setString(2, goal.dateSet.toString());
             ps.setString(3, goal.startDate.toString());
             ps.setString(4, goal.endDate.toString());
             ps.setInt(5, goal.target);
+            ps.setBoolean(6, goal.notified);
             
             ResultSet result = ps.executeQuery();//Run statement
             int id = -1;
@@ -240,7 +262,8 @@ public class Goal {
                         new HKFDate(result.getString("goalStart")),
                         new HKFDate(result.getString("goalDeadline")),
                         GoalType.toGoalType(result.getInt("goalType")),
-                        result.getInt("target"));
+                        result.getInt("target"),
+                        result.getBoolean("notified"));
                 goalList.add(goal);
             }
 
@@ -261,13 +284,14 @@ public class Goal {
             Connection con = DatabaseAccess.getConnection();
 
             PreparedStatement ps = con.prepareStatement(
-                        "INSERT INTO goal (goalType, goalDate, goalStart, goalDeadline, target) VALUES(?, ?, ?, ?, ?)");
+                        "INSERT INTO goal (goalType, goalDate, goalStart, goalDeadline, target, notified) VALUES(?, ?, ?, ?, ?, ?)");
             
             ps.setInt(1, goalType.ordinal());
             ps.setString(2, dateSet.toString());
             ps.setString(3, startDate.toString());
             ps.setString(4, endDate.toString());
             ps.setInt(5, target);
+            ps.setBoolean(6, notified);
 
             ps.executeUpdate();
             
@@ -279,4 +303,65 @@ public class Goal {
         }
     }
     
+    /**
+     * Compares based on endDate
+     * @param g
+     * @return 
+     * @throws ServletException 
+     */
+    @Override
+    public int compareTo(Goal g) {
+        return endDate.compareTo(g.endDate);
+    }
+    
+    public int checkProgress(PhysicalHealth physHealth, DietLogger dietLog, ExerciseLogger exLog) {
+            double progressPercent = 0;
+
+            switch (goalType) {
+                    case WEIGHT_HIGH: {
+                        physHealth.sortDate();
+                        Weight currentWeight = physHealth.getMostRecentWeight();
+                        Weight startweight = physHealth.findWeightOnDate(startDate);
+                        
+                        if (currentWeight.getGrams() >= target)
+                            return 100; //100% complete
+                        else {
+                            int targetDifference = startweight.getGrams() - target;
+                            int actualDifference = currentWeight.getGrams() - target;
+                            progressPercent = actualDifference / targetDifference;
+                        }
+                    }
+                    case WEIGHT_LOW: {
+                        physHealth.sortDate();
+                        Weight currentWeight = physHealth.getMostRecentWeight();
+                        Weight startweight = physHealth.findWeightOnDate(startDate);
+                        
+                        if (currentWeight.getGrams() <= target)
+                            return 100; //100% complete
+                        else {
+                            int targetDifference = startweight.getGrams() - target;
+                            int actualDifference = currentWeight.getGrams() - target;
+                            progressPercent = (double)actualDifference / (double)targetDifference;
+                        }
+                    }
+                    case CALORIES_BURNED:
+
+                    case ACTIVITY_TIME:
+                        int time = exLog.findExerciseTimeBetweenDates(startDate, endDate);
+                        progressPercent = (double)time / (double)target;
+                        
+                    case CALORIES_CONSUMED_HIGH:
+                    case CALORIES_CONSUMED_LOW:
+                        calorieseaten = 0
+                        for each meal since startdate
+                                calorieseaten += mealcalories
+                        progresspercent = calorieseaten / target
+                        //result interpreted depending on whether target is low (calorie cutting)
+                        //or high (bulking)
+                        //if low, goal is FAILED if 100% is reached
+                        //if high, goal is SUCCEEDED if 100% is reached
+            }
+
+            return (int)(progressPercent*100);
+    }
 }

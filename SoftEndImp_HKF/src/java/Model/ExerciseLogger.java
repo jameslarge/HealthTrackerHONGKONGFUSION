@@ -71,6 +71,18 @@ public class ExerciseLogger {
         return 1;
     }
     
+    public int findExerciseTimeBetweenDates(HKFDate start, HKFDate end) {
+        int totalTime = 0;
+        
+        for (ExerciseProgress ep : exerciseLog) {
+            if (ep.getDate().compareTo(start) >= 0 && ep.getDate().compareTo(start) <= 0)
+                totalTime += ep.getDuration();
+        }
+        
+        return totalTime;
+    }
+    
+    
     /**
      * Method to Sort information so that Date is in ascending order
      * @return Sorted ArrayList of ExerciseProgress

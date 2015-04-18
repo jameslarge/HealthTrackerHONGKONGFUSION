@@ -8,7 +8,7 @@ public class Weight {
         this.grams = grams;
     }
 
-    public double getGrams() {
+    public int getGrams() {
         return grams;
     }
 

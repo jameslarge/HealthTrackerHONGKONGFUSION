@@ -3,6 +3,7 @@ package Goals;
 import Controllers.DatabaseAccess;
 import Model.HKFDate;
 import Model.Member;
+import Model.PhysicalHealth.PhysicalHealth;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,7 +16,7 @@ import javax.servlet.ServletException;
  *
  * @author xmw13bzu
  */
-public class MemberGoal {
+public class MemberGoal implements Comparable<MemberGoal> {
     int ID;
     int memberID;
     Goal goal;
@@ -204,6 +205,17 @@ public class MemberGoal {
             throw new ServletException(
                     "Persist Problem: persisting member_goals details, memberID: " + memberID + " goalID: " + goalID, ex);
         }
+    }
+
+    /**
+     * Compares based on endDate
+     * @param mg
+     * @return 
+     * @throws ServletException 
+     */
+    @Override
+    public int compareTo(MemberGoal mg) {
+        return goal.endDate.compareTo(mg.goal.endDate);
     }
     
 }
