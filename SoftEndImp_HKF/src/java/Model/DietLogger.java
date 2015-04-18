@@ -87,6 +87,8 @@ public class DietLogger {
         return mealLog;
     }
     
+    
+    
     /**
      * Method to find a Member's DietLogger using their id
      *

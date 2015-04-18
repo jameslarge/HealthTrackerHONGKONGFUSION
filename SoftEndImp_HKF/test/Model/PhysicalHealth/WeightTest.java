@@ -72,7 +72,7 @@ public class WeightTest {
     public void testToString() {
         System.out.println("toString");
         Weight instance = new Weight(1000);
-        String expResult = "1";
+        String expResult = "1.0";
         String result = instance.toString();
         assertEquals(expResult, result);
     }

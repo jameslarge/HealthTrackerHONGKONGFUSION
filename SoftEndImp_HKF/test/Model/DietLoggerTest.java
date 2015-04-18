@@ -114,7 +114,13 @@ public class DietLoggerTest {
     @Test
     public void testSortDate() {
         System.out.println("sortDate Test");
+        for(int i = 0; i < instance.getMealLog().size(); i++) {
+            System.out.println(instance.getMealLog().get(i));
+        }
         instance.sortDate();
+        for(int i = 0; i < instance.getMealLog().size(); i++) {
+            System.out.println(instance.getMealLog().get(i));
+        }
     }
 
     /**
