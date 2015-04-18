@@ -3,6 +3,8 @@ package Model.PhysicalHealth;
 public class Height {
     
     private int centimetres;
+    
+    public Height() {}
 
     public Height(int centimetres) {
         this.centimetres = centimetres;

@@ -17,8 +17,8 @@ import javax.servlet.ServletException;
  * @author xmw13bzu
  */
 public class DietLogger {
-    int memberID;
-    ArrayList<MealProgress> mealLog;
+    private int memberID;
+    private ArrayList<MealProgress> mealLog;
     
     public DietLogger() { 
         this.memberID = -1;
@@ -71,7 +71,7 @@ public class DietLogger {
      * Method to Sort information so that Date is in ascending order
      * @return Sorted ArrayList of Meal Progress
      */
-    public ArrayList<MealProgress> sortDate() {
+    public ArrayList<MealProgress> sortDate() {        
         Collections.sort(mealLog);
         return mealLog;
     }
@@ -109,5 +109,32 @@ public class DietLogger {
     public void persist(MealProgress mealProg) throws ServletException {
         mealProg.persist(memberID); //passing this memberid
     }
+    
+        /**
+     * Method to find specific ExerciseProgress Object and delete it
+     * @param epID ID of ExerciseProgress we are going to Delete
+     * @throws ServletException 
+     */
+    public void delete(int mpID) throws ServletException {
+             
+        for(int i = 0; i < mealLog.size(); i++) {
+            if(mealLog.get(i).getID() == mpID) {
+                mealLog.get(i).delete();
+                mealLog.remove(i);
+            }
+        }
+    }
+    
+    /**
+     * Method to Delete all ExerciseProgress
+     * @throws ServletException 
+     */
+    public void deleteAll() throws ServletException {
+        for(MealProgress mProg : mealLog) {
+            mProg.delete();
+        }
+        mealLog.clear();
+    }
+    
     
 }
