@@ -107,8 +107,8 @@
                             %>
                         </select>
                     </p>
-                    <p>Duration(if applicable):<input type="text" name="duration" class="textbox"/></p>
-                    <p>Amount(if applicable):<input type="text" name="amount" class="textbox"/></p>
+                    <p>Duration(if applicable):<input type="number" name="duration" class="textbox"/></p>
+                    <p>Amount(if applicable):<input type="number" name="amount" class="textbox"/></p>
                     <p><input type="submit" value="Enter"/>
                     <input type="reset" value="Reset"/></p>
                 </form>

@@ -83,25 +83,49 @@
                          <th>Current Progress</th>
                     </tr>
                    
-                <%
-                    for (int i = 0; i < dueGoals.size(); ++i) {
-                %>
-                        <tr>
-                            <td><%=dueGoals.get(i).getGoalType().toString()%></td>   
-                            <td><%=dueGoals.get(i).getTarget()%></td>
-                            <td><%=dueGoalsProgress.get(i)%></td>
-                        </tr>
-                <%                        
-                    }
-                %>
+                    <%
+                        for (int i = 0; i < dueGoals.size(); ++i) {
+                    %>
+                            <tr>
+                                <td><%=dueGoals.get(i).getGoalType().toString()%></td>   
+                                <td><%=dueGoals.get(i).getTarget()%></td>
+                                <td><%=dueGoalsProgress.get(i)%></td>
+                            </tr>
+                    <%                        
+                        }
+                    %>
+                </table>
+                
+                <h3>
+                    Goals due soon
+                </h3>
+                
+                <!-- for each exercise progress -->
+                    <!-- print date : exercisename, cals burned --> 
+                <table>
+                    <tr>
+                         <th>Goal</th> 
+                         <th>Target</th> 
+                         <th>Current Progress</th>
+                    </tr>
+                   
+                    <%
+                        for (int i = 0; i < upcomingGoals.size(); ++i) {
+                    %>
+                            <tr>
+                                <td><%=upcomingGoals.get(i).getGoalType().toString()%></td>   
+                                <td><%=upcomingGoals.get(i).getTarget()%></td>
+                                <td><%=upcomingGoalsProgress.get(i)%></td>
+                            </tr>
+                    <%                        
+                        }
+                    %>
                 </table>
                 
                 <h3>
                     ALL Your Goals
                 </h3>
-                
 
-                
                 <!-- for each exercise progress -->
                     <!-- print date : exercisename, cals burned --> 
                 <table>
@@ -145,7 +169,7 @@
 
                     <p>Start Date:<input type="date" name="startDate" value="<%=new HKFDate().toString()%>" class="textbox"/></p>     
                     <p>End Date:<input type="date" name="endDate" value="<%=new HKFDate().toString()%>" class="textbox"/></p>     
-                    <p>Target:<input type="text" name="target" class="textbox"/></p>
+                    <p>Target:<input type="number" name="target" class="textbox"/></p>
                     <p><input type="submit" value="Create Goal"/>
                     <input type="reset" value="Reset"/></p>
                 </form>

@@ -150,7 +150,7 @@
                 
                  <form name="login" action="LogWeightController" method="get">
                     <p>Date:<input type="date" name="date" class="textbox"/></p>
-                    <p>Weight:<input type="text" name="weight" class="textbox"/></p>
+                    <p>Weight:<input type="number" name="weight" class="textbox"/></p>
                     <p><input type="submit" value="Enter"/>
                     <input type="reset" value="Reset"/></p>
                 </form>

@@ -48,12 +48,12 @@ public class LogExerciseController extends HttpServlet {
         
         String durationString = request.getParameter("duration");
         String amountString = request.getParameter("amount");
-        String exerciseIDString = request.getParameter("exerciseID");
+        String exerciseIDString = request.getParameter("exercise");
         
        
-        int duration = validator.validatePositiveInt("Invalid meal time entered: " + durationString, durationString);
-        int amount = validator.validatePositiveInt("Invalid meal entered: " + amountString, amountString);
-        int exerciseID = validator.validatePositiveInt("Invalid amount entered: " + exerciseIDString, exerciseIDString);
+        int duration = validator.validatePositiveInt("Invalid duration time entered: " + durationString, durationString);
+        int amount = validator.validatePositiveInt("Invalid amount entered: " + amountString, amountString);
+        int exerciseID = validator.validatePositiveInt("Invalid exercise entered: " + exerciseIDString, exerciseIDString);
         
         //should be  YYYY-MM-DD, i.e is shit and doesnt enforce any formatting 
         //on user in input type=date, deal with it later
