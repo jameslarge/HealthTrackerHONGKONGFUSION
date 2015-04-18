@@ -1,4 +1,5 @@
 package Model;
+import java.util.Calendar;
 import java.util.Date;
 
 public class HKFDate implements Comparable<HKFDate>{
@@ -9,12 +10,13 @@ public class HKFDate implements Comparable<HKFDate>{
     private int hours;
     private int minutes;
     
+    
     public HKFDate(){
-        Date currentDate = new Date();
+        Calendar currentDate = Calendar.getInstance();
 
-        this.day = currentDate.getDay();
-        this.month = currentDate.getMonth() + 1; //to be tested
-        this.year = currentDate.getYear() + 1900; //fuck that shit
+        this.day = currentDate.get(Calendar.DATE);
+        this.month = currentDate.get(Calendar.MONTH) + 1; //to be tested
+        this.year = currentDate.get(Calendar.YEAR); //fuck that shit
         this.hours = 23;
         this.minutes = 59;
     }
@@ -212,6 +214,11 @@ public class HKFDate implements Comparable<HKFDate>{
         }
     }
     
+    /**
+     * Method to calculate the difference between two dates 
+     * @param date Second date
+     * @return difference between dates in days
+     */
     public int diffDay(HKFDate date) {
         int monthSize = date.monthSize();
         
@@ -222,11 +229,29 @@ public class HKFDate implements Comparable<HKFDate>{
         return diffYear + diffMonth + diffDay;
     }
     
+    /**
+     * Method to calculate the difference between two dates 
+     * @param date Second date
+     * @return difference between dates in minutes
+     */
     public int diffMin(HKFDate date) {
         int diffHour = date.hours - hours * 60;
         int diffMin = date.minutes - minutes;
         
         return (diffDay(date) * 24 * 60) + diffHour + diffMin;
     }
+    
+    /**
+     * Method to get the end date 
+     * @param days amount of days to add on
+     * @return End Date
+     */
+    public HKFDate getEndDate(int minutes) {
+        HKFDate endDate = new HKFDate(day,month,year);
+        
+        endDate.setMinutes(minutes);
+        
+        return endDate;
+    }    
     
 }
