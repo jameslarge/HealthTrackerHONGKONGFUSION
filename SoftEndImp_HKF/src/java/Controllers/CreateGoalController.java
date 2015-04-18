@@ -64,6 +64,10 @@ public class CreateGoalController extends HttpServlet {
         if (validator.validateDate("Invalid end date entered, must be in YYYY-MM-DD format: " + endDateString, endDateString)) {
             endDate = new HKFDate(endDateString);
         }
+        
+        if (startDate.compareTo(endDate) > 0) {
+            validator.appendErrMsg("Invalid dates entered, goal ends before it starts");
+        }
   
         if (validator.isValid()) {
             Member member = (Member) session.getAttribute("member");

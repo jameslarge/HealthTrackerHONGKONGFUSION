@@ -42,15 +42,33 @@ public class HKFDate implements Comparable<HKFDate>{
     }
 
     public void setDay(int day) {        
-        this.day = day;
-        
+        if(day > monthSize()){
+            this.day = day - monthSize();
+            setMonth(this.month + 1);
+        }else if (day <= 0){
+            setMonth(this.month - 1);
+            this.day = monthSize() + day;
+        }else {
+            this.day = day;
+        } 
         
     }
 
     public void setMonth(int month) {
-        this.month = month;
-        
+        if(month > 12)
+        {            
+            this.month = 1;
+            this.year = this.year + (month/12);
+        }
+        else if(month <= 0)
+        {
+            this.month = 12;
+            this.year = this.year - (month/12);
+        }else {
+            this.month = month;
+        }
     }
+
 
     public void setYear(int year) {
         this.year = year;
@@ -90,6 +108,22 @@ public class HKFDate implements Comparable<HKFDate>{
         //return year + "-" + (month) + "-" + day;
         return String.format("%4d-%02d-%02d", year, month, day);
     }   
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final HKFDate other = (HKFDate) obj;
+
+        return this.day == other.day
+                && this.month == other.month
+                && this.year == other.year;
+    }
 
     @Override
     public int compareTo(HKFDate t) {

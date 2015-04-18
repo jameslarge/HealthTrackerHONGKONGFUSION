@@ -110,6 +110,7 @@ CREATE TABLE goal
 	goalStart		VARCHAR(10),
 	goalDeadline		VARCHAR(10),
 	target			INT,
+	notified		BOOLEAN,
 	
 	PRIMARY KEY (id)
 );

@@ -1,6 +1,7 @@
 package Model.PhysicalHealth;
 
 import Controllers.*;
+import Model.ExerciseProgress;
 import Model.HKFDate;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -76,6 +77,41 @@ public class PhysicalHealth {
     
     public void addWeightProgess(WeightProgress wp) {
         physicalHealthLog.add(wp);
+    }
+    
+    public Weight getMostRecentWeight() {
+        return Collections.max(physicalHealthLog).getWeight();
+    }
+    
+    public Weight findWeightOnDate(HKFDate date) {
+        if (physicalHealthLog.isEmpty()) 
+            return null;
+        
+        Collections.sort(physicalHealthLog);
+        
+        int prevDateIndex = 0, postDateIndex = 0; //if no weightProgress entered
+        //specifically on the given date, average out the two weightprogresses either side of the date
+        //if available
+        
+        for (WeightProgress wp : physicalHealthLog) {
+            int comp = wp.getDate().compareTo(date);
+            
+            if (comp == 0)
+                return wp.getWeight();
+            else if (comp < 0) {
+                prevDateIndex++;
+                postDateIndex = prevDateIndex + 1;
+            }   
+            else 
+                break;
+        }
+        
+        if (postDateIndex == 0) //date is BEFORE any weightprogresses were entered
+            return physicalHealthLog.get(0).getWeight();
+        if (postDateIndex == physicalHealthLog.size()) //date is AFTER any weightprogresses entered
+            return physicalHealthLog.get(physicalHealthLog.size()-1).getWeight();
+        
+        return new Weight((physicalHealthLog.get(prevDateIndex).getWeight().getGrams() + physicalHealthLog.get(postDateIndex).getWeight().getGrams()) / 2);
     }
     
     public int findTotalWeightDifferenceVersusDate(HKFDate dateToCompareAgainst) {
@@ -199,8 +235,33 @@ public class PhysicalHealth {
         } catch (SQLException e) {
             throw new ServletException("Persist Problem: persisting physicalhealth details", e);
         }
+    }    
+    
+    /**
+     * Method to find specific ExerciseProgress Object and delete it
+     * @param epID ID of ExerciseProgress we are going to Delete
+     * @throws ServletException 
+     */
+    public void delete(int wpID) throws ServletException {
+             
+        for(int i = 0; i < physicalHealthLog.size(); i++) {
+            if(physicalHealthLog.get(i).getID() == wpID) {
+                physicalHealthLog.get(i).delete();
+                physicalHealthLog.remove(i);
+            }
+        }
     }
     
+    /**
+     * Method to Delete all ExerciseProgress
+     * @throws ServletException 
+     */
+    public void deleteAll() throws ServletException {
+        for(WeightProgress wProg : physicalHealthLog) {
+            wProg.delete();
+        }
+        physicalHealthLog.clear();
+    }
     
 }
 

@@ -105,10 +105,10 @@
                         </select>
                     </p>
 
-                    <p>Start Date:<input type="date" name="startDate" class="textbox"/></p>     
-                    <p>End Date:<input type="date" name="endDate" class="textbox"/></p>     
+                    <p>Start Date:<input type="date" name="startDate" value="<%=new HKFDate().toString()%>" class="textbox"/></p>     
+                    <p>End Date:<input type="date" name="endDate" value="<%=new HKFDate().toString()%>" class="textbox"/></p>     
                     <p>Target:<input type="text" name="target" class="textbox"/></p>
-                    <p><input type="submit" value="Enter"/>
+                    <p><input type="submit" value="Create Goal"/>
                     <input type="reset" value="Reset"/></p>
                 </form>
                 

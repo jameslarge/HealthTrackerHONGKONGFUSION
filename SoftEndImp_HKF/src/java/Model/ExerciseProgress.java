@@ -192,4 +192,26 @@ public class ExerciseProgress implements Comparable<ExerciseProgress> {
     public int compareTo(ExerciseProgress t) {
         return (this.date.compareTo(t.date));
     }
+    
+    /**
+     * Method to delete all information related to ID
+     * @param epID ID for ExerciseProgress we are deleting
+     * @throws ServletException 
+     */
+    public void delete() throws ServletException {
+        try {
+            Connection con = DatabaseAccess.getConnection();
+
+            PreparedStatement ps = con.prepareStatement(
+                    "DELETE * FROM exerciseProgress WHERE (id = ?)");
+            
+            ps.setInt(1, ID);
+            ps.executeUpdate();
+            
+            con.close();
+            
+        } catch (SQLException ex) {
+            throw new ServletException("Delete Problem: Deleting exerciseProgress details: " + ID, ex);
+        }
+    }
 }

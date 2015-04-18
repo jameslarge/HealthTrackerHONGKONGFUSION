@@ -48,6 +48,12 @@ public class GoalsController extends HttpServlet {
         ArrayList<Goal> goalList = MemberGoal.findAllGoalsForMember(member.getUserID());
         session.setAttribute("goalList", goalList);
         
+        for (Goal goal : goalList) {
+            goal.checkProgress(member.getUserID());
+        }
+        
+        
+        
         request.getRequestDispatcher("goalProgress.jsp").forward(request, response);
     }
 

@@ -6,6 +6,10 @@
 
 package Model;
 
+import Controllers.DatabaseAccess;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -71,6 +75,18 @@ public class ExerciseLogger {
         return 1;
     }
     
+    public int findExerciseTimeBetweenDates(HKFDate start, HKFDate end) {
+        int totalTime = 0;
+        
+        for (ExerciseProgress ep : exerciseLog) {
+            if (ep.getDate().compareTo(start) >= 0 && ep.getDate().compareTo(start) <= 0)
+                totalTime += ep.getDuration();
+        }
+        
+        return totalTime;
+    }
+    
+    
     /**
      * Method to Sort information so that Date is in ascending order
      * @return Sorted ArrayList of ExerciseProgress
@@ -111,6 +127,32 @@ public class ExerciseLogger {
      */
     public void persist(ExerciseProgress exProg) throws ServletException {
         exProg.persist(memberID); //passing this psyhicalHealthId
+    }
+    
+    /**
+     * Method to find specific ExerciseProgress Object and delete it
+     * @param epID ID of ExerciseProgress we are going to Delete
+     * @throws ServletException 
+     */
+    public void delete(int epID) throws ServletException {
+             
+        for(int i = 0; i < exerciseLog.size(); i++) {
+            if(exerciseLog.get(i).getID() == epID) {
+                exerciseLog.get(i).delete();
+                exerciseLog.remove(i);
+            }
+        }
+    }
+    
+    /**
+     * Method to Delete all ExerciseProgress
+     * @throws ServletException 
+     */
+    public void deleteAll() throws ServletException {
+        for(ExerciseProgress exProg : exerciseLog) {
+            exProg.delete();
+        }
+        exerciseLog.clear();
     }
     
 }
