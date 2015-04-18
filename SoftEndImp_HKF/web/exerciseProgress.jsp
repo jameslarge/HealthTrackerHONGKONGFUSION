@@ -68,22 +68,82 @@
                     <!-- print date : exercisename, cals burned --> 
                 <table>
                     <tr>
-                         <th>Date</th> <th>Exercise</th> <th>Calories Burned</th>
+                        <th>Start Date</th> <th>Exercise</th> <th>Calories Burned</th> <th>End Date</th> <th>Duration</th>
                     </tr>
                    
                 <%
                     for (ExerciseProgress exProg : exLog.getExerciseLog()) {
+                        HKFDate startDate = exProg.getDate();
+                        HKFDate endDate = startDate.getEndDate(exProg.getDuration());
                 %>
                     <tr>
-                        <td><%=exProg.getDate()%></td>   
+                        <td><%=startDate.forGraphWithTime()%></td>   
                         <td><%=exProg.getExercise().getExerciseName()%></td>
                         <td><%=exProg.calculateCals()%></td>
+                        <td><%=endDate.forGraphWithTime()%></td>
+                        <td><%=exProg.getDuration()%></td>
+                        
                     </tr>
                 <%                        
                     }
                 %>
                 </table>    
-              
+              <!--Load the AJAX API-->
+                <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+                <script type="text/javascript">
+                google.load('visualization', '1', {packages: ['timeline']});
+                google.setOnLoadCallback(startChart);   
+                
+                
+                function prepareData() {
+                      
+                      data = new google.visualization.DataTable();
+                      data.addColumn('string', 'Activity');
+                      data.addColumn('date', 'startDate');
+                      data.addColumn('date', 'endDate');
+                      
+                      
+                      <%for (ExerciseProgress exProg : exLog.sortDate()){
+                          HKFDate startDate = exProg.getDate();
+                          HKFDate endDate = startDate.getEndDate(exProg.getDuration());
+                          String exerciseName = exProg.getExercise().getExerciseName();
+                         
+                          
+                      %>                      
+                        data.addRow(['<%=exerciseName%>', new Date(<%=startDate.forGraphWithTime()%>), new Date(<%=endDate.forGraphWithTime()%>)]);
+                       <%}%>  
+
+                    }
+                    
+                    function prepareChart(){
+                         options = {
+                             title: 'Your Weight Over Time [kg]',                                              
+                            width: 900,
+                            height: 500,                                                         
+                          };
+
+                                                 
+                       
+                          chart = new google.visualization.Timeline(document.getElementById('timeline'));
+                    }
+                   
+                    
+                    function drawChart(){
+                      chart.draw(data, options);
+                    }
+                    
+                    function startChart(){
+                      prepareData();
+                      prepareChart();
+                      drawChart();
+                    }
+                    
+                    drawChart();
+                    
+                </script>
+                
+                <div id="timeline"></div>
+      
                 <h3>
                     Log new exercise 
                 </h3>
@@ -94,7 +154,10 @@
                 %>
                 
                  <form name="login" action="LogExerciseController" method="get">
-                    <p>Date:<input type="date" name="date" class="textbox"/></p>
+                    <p>Start Date<input type="date" name="date" class="textbox"/></p>
+                    <p>Start Time<input type="time" name="time" class="textbox"/></p>
+                   
+                    
                     <!--<p>Exercise:<input type="text" name="exercise" class="textbox"/></p>-->
                     <p>Exercise: 
                         <select name="exercise">
@@ -107,6 +170,8 @@
                             %>
                         </select>
                     </p>
+                    
+                    
                     <p>Duration(if applicable):<input type="number" name="duration" class="textbox"/></p>
                     <p>Amount(if applicable):<input type="number" name="amount" class="textbox"/></p>
                     <p><input type="submit" value="Enter"/>

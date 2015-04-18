@@ -94,7 +94,7 @@ public class ExerciseProgress implements Comparable<ExerciseProgress> {
             if (result.next()) {
                 eProgress = new ExerciseProgress(
                         Exercise.find(result.getInt("exerciseID")),
-                        new HKFDate(result.getString("exerciseDate")),
+                        new HKFDate(result.getString("exerciseDate"), result.getString("exerciseStartTime")),
                         result.getInt("duration"),
                         result.getInt("amount"));
             }
@@ -127,7 +127,7 @@ public class ExerciseProgress implements Comparable<ExerciseProgress> {
             while (result.next()) {
                 ExerciseProgress eProgress = new ExerciseProgress(
                         Exercise.find(result.getInt("exerciseID")),
-                        new HKFDate(result.getString("exerciseDate")),
+                        new HKFDate(result.getString("exerciseDate"), result.getString("exerciseStartTime")),
                         result.getInt("duration"),
                         result.getInt("amount"));
                 
@@ -151,15 +151,16 @@ public class ExerciseProgress implements Comparable<ExerciseProgress> {
             Connection con = DatabaseAccess.getConnection();
 
             PreparedStatement ps = con.prepareStatement(
-                    "INSERT INTO exerciseProgress (memberID, exerciseDate, amount, duration, exerciseID) VALUES(?, ?, ?, ?, ?)");
+                    "INSERT INTO exerciseProgress (memberID, exerciseDate, exerciseStartTime, amount, duration, exerciseID) VALUES(?, ?, ?, ?, ?, ?)");
             
             ps.setInt(1, memberID);
 
             //http://stackoverflow.com/questions/530012/how-to-convert-java-util-date-to-java-sql-date
             ps.setString(2, date.toString());
-            ps.setInt(3, amount);
-            ps.setInt(4, duration);
-            ps.setInt(5, exercise.getID());
+            ps.setString(3, date.timeToString());
+            ps.setInt(4, amount);
+            ps.setInt(5, duration);
+            ps.setInt(6, exercise.getID());
 
             ps.executeUpdate();
             

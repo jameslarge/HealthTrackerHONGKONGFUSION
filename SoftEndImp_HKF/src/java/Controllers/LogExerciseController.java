@@ -58,9 +58,10 @@ public class LogExerciseController extends HttpServlet {
         //should be  YYYY-MM-DD, i.e is shit and doesnt enforce any formatting 
         //on user in input type=date, deal with it later
         String dateString = request.getParameter("date");
+        String timeString = request.getParameter("time");
         HKFDate date = new HKFDate();
         if (validator.validateDate("Invalid date entered, must be in YYYY-MM-DD format: " + dateString, dateString)) {
-            date = new HKFDate(dateString);
+            date = new HKFDate(dateString,timeString);
         }
         
         if (validator.isValid()) {
