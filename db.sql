@@ -61,6 +61,7 @@ CREATE TABLE exerciseProgress
 	id				SERIAL,
 	memberID 		INT REFERENCES member(id),
 	exerciseDate		VARCHAR(10),
+	exerciseStartTime	VARCHAR(10),
 	amount			INT,
 	duration		INT,
 	exerciseID		INT REFERENCES exercise(id),

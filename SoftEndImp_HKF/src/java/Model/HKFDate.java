@@ -38,7 +38,14 @@ public class HKFDate implements Comparable<HKFDate>{
     }
     
     public HKFDate(String dateStr){
-        splitString(dateStr);
+        splitStringDate(dateStr);
+        this.hours = 23;
+        this.minutes = 59;
+    }
+    
+    public HKFDate(String dateStr, String timeStr){
+        splitStringDate(dateStr);
+        splitStringTime(timeStr);
     }
 
     public int getDay() {
@@ -65,30 +72,28 @@ public class HKFDate implements Comparable<HKFDate>{
         return minutes;
     }
 
-    public void setDay(int day) {        
-        if(day > monthSize()){
-            this.day = day - monthSize();
+    public void addDay(int day) {   
+        
+        //assuming user can't skip more than one month
+        if(day+this.day > monthSize()){
+            this.day = day+this.day - monthSize();
             setMonth(this.month + 1);
-        }else if (day <= 0){
-            setMonth(this.month - 1);
-            this.day = monthSize() + day;
-        }else {
-            this.day = day;
+        }else{
+            setDay(day+this.day);
         } 
         
+    }
+    
+    public void setDay(int day){
+        this.day = day;
     }
 
     public void setMonth(int month) {
         if(month > 12)
         {            
             this.month = 1;
-            this.year = this.year + (month/12);
-        }
-        else if(month <= 0)
-        {
-            this.month = 12;
-            this.year = this.year - (month/12);
-        }else {
+            setYear(this.year + (month/12));
+        }else{
             this.month = month;
         }
     }
@@ -96,27 +101,46 @@ public class HKFDate implements Comparable<HKFDate>{
     public void setYear(int year) {
         this.year = year;
     }
+
     
-    public void setHours(int hour) {
-        if(hour > 24) {
-            this.hours = hour - 24;
-            setDay(this.day + hour/24);
-        }
-        else if ( hour <= 0) {
-            this.hours = 0 - hour/24;
-            setDay(this.day - hour/24);
-        }
+    public void addHours(int hours) {
+        int newhours = this.hours + hours;
+        
+        this.hours = newhours % 24;
+        addDay(newhours/24);
+//        
+//        if(this.hours + hours >= 24) {
+//            this.hours = hours%24;
+//            addDay(this.day + hours/24);
+//        }else{            
+//            setHours(this.hours + hours);
+//        }
+        
+    }
+    
+    public void setHours(int hours){
+        this.hours = hours;
+    }
+    
+    public void addMinutes(int minutes){
+        
+        int newminutes = this.minutes + minutes;
+        
+        this.minutes = newminutes % 60;
+        addHours(newminutes/60);
+        
+//        if(this.minutes + minutes >= 60) {
+//            this.minutes = minutes%60;
+//            addHours(this.hours + minutes/60);
+//        }
+//        else{
+//            setMinutes(this.minutes + minutes);      
+//        }
     }
     
     public void setMinutes(int minutes) {
-        if(minutes > 60) {
-            this.minutes = minutes - 60;
-            setHours(this.hours + 1);
-        }
-        else if (minutes <=0 ) {
-            this.minutes = 0 - minutes;
-            setHours(this.hours - 1);
-        }
+        this.minutes = minutes;
+        
     }
     
     public int monthSize(){
@@ -139,7 +163,7 @@ public class HKFDate implements Comparable<HKFDate>{
         }
     }
     
-    public void splitString(String dateString) {
+    public void splitStringDate(String dateString) {
         String [] parts = dateString.split("-");
         
         setYear(Integer.parseInt(parts[0]));
@@ -147,11 +171,27 @@ public class HKFDate implements Comparable<HKFDate>{
         setMonth(Integer.parseInt(parts[1]));
         setDay(Integer.parseInt(parts[2]));
     }
+    
+     public void splitStringTime(String timeString) {
+        String [] parts = timeString.split(":");
+        
+        setHours(Integer.parseInt(parts[0]));
+        setMinutes(Integer.parseInt(parts[1]));
+        
+        
+        
+    }
+    
+    
 
     @Override
     public String toString() {
         //return year + "-" + (month) + "-" + day;
         return String.format("%4d-%02d-%02d", year, month, day);
+    }
+    
+    public String timeToString(){
+        return String.format("%02d:%02d", hours, minutes);
     }
     
     
@@ -257,9 +297,9 @@ public class HKFDate implements Comparable<HKFDate>{
      * @return End Date
      */
     public HKFDate getEndDate(int minutes) {
-        HKFDate endDate = new HKFDate(day,month,year);
+        HKFDate endDate = new HKFDate(day,month,year, hours,this.minutes);
         
-        endDate.setMinutes(minutes);
+        endDate.addMinutes(minutes);
         
         return endDate;
     }    
