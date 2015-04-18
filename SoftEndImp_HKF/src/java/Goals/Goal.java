@@ -328,8 +328,9 @@ public class Goal implements Comparable<Goal> {
                         else {
                             int targetDifference = startweight.getGrams() - target;
                             int actualDifference = currentWeight.getGrams() - target;
-                            progressPercent = actualDifference / targetDifference;
+                            progressPercent = (double)actualDifference / (double)targetDifference;
                         }
+                        break;
                     }
                     case WEIGHT_LOW: {
                         physHealth.sortDate();
@@ -343,19 +344,24 @@ public class Goal implements Comparable<Goal> {
                             int actualDifference = currentWeight.getGrams() - target;
                             progressPercent = (double)actualDifference / (double)targetDifference;
                         }
+                        break;
                     }
-                    case CALORIES_BURNED:
-
-                    case ACTIVITY_TIME:
+                    case CALORIES_BURNED: {
+                        int time = exLog.findCalsBurnedBetweenDates(startDate, endDate);
+                        progressPercent = (double)time / (double)target;
+                        break;
+                    }
+                    case ACTIVITY_TIME: {
                         int time = exLog.findExerciseTimeBetweenDates(startDate, endDate);
                         progressPercent = (double)time / (double)target;
-                        
+                        break;
+                    }
                     case CALORIES_CONSUMED_HIGH:
-                    case CALORIES_CONSUMED_LOW:
-                        calorieseaten = 0
-                        for each meal since startdate
-                                calorieseaten += mealcalories
-                        progresspercent = calorieseaten / target
+                    case CALORIES_CONSUMED_LOW:  {
+                        int calsConsumed = dietLog.findCalsConsumedBetweenDates(startDate, endDate);
+                        progressPercent = (double)calsConsumed / (double)target;
+                        break;
+                    }
                         //result interpreted depending on whether target is low (calorie cutting)
                         //or high (bulking)
                         //if low, goal is FAILED if 100% is reached

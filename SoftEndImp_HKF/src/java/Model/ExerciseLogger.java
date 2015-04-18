@@ -86,6 +86,17 @@ public class ExerciseLogger {
         return totalTime;
     }
     
+    public int findCalsBurnedBetweenDates(HKFDate start, HKFDate end) {
+        int totalCals = 0;
+        
+        for (ExerciseProgress ep : exerciseLog) {
+            if (ep.getDate().compareTo(start) >= 0 && ep.getDate().compareTo(start) <= 0)
+                totalCals += ep.calculateCals();
+        }
+        
+        return totalCals;
+    }
+    
     
     /**
      * Method to Sort information so that Date is in ascending order

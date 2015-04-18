@@ -13,9 +13,23 @@
 
 <%
     Member member = (Member) session.getAttribute("member"); 
+    int memberID = member.getUserID();
     if (member == null) {
         //something or other 
     }
+%>
+
+                                                
+<%
+    GoalLogger goalLog = (GoalLogger) session.getAttribute("goalLog"); 
+
+    ArrayList<Goal> finishedGoals = goalLog.findFinishedGoals();
+    ArrayList<Goal> dueGoals = goalLog.findDueGoals();
+    ArrayList<Goal> upcomingGoals = goalLog.findUpcomingGoals();
+
+    ArrayList<Integer> finishedGoalsProgress = GoalLogger.checkProgress(finishedGoals, memberID);
+    ArrayList<Integer> dueGoalsProgress = GoalLogger.checkProgress(dueGoals, memberID);
+    ArrayList<Integer> upcomingGoalsProgress = GoalLogger.checkProgress(upcomingGoals, memberID);
 %>
 
 <!DOCTYPE html>
@@ -53,16 +67,40 @@
                     Your General Info
                 </h3>
                 
-                <%
-                    ArrayList<Goal> goalList = (ArrayList<Goal>) session.getAttribute("goalList"); 
-                %>
-                
                 <p>Username: <%=member.getUsername()%></p>   
                 <p>Email: <%=member.getEmail()%></p>
                 
                 <h3>
-                    Your Goals
+                    Goals due today
                 </h3>
+                
+                <!-- for each exercise progress -->
+                    <!-- print date : exercisename, cals burned --> 
+                <table>
+                    <tr>
+                         <th>Goal</th> 
+                         <th>Target</th> 
+                         <th>Current Progress</th>
+                    </tr>
+                   
+                <%
+                    for (int i = 0; i < dueGoals.size(); ++i) {
+                %>
+                        <tr>
+                            <td><%=dueGoals.get(i).getGoalType().toString()%></td>   
+                            <td><%=dueGoals.get(i).getTarget()%></td>
+                            <td><%=dueGoalsProgress.get(i)%></td>
+                        </tr>
+                <%                        
+                    }
+                %>
+                </table>
+                
+                <h3>
+                    ALL Your Goals
+                </h3>
+                
+
                 
                 <!-- for each exercise progress -->
                     <!-- print date : exercisename, cals burned --> 
@@ -75,7 +113,7 @@
                     </tr>
                    
                 <%
-                    for (Goal goal : goalList) {
+                    for (Goal goal : goalLog.getGoalList()) {
                 %>
                         <tr>
                             <td><%=goal.getGoalType().toString()%></td>   

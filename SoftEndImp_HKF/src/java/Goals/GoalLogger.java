@@ -8,6 +8,7 @@ package Goals;
 
 import java.util.ArrayList;
 import Model.*;
+import Model.PhysicalHealth.PhysicalHealth;
 import java.util.Collections;
 import java.util.Objects;
 import javax.servlet.ServletException;
@@ -100,11 +101,23 @@ public class GoalLogger {
             return upcomingGoals;
     }
 
-    //check ACTIVE goals only (i.e started but not finished startdate <= today <= enddate)
-    //if progress returned is >= 100, goal is complete (100% or even surpassed it). using this instead of //jsut bool to allow progress to be shown on a graph etc
-    public static boolean checkProgressAll(ArrayList<Goal> goalList) {
-            for (Goal goal : goalList)
-                
+    //check the progress of each goal in the given list 
+    //and return a parallel array of integers corresponding to the percentage of completetion
+    //of each
+    //if progress returned is >= 100, goal is complete (100% or even surpassed it). using this instead of 
+    //jsut bool a bool (in/complete) to allow progress to be shown on a graph etc
+    public static ArrayList<Integer> checkProgress(ArrayList<Goal> goalList, int memberID) throws ServletException {
+            
+        ArrayList<Integer> completeness = new ArrayList<>();
+        
+        PhysicalHealth ph = PhysicalHealth.find(memberID);
+        ExerciseLogger el = ExerciseLogger.find(memberID);
+        DietLogger dl = DietLogger.find(memberID);
+        
+        for (Goal goal : goalList)
+            completeness.add(Integer.valueOf(goal.checkProgress(ph, dl, el)));
+        
+        return completeness;
     }
     
     

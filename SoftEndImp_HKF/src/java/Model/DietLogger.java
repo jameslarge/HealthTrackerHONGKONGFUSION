@@ -67,6 +67,17 @@ public class DietLogger {
         //TODO
     }
     
+    public int findCalsConsumedBetweenDates(HKFDate start, HKFDate end) {
+        int totalCals = 0;
+        
+        for (MealProgress mp : mealLog) {
+            if (mp.getDate().compareTo(start) >= 0 && mp.getDate().compareTo(start) <= 0)
+                totalCals += mp.calcCalories();
+        }
+        
+        return totalCals;
+    }
+    
     /**
      * Method to Sort information so that Date is in ascending order
      * @return Sorted ArrayList of Meal Progress
