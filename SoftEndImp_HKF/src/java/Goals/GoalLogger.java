@@ -63,8 +63,10 @@ public class GoalLogger {
     public ArrayList<Goal> findFinishedGoals() {
             ArrayList<Goal> finishedGoals = new ArrayList<>();
 
+            HKFDate today = new HKFDate();
+            
             for (Goal goal : goalList)
-                if (goal.getEndDate().compareTo(new HKFDate()) < 0 && !goal.isNotified()) 
+                if (goal.getEndDate().compareTo(today) < 0 && !goal.isNotified()) 
                     finishedGoals.add(goal);
 
             return finishedGoals;
@@ -78,8 +80,10 @@ public class GoalLogger {
     public ArrayList<Goal> findDueGoals() {
             ArrayList<Goal> dueGoals = new ArrayList<>();
 
+            HKFDate today = new HKFDate();
+            
             for (Goal goal : goalList)
-                    if (goal.getEndDate().compareTo(new HKFDate()) == 0)
+                    if (goal.getEndDate().equals(today))
                             dueGoals.add(goal);
 
             return dueGoals;

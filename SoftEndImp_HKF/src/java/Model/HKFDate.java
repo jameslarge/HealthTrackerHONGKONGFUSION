@@ -224,32 +224,32 @@ public class HKFDate implements Comparable<HKFDate>{
 
     @Override
     public int compareTo(HKFDate t) {
-        if(t.year < year) {
+        if(t.year > year) {
             return -1;
-        }else if (t.year > year) {
+        }else if (t.year < year) {
             return 1;
         }
         else{
             //same year
-            if(t.month < month) {
+            if(t.month > month) {
                 return -1;
-            }else if ( t.month > month){
+            }else if ( t.month < month){
                 return 1;
             } else {
                 //same month
-                if(t.day < day) {
+                if(t.day > day) {
                     return -1;
-                } else if (t.day > day) {
+                } else if (t.day < day) {
                     return 1;
                 } else {
                     //same day
-                    if(t.hours < hours) {
+                    if(t.hours > hours) {
                         return -1;
-                    } else if ( t.hours > hours) {
+                    } else if ( t.hours < hours) {
                         return 1;
                     } else {
                       //Same hour
-                        if(t.minutes < minutes) {
+                        if(t.minutes > minutes) {
                             return -1;
                         } else if ( t.minutes < minutes ) {
                             return 1;

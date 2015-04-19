@@ -319,21 +319,19 @@ public class Goal implements Comparable<Goal> {
 
             switch (goalType) {
                     case WEIGHT_HIGH: {
-                        physHealth.sortDate();
                         Weight currentWeight = physHealth.getMostRecentWeight();
                         Weight startweight = physHealth.findWeightOnDate(startDate);
                         
                         if (currentWeight.getGrams() >= target)
                             return 100; //100% complete
                         else {
-                            int targetDifference = startweight.getGrams() - target;
-                            int actualDifference = currentWeight.getGrams() - target;
-                            progressPercent = (double)actualDifference / (double)targetDifference;
+                            int targetDifference = target - startweight.getGrams();
+                            int actualDifference = target - currentWeight.getGrams();
+                            progressPercent = 1 - ((double)(actualDifference) / (double)targetDifference);
                         }
                         break;
                     }
                     case WEIGHT_LOW: {
-                        physHealth.sortDate();
                         Weight currentWeight = physHealth.getMostRecentWeight();
                         Weight startweight = physHealth.findWeightOnDate(startDate);
                         

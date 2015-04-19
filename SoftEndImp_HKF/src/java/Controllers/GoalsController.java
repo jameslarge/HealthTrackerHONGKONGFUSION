@@ -49,21 +49,6 @@ public class GoalsController extends HttpServlet {
         GoalLogger goalLog = GoalLogger.find(member.getUserID());
         session.setAttribute("goalLog", goalLog);
         
-        ArrayList<Goal> finishedGoals = goalLog.findFinishedGoals();
-        ArrayList<Goal> dueGoals = goalLog.findDueGoals();
-        ArrayList<Goal> upcomingGoals = goalLog.findUpcomingGoals();
-            
-        ArrayList<Integer> finishedGoalsProgress = GoalLogger.checkProgress(finishedGoals, memberID);
-        ArrayList<Integer> dueGoalsProgress = GoalLogger.checkProgress(dueGoals, memberID);
-        ArrayList<Integer> upcomingGoalsProgress = GoalLogger.checkProgress(upcomingGoals, memberID);
-        
-        session.setAttribute("finishedGoals", finishedGoals);
-        session.setAttribute("finishedGoalsProgress", finishedGoalsProgress);
-        session.setAttribute("dueGoals", dueGoals);
-        session.setAttribute("dueGoalsProgress", dueGoalsProgress);
-        session.setAttribute("upcomingGoals", upcomingGoals);
-        session.setAttribute("upcomingGoalsProgress", upcomingGoalsProgress);
-        
         request.getRequestDispatcher("goalProgress.jsp").forward(request, response);
     }
 

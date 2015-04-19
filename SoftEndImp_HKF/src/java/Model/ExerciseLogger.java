@@ -7,12 +7,15 @@
 package Model;
 
 import Controllers.DatabaseAccess;
+import Goals.Goal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 
+import java.util.TreeMap;
 import javax.servlet.ServletException;
 
 /**
@@ -75,11 +78,49 @@ public class ExerciseLogger {
         return 1;
     }
     
+    public TreeMap<HKFDate, Integer> findActivityTimePerDay() throws ServletException {
+        TreeMap<HKFDate, Integer> result = new TreeMap<>();
+        
+        //build keys/intialise values
+        for (ExerciseProgress ep : exerciseLog)
+            result.put(ep.getDate(), 0);
+        
+        //build values
+        for (ExerciseProgress ep : exerciseLog)
+            result.put(ep.getDate(), result.get(ep.getDate()) + ep.getDuration());
+        
+        return result;
+    }
+    
+    public TreeMap<HKFDate, Integer> findCalsBurnedPerDay() throws ServletException {
+        TreeMap<HKFDate, Integer> result = new TreeMap<>();
+        
+        //build keys/intialise values
+        for (ExerciseProgress ep : exerciseLog)
+            result.put(ep.getDate(), 0);
+        
+        //build values
+        for (ExerciseProgress ep : exerciseLog)
+            result.put(ep.getDate(), result.get(ep.getDate()) + ep.calculateCals());
+        
+        return result;
+    }
+    
+    public ArrayList<ExerciseProgress> findProgressesBetweenDates(HKFDate start, HKFDate end) {
+        ArrayList<ExerciseProgress> eps = new ArrayList<>();
+
+        for (ExerciseProgress ep : exerciseLog)
+             if (ep.getDate().compareTo(start) >= 0 && ep.getDate().compareTo(end) <= 0)
+                eps.add(ep);
+
+        return eps;
+    }
+    
     public int findExerciseTimeBetweenDates(HKFDate start, HKFDate end) {
         int totalTime = 0;
         
         for (ExerciseProgress ep : exerciseLog) {
-            if (ep.getDate().compareTo(start) >= 0 && ep.getDate().compareTo(start) <= 0)
+            if (ep.getDate().compareTo(start) >= 0 && ep.getDate().compareTo(end) <= 0)
                 totalTime += ep.getDuration();
         }
         

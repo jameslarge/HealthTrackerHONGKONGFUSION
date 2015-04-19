@@ -10,6 +10,7 @@ package Model;
 import Model.Meal.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.TreeMap;
 import javax.servlet.ServletException;
 
 /**
@@ -71,11 +72,35 @@ public class DietLogger {
         int totalCals = 0;
         
         for (MealProgress mp : mealLog) {
-            if (mp.getDate().compareTo(start) >= 0 && mp.getDate().compareTo(start) <= 0)
+            if (mp.getDate().compareTo(start) >= 0 && mp.getDate().compareTo(end) <= 0)
                 totalCals += mp.calcCalories();
         }
         
         return totalCals;
+    }
+    
+    public ArrayList<MealProgress> findProgressesBetweenDates(HKFDate start, HKFDate end) {
+       ArrayList<MealProgress> mps = new ArrayList<>();
+
+       for (MealProgress mp : mealLog)
+            if (mp.getDate().compareTo(start) >= 0 && mp.getDate().compareTo(end) <= 0)
+               mps.add(mp);
+
+       return mps;
+    }
+    
+    public TreeMap<HKFDate, Integer> findCalsConsumedPerDay() throws ServletException {
+        TreeMap<HKFDate, Integer> result = new TreeMap<>();
+        
+        //build keys/intialise values
+        for (MealProgress ep : mealLog)
+            result.put(ep.getDate(), 0);
+        
+        //build values
+        for (MealProgress ep : mealLog)
+            result.put(ep.getDate(), result.get(ep.getDate()) + ep.calcCalories());
+        
+        return result;
     }
     
     /**

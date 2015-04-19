@@ -83,6 +83,16 @@ public class PhysicalHealth {
         return Collections.max(physicalHealthLog).getWeight();
     }
     
+    public ArrayList<WeightProgress> findProgressesBetweenDates(HKFDate start, HKFDate end) {
+       ArrayList<WeightProgress> wps = new ArrayList<>();
+       
+       for (WeightProgress wp : physicalHealthLog)
+            if (wp.getDate().compareTo(start) >= 0 && wp.getDate().compareTo(end) <= 0)
+               wps.add(wp);
+
+       return wps;
+    }
+    
     public Weight findWeightOnDate(HKFDate date) {
         if (physicalHealthLog.isEmpty()) 
             return null;
