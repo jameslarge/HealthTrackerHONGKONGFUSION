@@ -375,7 +375,7 @@ public class Goal implements Comparable<Goal> {
 
             switch (goalType) {
                     case WEIGHT_HIGH: {
-                        Weight currentWeight = physHealth.getMostRecentWeight();
+                        Weight currentWeight = physHealth.getMostRecentWeightProgress().getWeight();
                         Weight startweight = physHealth.findWeightOnDate(startDate);
                         
                         if (currentWeight.getGrams() >= target)
@@ -388,7 +388,7 @@ public class Goal implements Comparable<Goal> {
                         break;
                     }
                     case WEIGHT_LOW: {
-                        Weight currentWeight = physHealth.getMostRecentWeight();
+                        Weight currentWeight = physHealth.getMostRecentWeightProgress().getWeight();
                         Weight startweight = physHealth.findWeightOnDate(startDate);
                         
                         if (currentWeight.getGrams() <= target)

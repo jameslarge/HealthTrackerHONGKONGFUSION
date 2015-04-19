@@ -79,8 +79,8 @@ public class PhysicalHealth {
         physicalHealthLog.add(wp);
     }
     
-    public Weight getMostRecentWeight() {
-        return Collections.max(physicalHealthLog).getWeight();
+    public WeightProgress getMostRecentWeightProgress() {
+        return Collections.max(physicalHealthLog);
     }
     
     public ArrayList<WeightProgress> findProgressesBetweenDates(HKFDate start, HKFDate end) {
