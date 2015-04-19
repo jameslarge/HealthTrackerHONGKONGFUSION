@@ -7,8 +7,10 @@
 package Controllers;
 
 import Model.*;
+import Goals.*;
 import View.Validator;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,8 +22,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author xmw13bzu
  */
-@WebServlet(name = "LogExerciseController", urlPatterns = {"/LogExerciseController"})
-public class LogExerciseController extends HttpServlet {
+@WebServlet(name = "UpdateGoalController", urlPatterns = {"/UpdateGoalController"})
+public class UpdateGoalController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,48 +40,56 @@ public class LogExerciseController extends HttpServlet {
         
         HttpSession session = request.getSession(false);        
         if (session == null) 
-            throw new ServletException("Attempting to log an exerciseProgress while no session is active (no user logged in)");
-        
+            throw new ServletException("Attempting to create a goal while no session is active (no user logged in)");
               
-        //Validate all the info and make type conversions where needed
-        Validator validator = new Validator();
+        Member member = (Member) session.getAttribute("member");
         
+        int goalID = Integer.parseInt(request.getParameter("goalID"));
+        String action = request.getParameter("submit");
         
-        
-        String durationString = request.getParameter("duration");
-        String amountString = request.getParameter("amount");
-        String exerciseIDString = request.getParameter("exercise");
-        
-       
-        int duration = validator.validatePositiveInt("Invalid duration time entered: " + durationString, durationString);
-        int amount = validator.validatePositiveInt("Invalid amount entered: " + amountString, amountString);
-        int exerciseID = validator.validatePositiveInt("Invalid exercise entered: " + exerciseIDString, exerciseIDString);
-        
-        //should be  YYYY-MM-DD, i.e is shit and doesnt enforce any formatting 
-        //on user in input type=date, deal with it later
-        String dateString = request.getParameter("date");
-        String timeString = request.getParameter("time");
-        HKFDate date = new HKFDate();
-        if (validator.validateDate("Invalid date entered, must be in YYYY-MM-DD format: " + dateString, dateString)) {
-            date = new HKFDate(dateString,timeString);
+        if (action.equals("Cancel")) {
+            Goal.delete(goalID);  
+            request.getRequestDispatcher("GoalsController").forward(request, response);
+        }
+        else { //updating fields
+            Goal goal = Goal.find(goalID);
             
-            if (date.compareTo(new HKFDate()) > 0) //in the future
-                validator.appendErrMsg("Cannot log things which haven't happened yet");
-        }
-        
-        if (validator.isValid()) {
-            Member member = (Member) session.getAttribute("member");
-            ExerciseProgress ep = new ExerciseProgress(Exercise.find(exerciseID), 
-                                                date, duration, amount);
-            ep.persist(member.getUserID());
+            //Validate all the info and make type conversions where needed
+            Validator validator = new Validator();
+            
+            String targetString = request.getParameter("target");
+            int target = validator.validatePositiveInt("Invalid target entered: " + targetString, targetString);
+            
+            if (validator.isValid()) {
+                goal.updateInt("target", target);
+            }
+            
+            String endDateString = request.getParameter("goalDeadline");
+            HKFDate endDate = new HKFDate();
+            if (validator.validateDate("Invalid end date entered, must be in YYYY-MM-DD format: " + endDateString, endDateString)) {
+                endDate = new HKFDate(endDateString);
 
-            //reload weight log page, refresh data essentially
-            request.getRequestDispatcher("ExerciseLogController").forward(request, response);
-        }
-        //Else send user back with the error messages produced by the validator
-        else {
-            request.setAttribute("errorMessage", validator.getErrMsg());
-            request.getRequestDispatcher("exerciseProgress.jsp").forward(request, response);
+                if (endDate.compareTo(new HKFDate()) < 0) {//in the past
+                    validator.appendErrMsg(endDateString + " has already passed!");
+                }
+                else if (goal.getStartDate().compareTo(endDate) > 0) {
+                    validator.appendErrMsg("Invalid date entered, goal would end before it starts.");
+                }
+                else {
+                    goal.updateString("goalDeadline", endDateString);
+                }
+            }
+            
+           
+            
+            
+            if (validator.isValid()) {
+                request.getRequestDispatcher("GoalsController").forward(request, response);
+            }
+            else {
+                request.setAttribute("errorMessage", validator.getErrMsg());
+                request.getRequestDispatcher("updateGoal.jsp").forward(request, response);
+            }
         }
     }
 

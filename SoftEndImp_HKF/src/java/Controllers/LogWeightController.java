@@ -55,6 +55,9 @@ public class LogWeightController extends HttpServlet {
         HKFDate date = new HKFDate();
         if (validator.validateDate("Invalid date entered, must be in YYYY-MM-DD format: " + dateString, dateString)) {
             date = new HKFDate(dateString);
+            
+            if (date.compareTo(new HKFDate()) > 0) //in the future
+                validator.appendErrMsg("Cannot log things which haven't happened yet");
         }
         
         //If valid, create and persist the mealProgress

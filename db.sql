@@ -29,7 +29,7 @@ CREATE TABLE physicalHealth
 (
 	ID 				SERIAL,
 	heightcm 		INT,
-	memberID		INT REFERENCES member(id),
+	memberID		INT REFERENCES member(id) ON DELETE CASCADE,
 	PRIMARY KEY (id)
 
 
@@ -38,7 +38,7 @@ CREATE TABLE physicalHealth
 CREATE TABLE weightProgress
 (
 	id				 SERIAL,
-	physicalHealthID INT	REFERENCES physicalHealth(id),
+	physicalHealthID INT	REFERENCES physicalHealth(id) ON DELETE CASCADE,
 	weightDate 		 VARCHAR(10),
 	weight			 INT,
 	
@@ -59,12 +59,12 @@ CREATE TABLE exercise
 CREATE TABLE exerciseProgress
 (
 	id				SERIAL,
-	memberID 		INT REFERENCES member(id),
+	memberID 		INT REFERENCES member(id) ON DELETE CASCADE,
 	exerciseDate		VARCHAR(10),
 	exerciseStartTime	VARCHAR(10),
 	amount			INT,
 	duration		INT,
-	exerciseID		INT REFERENCES exercise(id),
+	exerciseID		INT REFERENCES exercise(id) ON DELETE SET NULL,
 	
 	
 	PRIMARY KEY (id)
@@ -93,8 +93,8 @@ CREATE TABLE  meal
 CREATE TABLE mealProgress
 (
 	id				SERIAL,
-	memberID		INT REFERENCES member(id),
-	mealID			INT REFERENCES meal(id),
+	memberID		INT REFERENCES member(id) ON DELETE CASCADE,
+	mealID			INT REFERENCES meal(id) ON DELETE SET NULL,
 	mealTime		INT,
 	mealDate		VARCHAR(10),
 	amount			INT,
@@ -119,8 +119,8 @@ CREATE TABLE goal
 CREATE TABLE member_goals
 (
 	id				SERIAL,
-	memberID		INT REFERENCES member(id),
-	goalID			INT REFERENCES goal(id),
+	memberID		INT REFERENCES member(id) ON DELETE CASCADE,
+	goalID			INT REFERENCES goal(id) ON DELETE CASCADE,
 	
 	PRIMARY KEY (id)
 );
