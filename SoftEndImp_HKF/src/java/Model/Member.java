@@ -367,4 +367,55 @@ public class Member {
                 "\nEmail: " + email +
                 "\nPassword: " + password; 
     }
+    
+    
+    public int calculateHealthiness() throws ServletException {
+        double result = 0;
+        
+        double bmiFactor = 5, exTimeFactor = 2.5, calsConsumedFactor = 2.5;
+
+        result += calcHealthinessBMI() * bmiFactor; 
+        result += calcHealthinessActivity() * exTimeFactor;
+        result += calcHealthinessDiet() * calsConsumedFactor;
+        
+        return (int) (result + 0.5); //round to nearest integer
+    }
+    
+    public double calcHealthinessBMI() throws ServletException {
+        PhysicalHealth ph = PhysicalHealth.find(userID);
+        
+        int bmi = ph.getMostRecentWeightProgress().calulateBMI();
+        int healthyBMILow = 19, healthyBMIHigh = 25;
+        
+        int distFromHealthyBMI = 0, maxDist = 10;
+        
+        if (bmi < healthyBMILow)
+            distFromHealthyBMI = healthyBMILow - bmi;
+        else if (bmi > healthyBMIHigh)
+            distFromHealthyBMI = bmi - healthyBMIHigh;
+                    
+        return (double)distFromHealthyBMI / (double)maxDist;
+    }
+    
+    public double calcHealthinessActivity() throws ServletException {
+        ExerciseLogger el = ExerciseLogger.find(userID);
+        
+        int dailyCalsBurned = el.findAverageDailyActivityTime();
+        int goodDailyTime = 30;
+        int greatDailyTime = goodDailyTime*2;
+        
+        if (dailyCalsBurned > greatDailyTime)
+            return 1.0;
+        if (dailyCalsBurned > goodDailyTime) {
+            return (double)dailyCalsBurned / (double)greatDailyTime;
+        }
+        
+        return ((double)dailyCalsBurned / (double)goodDailyTime) * 0.5;
+    }
+    
+    public double calcHealthinessDiet() throws ServletException {
+        DietLogger dl = DietLogger.find(userID);
+        
+asdasd
+    }
 }

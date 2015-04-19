@@ -43,10 +43,19 @@ public class ExerciseLogController extends HttpServlet {
         
         Member member = (Member) session.getAttribute("member"); //member member member member
         
-        
         ExerciseLogger exLog = new ExerciseLogger();
         exLog = ExerciseLogger.find(member.getUserID());
         session.setAttribute("exerciseLog", exLog);
+        
+                
+        String specificDateString = request.getParameter("specificDate");
+        HKFDate specificDate = specificDateString == null ? new HKFDate() : new HKFDate(specificDateString);
+        HKFDate specificDate2 = specificDateString == null ? new HKFDate() : new HKFDate(specificDateString);
+        specificDate2.setHours(0);
+        specificDate2.setMinutes(0);
+        
+        ArrayList<ExerciseProgress> exercises = exLog.findProgressesBetweenDates(specificDate, specificDate2);
+        session.setAttribute("specificExercises", exercises);
         
         request.getRequestDispatcher("exerciseProgress.jsp").forward(request, response);
     }
