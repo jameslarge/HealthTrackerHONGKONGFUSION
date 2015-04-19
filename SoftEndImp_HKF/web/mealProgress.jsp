@@ -34,6 +34,7 @@
                 <nav id="mainnav">
                     <ul>
                         <li><a href="home.jsp" class="thispage">Home</a></li>
+                        <li><a href="accountManagement.jsp" class="thispage">Account</a></li> 
                         <li><a href="LogoutController" class="thispage">Log Out</a></li>   
                     </ul>
                 </nav>

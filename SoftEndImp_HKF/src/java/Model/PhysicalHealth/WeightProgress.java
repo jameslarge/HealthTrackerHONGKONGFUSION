@@ -166,6 +166,28 @@ public class WeightProgress implements Comparable<WeightProgress> {
     }
 
     /**
+     * Update one of the parameters of this weightProgress in the database
+     *
+     * @param valueName The name of the value to be changed
+     * @param newValue The new value for the above to be set to
+     * @throws ServletException
+     * @throws SQLException
+     */
+    public void updateValue(String valueName, String newValue) throws ServletException, SQLException {
+        try {
+            Connection con = DatabaseAccess.getConnection();
+            PreparedStatement ps = con.prepareStatement("UPDATE goal SET " + valueName + " = ? WHERE id = ?;");
+            ps.setString(1, newValue);
+            ps.setInt(2, ID);
+            ps.execute();
+        } catch (ServletException ex) {
+            throw ex;
+        } catch (SQLException ex) {
+            throw ex;
+        }
+    }
+    
+    /**
      * Method to Calculate BMI using grams and cm
      * @return value of members BMI
      * @throws ServletException 

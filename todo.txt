@@ -1,0 +1,27 @@
+documentation
+	update use cases
+	finish off jsp uml diagram
+	make sure all diagrams consistent 
+	testing plan / matrix 
+	javadoc
+	clean code / comments
+finish off junits
+	roughly, dont really give a shit beyond basics 
+css
+	copy/paste most from old c/w
+	just basic areas for stuff, layout mostly 
+	keep fonts etc
+	graphs will be the flashy shit 
+user account management
+	jsp/controller
+update methods for all beans
+	and allow user to update/edit goals/progresses
+make sure user deletion works properly 
+	all goals/progresses associated with them deleted too
+populate db with a bunch of test data
+	goals and progresses towards them
+add extra validation to user inputs
+	e.g progresses cant be in future
+properly display validation error messages
+	part of css
+	add validation error to user login fail

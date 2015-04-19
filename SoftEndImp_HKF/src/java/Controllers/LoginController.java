@@ -1,6 +1,7 @@
 package Controllers;
 
 import Model.*;
+import View.Validator;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -37,6 +38,10 @@ public class LoginController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         HttpSession session = request.getSession(true); //Get session, or create if one is not present
+        
+        //Validate all the info and make type conversions where needed
+        Validator validator = new Validator();
+        
         String email = null;
         String password = null;
         //Get the username and password from the request
@@ -57,6 +62,9 @@ public class LoginController extends HttpServlet {
             request.getRequestDispatcher("home.jsp").forward(request, response);
         }
         else {
+            validator.appendErrMsg("The user name or password you entered isn't correct. Try entering it again.");
+            
+            request.setAttribute("errorMessage", validator.getErrMsg());
             request.getRequestDispatcher("index.jsp").forward(request, response);
         }
         

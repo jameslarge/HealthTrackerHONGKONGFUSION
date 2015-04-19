@@ -42,7 +42,6 @@ public class CreateGoalController extends HttpServlet {
         HttpSession session = request.getSession(false);        
         if (session == null) 
             throw new ServletException("Attempting to create a goal while no session is active (no user logged in)");
-        
               
         //Validate all the info and make type conversions where needed
         Validator validator = new Validator();
@@ -65,6 +64,9 @@ public class CreateGoalController extends HttpServlet {
         HKFDate endDate = new HKFDate();
         if (validator.validateDate("Invalid end date entered, must be in YYYY-MM-DD format: " + endDateString, endDateString)) {
             endDate = new HKFDate(endDateString);
+            
+            if (endDate.compareTo(new HKFDate()) < 0) //in the past
+                validator.appendErrMsg(endDateString + " has already passed!");
         }
         
         if (startDate.compareTo(endDate) > 0) {

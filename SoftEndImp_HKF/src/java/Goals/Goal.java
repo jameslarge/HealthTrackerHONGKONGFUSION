@@ -304,6 +304,62 @@ public class Goal implements Comparable<Goal> {
     }
     
     /**
+     * Update one of the string parameters of this Goal in the database
+     *
+     * @param valueName The name of the value to be changed
+     * @param newValue The new value for the above to be set to
+     * @throws ServletException
+     * @throws SQLException
+     */
+    public void updateString(String valueName, String newValue) throws ServletException {
+        try {
+            Connection con = DatabaseAccess.getConnection();
+            PreparedStatement ps = con.prepareStatement("UPDATE goal SET " + valueName + " = ? WHERE id = ?;");
+            ps.setString(1, newValue);
+            ps.setInt(2, goalID);
+            ps.execute();
+        } catch (SQLException ex) {
+            throw new ServletException("Problem updating goal, field: " + valueName + " value: " + newValue, ex);
+        }
+    }
+    
+     /**
+     * Update one of the int parameters of this Goal in the database
+     *
+     * @param valueName The name of the value to be changed
+     * @param newValue The new value for the above to be set to
+     * @throws ServletException
+     * @throws SQLException
+     */
+    public void updateInt(String valueName, int newValue) throws ServletException {
+        try {
+            Connection con = DatabaseAccess.getConnection();
+            PreparedStatement ps = con.prepareStatement("UPDATE goal SET " + valueName + " = ? WHERE id = ?;");
+            ps.setInt(1, newValue);
+            ps.setInt(2, goalID);
+            ps.execute();
+        } catch (SQLException ex) {
+            throw new ServletException("Problem updating goal, field: " + valueName + " value: " + newValue, ex);
+        }
+    }
+    
+    /**
+     * Remove goal with given id from database
+     * @throws SQLException
+     * @throws ServletException
+     */
+    public static void delete(int goalID) throws ServletException {
+        try {
+            Connection con = DatabaseAccess.getConnection();
+            PreparedStatement ps = con.prepareStatement("DELETE FROM goal WHERE (id = ?)");
+            ps.setInt(1, goalID);
+            ps.execute();
+        } catch (SQLException ex) {
+            throw new ServletException("Problem deleting goal, id: " + goalID);
+        }
+    }
+    
+    /**
      * Compares based on endDate
      * @param g
      * @return 

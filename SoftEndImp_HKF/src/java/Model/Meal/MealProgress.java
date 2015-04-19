@@ -241,6 +241,28 @@ public class MealProgress implements Comparable<MealProgress> {
     }
     
     /**
+     * Update one of the parameters of this mealProgress in the database
+     *
+     * @param valueName The name of the value to be changed
+     * @param newValue The new value for the above to be set to
+     * @throws ServletException
+     * @throws SQLException
+     */
+    public void updateValue(String valueName, String newValue) throws ServletException, SQLException {
+        try {
+            Connection con = DatabaseAccess.getConnection();
+            PreparedStatement ps = con.prepareStatement("UPDATE goal SET " + valueName + " = ? WHERE id = ?;");
+            ps.setString(1, newValue);
+            ps.setInt(2, ID);
+            ps.execute();
+        } catch (ServletException ex) {
+            throw ex;
+        } catch (SQLException ex) {
+            throw ex;
+        }
+    }
+    
+    /**
      * Method to sort Meal Progress into order using date
      * if date are same use Meal Time
      * @param t MealProgress Object

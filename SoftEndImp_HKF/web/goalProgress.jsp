@@ -48,6 +48,7 @@
                 <nav id="mainnav">
                     <ul>
                         <li><a href="home.jsp" class="thispage">Home</a></li>
+                        <li><a href="accountManagement.jsp" class="thispage">Account</a></li> 
                         <li><a href="LogoutController" class="thispage">Log Out</a></li>   
                     </ul>
                 </nav>
@@ -90,6 +91,16 @@
                                 <td><%=dueGoals.get(i).getGoalType().toString()%></td>   
                                 <td><%=dueGoals.get(i).getTarget()%></td>
                                 <td><%=dueGoalsProgress.get(i)%></td>
+                                <td>
+                                    <form name="login" action="updateGoal.jsp" method="get">
+                                       <input type="hidden" name="goalID" value="<%=dueGoals.get(i).getGoalID()%>"/>
+                                       <input type="submit" name="submit" value="Update"/>
+                                    </form>
+                                    <form name="login" action="UpdateGoalController" method="get">
+                                        <input type="hidden" name="goalID" value="<%=dueGoals.get(i).getGoalID()%>"/>
+                                        <input type="submit" name="submit" value="Cancel"/>
+                                    </form>
+                                </td> 
                             </tr>
                     <%                        
                         }
@@ -108,6 +119,7 @@
                          <th>Target</th> 
                          <th>Date Due</th>
                          <th>Current Progress</th>
+                         <th></th>
                     </tr>
                    
                     <%
@@ -118,6 +130,16 @@
                                 <td><%=upcomingGoals.get(i).getTarget()%></td>
                                 <td><%=upcomingGoals.get(i).getEndDate()%></td>
                                 <td><%=upcomingGoalsProgress.get(i)%></td>
+                                <td>
+                                    <form name="login" action="updateGoal.jsp" method="get">
+                                       <input type="hidden" name="goalID" value="<%=upcomingGoals.get(i).getGoalID()%>"/>
+                                       <input type="submit" name="submit" value="Update"/>
+                                    </form>
+                                    <form name="login" action="UpdateGoalController" method="get">
+                                        <input type="hidden" name="goalID" value="<%=upcomingGoals.get(i).getGoalID()%>"/>
+                                        <input type="submit" name="submit" value="Cancel"/>
+                                    </form>
+                                </td> 
                             </tr>
                     <%                        
                         }
@@ -136,6 +158,7 @@
                          <th>Target</th> 
                          <th>Start Date</th>
                          <th>End Date</th>
+                         <th></th>
                     </tr>
                    
                 <%
@@ -146,6 +169,22 @@
                             <td><%=goal.getTarget()%></td>
                             <td><%=goal.getStartDate()%></td>
                             <td><%=goal.getEndDate()%></td>
+                            <td>
+                            <%
+                                if (goal.getEndDate().compareTo(new HKFDate()) >= 0) {
+                            %>
+                                    <form name="login" action="updateGoal.jsp" method="get">
+                                       <input type="hidden" name="goalID" value="<%=goal.getGoalID()%>"/>
+                                       <input type="submit" name="submit" value="Update"/>
+                                    </form>
+                                    <form name="login" action="UpdateGoalController" method="get">
+                                        <input type="hidden" name="goalID" value="<%=goal.getGoalID()%>"/>
+                                        <input type="submit" name="submit" value="Cancel"/>
+                                    </form>
+                            <% 
+                                } 
+                            %>
+                            </td>
                         </tr>
                 <%                        
                     }

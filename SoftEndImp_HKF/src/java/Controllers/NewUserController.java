@@ -58,6 +58,12 @@ public class NewUserController extends HttpServlet {
         Weight weight = new Weight(validator.validatePositiveInt("Invalid weight entered: " + weightString, weightString));  
         int height = validator.validatePositiveInt("Invalid weight entered: " + heightString, heightString);
             
+        if (Member.findByEmail(email) != null)
+            validator.appendErrMsg("Account with that email already exists");
+        
+        if (Member.findByUsername(username) != null)
+            validator.appendErrMsg("Account with that username exists");
+        
         //If valid, create and persist the new member, send them to their new homepage
         if (validator.isValid()) {
             //Create a user bean, and add their details to the database.
