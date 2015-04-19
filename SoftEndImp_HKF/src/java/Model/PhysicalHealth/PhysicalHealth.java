@@ -121,6 +121,8 @@ public class PhysicalHealth {
         if (postDateIndex == physicalHealthLog.size()) //date is AFTER any weightprogresses entered
             return physicalHealthLog.get(physicalHealthLog.size()-1).getWeight();
         
+        
+        //to fix
         return new Weight((physicalHealthLog.get(prevDateIndex).getWeight().getGrams() + physicalHealthLog.get(postDateIndex).getWeight().getGrams()) / 2);
     }
     
