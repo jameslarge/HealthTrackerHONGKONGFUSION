@@ -47,8 +47,15 @@ public class ExerciseLogController extends HttpServlet {
         exLog = ExerciseLogger.find(member.getUserID());
         session.setAttribute("exerciseLog", exLog);
         
-                
-        String specificDateString = request.getParameter("specificDate");
+        String specificDateString = null;
+        
+        try {  //incase parameter doesnt exist
+            specificDateString = request.getParameter("specificDate");
+        } catch (Exception ex) {
+            specificDateString = null;
+        }
+        
+        //by default todays date
         HKFDate specificDate = specificDateString == null ? new HKFDate() : new HKFDate(specificDateString);
         HKFDate specificDate2 = specificDateString == null ? new HKFDate() : new HKFDate(specificDateString);
         specificDate2.setHours(0);

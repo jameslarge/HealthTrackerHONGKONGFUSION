@@ -38,6 +38,7 @@
                 <nav id="mainnav">
                     <ul>
                         <li><a href="home.jsp" class="thispage">Home</a></li>
+                        <li><a href="accountManagement.jsp" class="thispage">Account</a></li> 
                         <li><a href="LogoutController" class="thispage">Log Out</a></li>   
                     </ul>
                 </nav>
@@ -63,9 +64,9 @@
 
                 <p>Username: <%=member.getUsername()%></p>   
                 <p>Email: <%=member.getEmail()%></p>
-
+                
                 <h3>
-                    Your Exercise Log
+                    Your Overall Exercise Log
                 </h3>
 
                 <!-- for each exercise progress -->
@@ -222,6 +223,34 @@
                 <div id="timeline"></div>
                <div id="graph"></div>
 
+               <h3>
+                    Select a specific date to look at in detail
+               </h3>
+               <form name="chooseDate" action="ExerciseLogController" method="get">
+                   <p>
+                       <input type="date" name="specificDate" class="textbox"/>
+                       <input type="submit" value="View"/>
+                   </p>
+               </form>
+               
+               <% 
+                   ArrayList<ExerciseProgress> specificProgresses = 
+                           (ArrayList<ExerciseProgress>) session.getAttribute("specificExercises");
+                   if (specificProgresses == null) {
+               %>
+               
+                    <p>Pick a date to see detailed a progress report for it.</p>
+               
+               <% 
+                   }
+                   else {
+               %>
+                    <!-- graph shizz -->
+                
+               <%
+                   }
+               %>
+               
                 <h3>
                     Log new exercise 
                 </h3>

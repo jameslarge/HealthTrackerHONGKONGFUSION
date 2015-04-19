@@ -400,7 +400,8 @@ public class Member {
     public double calcHealthinessActivity() throws ServletException {
         ExerciseLogger el = ExerciseLogger.find(userID);
         
-        int dailyCalsBurned = el.findAverageDailyActivityTime();
+        //int dailyCalsBurned = el.findAverageDailyActivityTime();
+        int dailyCalsBurned = 1;
         int goodDailyTime = 30;
         int greatDailyTime = goodDailyTime*2;
         
@@ -416,6 +417,6 @@ public class Member {
     public double calcHealthinessDiet() throws ServletException {
         DietLogger dl = DietLogger.find(userID);
         
-asdasd
+        return 1;
     }
 }
