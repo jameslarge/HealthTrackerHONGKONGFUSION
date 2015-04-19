@@ -74,6 +74,14 @@ public class ExerciseLogger {
         return 1;
     }
 
+    public int findAverageDailyActivityTime() {
+        double result = 0;
+        
+        for (ExerciseProgress ep : exerciseLog)
+            result += ep.getDuration();
+        
+        return (int) (result/exerciseLog.size());
+    }
     public int findTotalCalsBurnedToday() {
         //TODO
         return 1;

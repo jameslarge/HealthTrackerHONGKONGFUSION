@@ -55,6 +55,25 @@
                 <p>Forename:  <%=member.getForename()%></p>
                 <p>Surname:  <%=member.getSurname()%></p>              
                 
+                <% 
+                    double bmiHealth = member.calcHealthinessBMI();
+                    double activityHealth = member.calcHealthinessActivity();
+                    double dietHealth = member.calcHealthinessDiet();
+                    
+                    ExerciseLogger exLog = ExerciseLogger.find(member.getUserID());
+                    int avgActivityPerDay = exLog.findAverageDailyActivityTime();
+                    
+                    DietLogger dietLog = DietLogger.find(member.getUserID());
+                    int avgCalsPerDay = dietLog.findAverageDailyCalsConsumed();
+                %>
+                
+                <h3>
+                    Your Health Summary: <%=member.calculateHealthiness(bmiHealth, activityHealth, dietHealth)%>
+                </h3>
+                <p>Body Mass Index: <%=member.calculateBMI()%></p>
+                <p>Average Activity per day: <%=avgActivityPerDay%>mins</p>
+                <p>Average Calories Consumed per day: <%=avgCalsPerDay%></p>
+                
                 <h3>
                     View Physical Details/Weight Progress
                 </h3>

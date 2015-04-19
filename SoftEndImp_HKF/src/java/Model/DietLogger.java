@@ -60,8 +60,13 @@ public class DietLogger {
         //todo
     }
    
-    public void findAverageDailyCalsConsumed() {
-        //TODO
+    public int findAverageDailyCalsConsumed() {
+        double result = 0;
+        
+        for (MealProgress mp : mealLog)
+            result += mp.calcCalories();
+        
+        return (int) (result/mealLog.size());
     }
     
     public void findTotalCalsConsumedToday() {

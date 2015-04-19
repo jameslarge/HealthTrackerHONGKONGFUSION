@@ -369,22 +369,20 @@ public class Member {
     }
     
     
-    public int calculateHealthiness() throws ServletException {
+    public int calculateHealthiness(double bmiHealth, double activityHealth, double dietHealth) throws ServletException {
         double result = 0;
         
         double bmiFactor = 5, exTimeFactor = 2.5, calsConsumedFactor = 2.5;
 
-        result += calcHealthinessBMI() * bmiFactor; 
-        result += calcHealthinessActivity() * exTimeFactor;
-        result += calcHealthinessDiet() * calsConsumedFactor;
+        result += bmiHealth * bmiFactor; 
+        result += activityHealth * exTimeFactor;
+        result += dietHealth * calsConsumedFactor;
         
         return (int) (result + 0.5); //round to nearest integer
     }
     
     public double calcHealthinessBMI() throws ServletException {
-        PhysicalHealth ph = PhysicalHealth.find(userID);
-        
-        int bmi = ph.getMostRecentWeightProgress().calulateBMI();
+        int bmi = calculateBMI();
         int healthyBMILow = 19, healthyBMIHigh = 25;
         
         int distFromHealthyBMI = 0, maxDist = 10;
@@ -400,8 +398,7 @@ public class Member {
     public double calcHealthinessActivity() throws ServletException {
         ExerciseLogger el = ExerciseLogger.find(userID);
         
-        //int dailyCalsBurned = el.findAverageDailyActivityTime();
-        int dailyCalsBurned = 1;
+        int dailyCalsBurned = el.findAverageDailyActivityTime();
         int goodDailyTime = 30;
         int greatDailyTime = goodDailyTime*2;
         
@@ -417,6 +414,19 @@ public class Member {
     public double calcHealthinessDiet() throws ServletException {
         DietLogger dl = DietLogger.find(userID);
         
-        return 1;
+        int dailyCalsBurned = dl.findAverageDailyCalsConsumed();
+        int healthyDailyCalorieConsumption = 2250; //we arnt differentiating between
+        //male and female, so...
+
+        int unhealthlyDistance = 1000;
+        int distance = Math.abs(healthyDailyCalorieConsumption - dailyCalsBurned);
+        
+        return 1 - ((double)distance / (double)unhealthlyDistance);
+    }
+    
+    public int calculateBMI() throws ServletException {
+        PhysicalHealth ph = PhysicalHealth.find(userID);
+        
+        return ph.getMostRecentWeightProgress().calulateBMI();
     }
 }
