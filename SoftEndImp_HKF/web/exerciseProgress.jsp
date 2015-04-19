@@ -76,6 +76,9 @@
                     </tr>
 
                     <%
+                        //get all exercises
+                        ArrayList<Exercise> exercises = Exercise.findAll();
+                        
                         for (ExerciseProgress exProg : exLog.getExerciseLog()) {
                             HKFDate startDate = exProg.getDate();
                             HKFDate endDate = startDate.getEndDate(exProg.getDuration());
@@ -97,11 +100,132 @@
                 <script type="text/javascript">
                     google.load('visualization', '1', {packages: ['timeline']}); 
                     google.load("visualization", "1", {packages: ["bar"]});
+                      google.load('visualization', '1.0', {'packages':['corechart']});
                     google.setOnLoadCallback(startChart);
 
 
 
 
+                    function drawCalBurnedOverview() {
+                      
+                      var data = new google.visualization.DataTable();
+                      data.addColumn('string', 'Date');
+                     
+                      
+                      
+                      // index in array corresponds to (meal.Id)
+                      // i.e. Pizza.id = 2, 
+                      <%for (Exercise ex: exercises){%>
+                        data.addColumn('number', '<%=ex.getExerciseName()%>');
+                         
+                      <%}%>
+                      
+                      
+                      
+                      <%
+                      //******************JSP***************//
+                        
+                        ArrayList<Object> row = new ArrayList<Object>();
+                      
+                      
+                        //create a temporary row containg 
+                        //date and calories per all possible meals initialised to 0                        
+                        row.add(new HKFDate());
+                        int exSize = 0;
+                        for (Exercise ex : exercises){
+                              exSize++;
+                              row.add(Integer.valueOf(0));
+                          }
+                        
+                        
+                          int counter = 0;
+                          HKFDate prevDate = null;
+                          ArrayList<ExerciseProgress> exProgSorted =  exLog.sortDate();
+                      for (ExerciseProgress exProg : exProgSorted){
+                          
+                                                   
+                          HKFDate date = exProg.getDate();
+                          
+                          if(counter==0){
+                              prevDate = date;
+                          }
+                          
+                          row.set(0, date);
+                          
+                          int exIndex = exProg.getExercise().getID();
+                          
+                          
+                          boolean sameDay = date.compareToWithoutTime(prevDate)==0;
+                          
+                          //if the date is the same modify the values by adding to appropriate fields
+                          if (sameDay){
+                              
+                              //add to whatever is already there (might be 0, might be a value)                                                           
+                              Integer valueToStore = Integer.valueOf(exProg.calculateCals());
+                              Integer valueStored = (Integer) row.get(exIndex);
+                                      
+                              row.set(exProg.getExercise().getID(), valueStored + valueToStore);
+                          }
+                          if (!sameDay || counter == exProgSorted.size() - 1 ){
+                             
+                             //output row to GOOGLE GRAPHS
+                             %>   
+                                 data.addRow([new Date(<%=prevDate.getYear()%>,<%=prevDate.getMonthForGraph()%>,<%=prevDate.getDay()%>).toDateString()
+                                     <%
+                                     String exCell;
+                                     for(int i = 1; i<=exSize; i++){
+                                         exCell = ", " + ((Integer)row.get(i)).intValue();
+                                         %>
+                                                     <%=exCell%>
+                                                         
+                                     <%
+                                     }
+                                     %>                               
+                                ]);     
+                             <% 
+                              //reload row (clean it up)
+                              for (int j = 1; j<=exSize; j++){
+                                   row.set(j,Integer.valueOf(0));
+                               }
+                              //start a new one
+                             row.set(exIndex, Integer.valueOf(exProg.calculateCals()));
+                             
+                             
+                          }
+                          if(counter!=0){
+                            prevDate = date;
+                          }
+                         counter++;
+                        }%>  
+                                
+                        
+                                                  
+                          
+                                     
+
+                      var options = {
+                        title: 'Blabla',                                              
+                        width: 900,
+                        height: 500,
+                        legend: 'none',
+                        isStacked: 'true'
+                        
+                       
+                      };
+                      
+                       var chart = new google.visualization.BarChart(document.getElementById('calBurned'));
+                       
+                       //getting the total amount of calories consumed per date
+//                       rowValues;
+//                       for(r = 0; r< data.getNumberOfRows(); r++){
+//                           var value = 0;
+//                           for(c = 1; c<data.getNumberOfColumns();c++){
+//                              value = value + data.getValue(r,c);
+//                           }
+//                           rowValues[rowValues.length] = value;
+//                       }
+                      chart.draw(data, options);
+                    }
                     function prepareDataForTimeline() {
 
                         data_TL = new google.visualization.DataTable();
@@ -206,6 +330,7 @@
 
 
                     function startChart() {
+                        drawCalBurnedOverview()
                         prepareDataForTimeline();
                         prepareTimeline();
                         drawTimeline();
@@ -218,7 +343,7 @@
 
                     
                 </script>
-
+                <div id="calBurned"></div>
                 <div id="timeline"></div>
                <div id="graph"></div>
 
@@ -226,10 +351,7 @@
                     Log new exercise 
                 </h3>
 
-                <%
-                    ArrayList<Exercise> exercises = Exercise.findAll();
-                    //print out all exercise names in drop down list
-                %>
+             
 
                 <form name="login" action="LogExerciseController" method="get">
                     <p>Start Date<input type="date" name="date" class="textbox"/></p>

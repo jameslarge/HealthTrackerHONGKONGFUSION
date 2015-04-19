@@ -6,7 +6,11 @@
 
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<%@page import="java.util.Iterator"%>
+<%@page import="java.util.Set"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.TreeMap"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import ="Controllers.*"%>
 <%@page import ="Model.*"%>
 <%@page import ="Model.Meal.*"%>
@@ -96,11 +100,11 @@
       google.load('visualization', '1.0', {'packages':['corechart']});
 
       // Set a callback to run when the Google Visualization API is loaded.
-      google.setOnLoadCallback(drawChart);
+      google.setOnLoadCallback(startChart);
 
 
                     
-                    function drawChart() {
+                    function drawCalBreakDown() {
                       
                       var data = new google.visualization.DataTable();
                       data.addColumn('string', 'Date');
@@ -202,28 +206,90 @@
                         width: 900,
                         height: 500,
                         legend: 'none',
-                        isStacked: 'true',
+                        isStacked: 'true'
                         
                        
                       };
                       
-                       var chart = new google.visualization.BarChart(document.getElementById('linechart'));
+                       var chart = new google.visualization.BarChart(document.getElementById('calBreakDown'));
                        
                        //getting the total amount of calories consumed per date
-                       rowValues;
-                       for(r = 0; r< data.getNumberOfRows(); r++){
-                           var value = 0;
-                           for(c = 1; c<data.getNumberOfColumns();c++){
-                              value = value + data.getValue(r,c);
-                           }
-                           rowValues[rowValues.length] = value;
-                       }
+                       
                       chart.draw(data, options);
                     }
+                    
+                   
+                    
+                    
+                    function prepareData() {
+                      
+                      data = new google.visualization.DataTable();
+                      data.addColumn('date', 'Date');
+                      data.addColumn('number', 'Calories')
+                      
+                      
+                      <%
+                          TreeMap<HKFDate, Integer> calEatenPerDay = dietLog.findCalsConsumedPerDay();
+                          
+                          for (Map.Entry<HKFDate,Integer> entry : calEatenPerDay.entrySet()){
+                                HKFDate date = entry.getKey();
+                                int calEaten = (int) entry.getValue();
+                          
+                      %>                      
+                        data.addRow([new Date(<%=date.getYear()%>,<%=date.getMonthForGraph()%>,<%=date.getDay()%>), <%=calEaten%>]);
+                       <%}%>  
+
+                    }
+                    
+                    function prepareChart(){
+                         options = {
+                             title: 'Calories Eaten Over Time',                                              
+                            width: 900,
+                            height: 500,
+                            pointSize: 20,
+                            legend: 'none',
+                             hAxis: {title: 'Day'},
+                             vAxis: {title: 'Calories [kCal]'},
+                             crosshair: { 
+                                          trigger: 'both',
+                                          orientation: 'horizontal',
+                                          color: 'red'                                                                                   
+                                        }
+                           
+                            
+                          };
+
+                          var formatter = new google.visualization.NumberFormat(
+                          {suffix: ' kCal'});
+                          formatter.format(data, 1); // Apply formatter to second column
+                          
+                       
+                          chart = new google.visualization.LineChart(document.getElementById('linechart'));
+                    }
+                    
+                    
+                    function drawChart(){
+                      chart.draw(data, options);
+                    }
+                    
+                    function startChart(){
+                      drawCalBreakDown();
+                      prepareData();
+                      prepareChart();
+                      drawChart();
+                      
+                    }
+                    
+                    drawChart();
+                    
+                
                                        
                 </script>
+                                       
+               
                 
                  <div id="linechart"></div>
+                 <div id="calBreakDown"></div>
                 
                              
                 <h3>
