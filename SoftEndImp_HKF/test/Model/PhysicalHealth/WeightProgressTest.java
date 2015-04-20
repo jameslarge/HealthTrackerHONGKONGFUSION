@@ -36,7 +36,7 @@ public class WeightProgressTest {
     
     @Before
     public void setUp() {
-        instance = new WeightProgress(new Weight(-1), new HKFDate(18,04,2015));
+        instance = new WeightProgress(6,new Weight(-1), new HKFDate(18,04,2015));
     }
     
     @After
@@ -102,7 +102,8 @@ public class WeightProgressTest {
     
     public void testDelete() throws Exception {
         System.out.println("delete");
-        //instance.delete();
+        instance.delete();
+        System.out.println("END");
     }
     
 }

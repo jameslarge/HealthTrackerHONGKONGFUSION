@@ -19,6 +19,14 @@ public class WeightProgress implements Comparable<WeightProgress> {
     private HKFDate date;
 
     public WeightProgress(int ID, int physicalHealthID, Weight weight, HKFDate date) {
+        this.ID = ID;
+        this.physicalHealthID = physicalHealthID;
+        this.weight = weight;
+        this.date = date;
+    }
+    
+    public WeightProgress(int physicalHealthID, Weight weight, HKFDate date) {
+        this.ID = -1;
         this.physicalHealthID = physicalHealthID;
         this.weight = weight;
         this.date = date;
@@ -195,7 +203,6 @@ public class WeightProgress implements Comparable<WeightProgress> {
     public int calulateBMI() throws ServletException{
         PhysicalHealth ph = PhysicalHealth.find(physicalHealthID);
         int height = ph.getHeight().getCentimetres();
-        System.out.println("Height:" + height);
         return (int) (weight.getGrams()/(height * height));
     }
     
