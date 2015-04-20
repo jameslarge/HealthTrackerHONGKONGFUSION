@@ -22,7 +22,7 @@ import org.junit.Test;
  */
 public class WeightProgressTest {
     
-    WeightProgress instance;
+    WeightProgress instance = new WeightProgress(1,new Weight(-1), new HKFDate(18,04,2015));
 
     public WeightProgressTest() {
     }
@@ -36,8 +36,7 @@ public class WeightProgressTest {
     }
     
     @Before
-    public void setUp() {
-        instance = new WeightProgress(6,new Weight(-1), new HKFDate(18,04,2015));
+    public void setUp() {        
     }
     
     @After
@@ -47,12 +46,12 @@ public class WeightProgressTest {
     /**
      * Test of find method, of class WeightProgress.
      */
-    @Test
+    //@Test
     public void testFind() throws Exception {
         System.out.println("find");
         int wpID = 1;
         int expResult = -1;
-        int result = (int) WeightProgress.find(wpID).getWeight().getGrams();
+        int result = WeightProgress.find(wpID).getWeight().getGrams();
         
         assertEquals(expResult, result);
     }
@@ -60,12 +59,13 @@ public class WeightProgressTest {
     /**
      * Test of findAll method, of class WeightProgress.
      */
-    @Test
+    //@Test
     public void testFindAll() throws Exception {
         System.out.println("findAll");
         int physHealthID = 1;
-        int expResult = -1;
-        int result = (int) WeightProgress.findAll(physHealthID).get(0).getWeight().getGrams();
+        int expResult = 2;
+        //Know that there is only 2 elements in table with ID of 1
+        int result = WeightProgress.findAll(physHealthID).size();
         
         assertEquals(expResult, result);
     }
@@ -76,13 +76,10 @@ public class WeightProgressTest {
     @Test
     public void testPersist() throws Exception {
         System.out.println("persist");
-        int physHealthId = 6;
+        int physHealthId = 1;
         instance.persist(physHealthId);
-        
-        int expResult = -1;
-        int result = -1;
-        
-        assertEquals(expResult, result);
+        testFindAll(); //If this true persist worked
+        testFind(); //If this is true persist worked too
     }
 
     /**
@@ -91,7 +88,7 @@ public class WeightProgressTest {
     @Test
     public void testCalulateBMI() throws Exception {
         System.out.println("calulateBMI");
-        int expResult = 0;
+        int expResult = -1;
         int result = instance.calulateBMI();
         assertEquals(expResult, result);
         testDelete();
@@ -104,6 +101,7 @@ public class WeightProgressTest {
     public void testDelete() throws Exception {
         System.out.println("delete");
         instance.delete();
+        assertEquals(-1,WeightProgress.find(1).getWeight().getGrams());
         System.out.println("END");
     }
     
