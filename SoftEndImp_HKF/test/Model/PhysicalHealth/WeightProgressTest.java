@@ -50,8 +50,6 @@ public class WeightProgressTest {
     public void testFind() throws Exception {
         System.out.println("find");
         int wpID = 1;
-       // WeightProgress expResult = new WeightProgress(new Weight(-1), new HKFDate(14,04,2015));
-       // WeightProgress result = WeightProgress.find(wpID);
         int expResult = -1;
         int result = (int) WeightProgress.find(wpID).getWeight().getGrams();
         
@@ -77,7 +75,7 @@ public class WeightProgressTest {
     @Test
     public void testPersist() throws Exception {
         System.out.println("persist");
-        int physHealthId = -1;
+        int physHealthId = 6;
         instance.persist(physHealthId);
         
         int expResult = -1;
@@ -95,17 +93,16 @@ public class WeightProgressTest {
         int expResult = 0;
         int result = instance.calulateBMI();
         assertEquals(expResult, result);
+        testDelete();
     }
 
     /**
      * Test of delete method, of class WeightProgress.
      */
-    @Test
+    
     public void testDelete() throws Exception {
         System.out.println("delete");
-        instance.delete();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //instance.delete();
     }
     
 }

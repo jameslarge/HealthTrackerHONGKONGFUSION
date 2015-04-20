@@ -195,7 +195,7 @@ public class WeightProgress implements Comparable<WeightProgress> {
     public int calulateBMI() throws ServletException{
         PhysicalHealth ph = PhysicalHealth.find(physicalHealthID);
         int height = ph.getHeight().getCentimetres();
-        
+        System.out.println("Height:" + height);
         return (int) (weight.getGrams()/(height * height));
     }
     
@@ -209,7 +209,7 @@ public class WeightProgress implements Comparable<WeightProgress> {
             Connection con = DatabaseAccess.getConnection();
 
             PreparedStatement ps = con.prepareStatement(
-                    "DELETE * FROM weightProgress WHERE (id = ?)");
+                    "DELETE FROM weightProgress WHERE (id = ?)");
             
             ps.setInt(1, ID);
             ps.executeUpdate();
