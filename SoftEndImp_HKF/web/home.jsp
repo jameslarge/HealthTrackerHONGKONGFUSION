@@ -25,8 +25,19 @@
 
     <body>
         <div id="wrapper">
+            
+            <footer>
+                <article id="disclaimer">
+                    <span>Disclaimer:</span> This application is not a commercial application and does not provide
+                    insurance. This is a study project that is part of a Computing Science module taught at the
+                    University of East Anglia, Norwich, UK. If you have any questions, please contact the
+                    module coordinator, Joost Noppen, at j.noppen@uea.ac.uk
+                </article>
+            </footer>
+            
+            
             <header id="top">
-                <h1>HONG KONG FUSIOOOOON</h1>
+                <h1>Hong Kong Fusion Health Tracker</h1>
                 <nav id="mainnav">
                     <ul>
                         <li><a href="home.jsp" class="thispage">Home</a></li>
@@ -39,45 +50,61 @@
                     </ul>
                 </nav>
             </header>
-            <article id="main">
+            
+            
+            <!--<article id="main">-->
+            <div class="divTable">
+              <div class="divRow">
+                  <article class="contentArea" id="leftHalf">
+                       <article class="basicArea">
+                            <%
+                                String errorMessage = (String) request.getAttribute("errorMessage");
+                                if (errorMessage != null) {
+                            %>
+                                    <p class="error">Error: <%=errorMessage%></p>
+                            <%
+                                }
+                            %>
+
+                            <h3>
+                                Your Info
+                            </h3>
+
+                            <p>Username: <%=member.getUsername()%></p>   
+                            <p>Email: <%=member.getEmail()%></p>
+                            <p>Forename:  <%=member.getForename()%></p>
+                            <p>Surname:  <%=member.getSurname()%></p>              
                 
-                <%
-                    String errorMessage = (String) request.getAttribute("errorMessage");
-                    if (errorMessage != null) {
-                %>
-                        <p class="error"><%=errorMessage%></p>
-                <%
-                    }
-                %>
-                
-                <h3>
-                    Your Info
-                </h3>
-                
-                <p>Username: <%=member.getUsername()%></p>   
-                <p>Email: <%=member.getEmail()%></p>
-                <p>Forename:  <%=member.getForename()%></p>
-                <p>Surname:  <%=member.getSurname()%></p>              
-                
-                <% 
-                    double bmiHealth = member.calcHealthinessBMI();
-                    double activityHealth = member.calcHealthinessActivity();
-                    double dietHealth = member.calcHealthinessDiet();
+                        </article>
+                    </article>
+
+                    <article id="centre"></article>
                     
-                    ExerciseLogger exLog = ExerciseLogger.find(member.getUserID());
-                    int avgActivityPerDay = exLog.findAverageDailyActivityTime();
-                    
-                    DietLogger dietLog = DietLogger.find(member.getUserID());
-                    int avgCalsPerDay = dietLog.findAverageDailyCalsConsumed();
-                %>
+                    <article class="contentArea" id="rightHalf">
+                         <article class="basicArea">
                 
-                <h3>
-                    Your Health Summary: <%=member.calculateHealthiness(bmiHealth, activityHealth, dietHealth)%>
-                </h3>
-                <p>Body Mass Index: <%=member.calculateBMI()%></p>
-                <p>Average Activity per day: <%=avgActivityPerDay%>mins</p>
-                <p>Average Calories Consumed per day: <%=avgCalsPerDay%></p>
-            </article>
+                            <% 
+                                double bmiHealth = member.calcHealthinessBMI();
+                                double activityHealth = member.calcHealthinessActivity();
+                                double dietHealth = member.calcHealthinessDiet();
+
+                                ExerciseLogger exLog = ExerciseLogger.find(member.getUserID());
+                                int avgActivityPerDay = exLog.findAverageDailyActivityTime();
+
+                                DietLogger dietLog = DietLogger.find(member.getUserID());
+                                int avgCalsPerDay = dietLog.findAverageDailyCalsConsumed();
+                            %>
+
+                            <h3>
+                                Your Health Summary: <%=member.calculateHealthiness(bmiHealth, activityHealth, dietHealth)%>
+                            </h3>
+                            <p>Body Mass Index: <%=member.calculateBMI()%></p>
+                            <p>Average Activity per day: <%=avgActivityPerDay%>mins</p>
+                            <p>Average Calories Consumed per day: <%=avgCalsPerDay%></p>
+                        </article>
+                    </article>
+                </div>
+           </div>
                 
             <br><br>
             <footer>

@@ -36,15 +36,25 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>HONG KONG FUSIOOOOON</title>
+        <title>Hong Kong Fusion Health Tracker</title>
         <link href="styles/main.css" rel="stylesheet" type="text/css">
 
     </head>
 
     <body>
         <div id="wrapper">
+            
+            <footer>
+                <article id="disclaimer">
+                    <span>Disclaimer:</span> This application is not a commercial application and does not provide
+                    insurance. This is a study project that is part of a Computing Science module taught at the
+                    University of East Anglia, Norwich, UK. If you have any questions, please contact the
+                    module coordinator, Joost Noppen, at j.noppen@uea.ac.uk
+                </article>
+            </footer>
+            
             <header id="top">
-                <h1>HONG KONG FUSIOOOOON</h1>
+                <h1>HONG KONG FUSION HEALTH TRACKER</h1>
                 <nav id="mainnav">
                     <ul>
                         <li><a href="home.jsp">Home</a></li>
@@ -57,27 +67,20 @@
                     </ul>
                 </nav>
             </header>
-            <article id="main">
+            <article id="meh">
                 
                 <%
                     String errorMessage = (String) request.getAttribute("errorMessage");
                     if (errorMessage != null) {
                 %>
-                        <p class="error"><%=errorMessage%></p>
+                        <p class="error">Error: <%=errorMessage%></p>
                 <%
                     }
                 %>
-                
-                <h3>
-                    Your General Info
-                </h3>
-                
-                <p>Username: <%=member.getUsername()%></p>   
-                <p>Email: <%=member.getEmail()%></p>
-                
-                <h3>
-                    Goals due today
-                </h3>
+                                
+                <h5>
+                    GOALS DUE TODAY
+                </h5>
                 
                 <!-- for each exercise progress -->
                     <!-- print date : exercisename, cals burned --> 
@@ -111,9 +114,9 @@
                     %>
                 </table>
                 
-                <h3>
-                    Goals due soon
-                </h3>
+                <h5>
+                    GOALS DUE SOON
+                </h5>
                 
                 <!-- for each exercise progress -->
                     <!-- print date : exercisename, cals burned --> 
@@ -150,9 +153,9 @@
                     %>
                 </table>
                 
-                <h3>
-                    ALL Your Goals
-                </h3>
+                <h5>
+                    ALL YOUR GOALS
+                </h5>
 
                 <!-- for each exercise progress -->
                     <!-- print date : exercisename, cals burned --> 
@@ -195,9 +198,9 @@
                 %>
                 </table>    
               
-                <h3>
+                <h5>
                     Set new goal
-                </h3>
+                </h5>
                 
                 <form name="login" action="CreateGoalController" method="get">
                     <p>Goal Type: 

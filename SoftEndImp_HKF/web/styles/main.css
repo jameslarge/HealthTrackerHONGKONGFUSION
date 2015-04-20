@@ -50,18 +50,18 @@ h1, h2,h5,h6{
 }
 
 h1 {
-	font-size: 72px;
+	font-size: 300%;
 	text-align: center;
 	text-transform: uppercase;
 	margin-top: 0px;
 	margin-bottom: 0px;
 }
 h5 {
-    margin-top: 2%;
-	margin-bottom: 2%;
-        font-size: 48px;
-        color: #006C94;
-        text-align: center;
+    margin-top: 0.5%;
+    margin-bottom: 0.5%;
+    font-size: 70%;
+    color: #006C94;
+    text-align: center;
 }
 h6{
     margin-top: 2%;
@@ -82,10 +82,10 @@ h6{
 	margin-left: 2%;
 	float: left;
 }
-#mainbook {
-	width: 58%;
-	margin-left: auto;
-	margin-right: auto;
+#mainbook {    
+	width: 60%;
+	margin-left: 2%;
+	margin-right: 2%;
 }
 #adminsidebar {
 	width: 42%;
@@ -209,7 +209,19 @@ h4 {
 	font-size: 200%;
 }
 
-    
+
+h5 {
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 150%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 4%;
+    padding-right: 4%;
+    background-color: #F2250A;
+    color: #FFFFFF;
+}  
 
 #bookbutton {
 	display: inline;
@@ -418,6 +430,42 @@ color:white;
     color: #43A6CB;
 }
 
+#disclaimer {
+    clear: left;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 4%;
+    padding-right: 4%;
+    background-color: #F2250A;
+    color: #FFFFFF;
+    text-align: center;
+    font-style:italic;
+}
+
+#disclaimer span {
+    font-weight:bold;
+}
+
+.divTable {
+    width: 100%;
+    display: table;
+}
+.contentArea {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    border-width: 0px;
+    padding: 1%;
+}
+
+.divTableInner {
+    width: 100%;
+    display: table;
+}
+
+.divRow {
+    display: table-row;
+}
+
 #leftHalf {
     width: 42%;
     margin-left: 4%;
@@ -442,4 +490,31 @@ color:white;
     margin-bottom: 2%; 
     margin-right: 4%;
     display: table-cell;
+}
+
+.basicArea {
+    width: 70%;
+    margin-left: 15%;
+}
+
+#top {
+     margin-top: 10px;
+}
+
+.error {
+    color:#F2250A;
+    //font-weight: bold;
+    
+}
+
+#meh {
+    margin-top: 5%;
+    margin-left: 10%;
+    margin-right: 10%;
+    text-align: center;
+}
+
+#meh2 {
+    margin-left: 33%;
+    margin-right: 33%;
 }

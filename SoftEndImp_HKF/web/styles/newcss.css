@@ -1,0 +1,294 @@
+/* 
+    Document   : main
+    Created on : 11-Mar-2014, 10:11:21
+    Author     : xmw13bzu
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.wrapper {
+    position: absolute;
+    background-color: #F2250A;
+    border-radius: 10px;
+    width: 60%;
+    min-width: 800px;
+    max-width: 1000px;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 0%;
+    margin-bottom: 4%;
+    border-width: medium;
+    color: #000000;
+}
+
+header {
+    border-width: medium;
+    margin-bottom: 2%;
+    margin-left: 4%;
+    margin-right: 4%;
+    margin-top: 4%;
+    position: relative;
+}
+
+#headerMessage { 
+    width: 40%;
+    padding-left: 15%;
+    display: table-cell;
+    font-size: 150%;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.globalNav {
+    width: 30%;
+    display: table-cell;
+    font-size: 75%; 
+    padding-right: 15%;
+}
+
+.globalNav ul {
+    list-style-type: none;
+    padding: 0%;
+    margin: 0%;
+}
+
+.globalNav a {
+    float: left;
+    text-align: center;
+    background-color: #FFFFFF;
+    color: #000000;
+    display: block;	
+    width: 22%;
+    padding-left: 1%;
+    padding-right: 1%;
+    border: 1px solid #FFFFFF;
+}
+
+.globalNav a:hover {
+    border: 1px solid #660066;
+}
+
+.globalNav span {
+    float: left;
+    text-align: center;
+    background-color: #FFFFFF;
+    color: #000000;
+    display: block;	
+    width: 60%;
+    padding-left: 1%;
+    padding-right: 1%;
+}
+
+footer {
+    border-width: medium;
+    font-size: 75%;
+    text-align: center;
+    margin-bottom: 4%;
+    margin-left: 4%;
+    margin-right: 4%;
+    margin-top: 2%;
+    display: block;
+}
+
+.contentArea {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    border-width: 0px;
+    padding: 1%;
+}
+
+.divTable {
+    margin-left: 4%;
+    margin-right: 4%;
+    display: table;
+}
+
+.divTableInner {
+    width: 100%;
+    display: table;
+}
+
+.divRow {
+    display: table-row;
+}
+
+#leftHalf {
+    width: 42%;
+    margin-left: 4%;
+    margin-top: 2%;
+    margin-bottom: 2%; 
+    margin-right: 0%;
+    display: table-cell;
+}
+
+#centre {
+    width: 4%;
+    margin-left: 46%;
+    margin-top: 2%;
+    margin-bottom: 2%; 
+    display: table-cell;
+}
+
+#rightHalf {
+    width: 42%;
+    margin-left: 3.49%;
+    margin-top: 2%;
+    margin-bottom: 2%; 
+    margin-right: 4%;
+    display: table-cell;
+}
+
+.form th {
+    text-align: right;
+    font-weight: bold;
+}
+
+.form td#label {
+    text-align: right;
+}
+
+#main {
+    width: 90%; 
+    margin-left: 4%;
+    margin-right: 4%;
+    margin-bottom: 2%;
+    margin-top: 2%;
+}
+
+table.dataList {
+    width: 70%;
+    margin-left: 15%; 
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.headerRow {
+    background-color: #696969;
+    color: white;
+}
+
+.oddRow {
+    background-color: #DCDCDC;
+}
+
+.evenRow {
+    background-color: #FFFFFF;
+}
+
+table.dataList th {
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    font-weight: bold;
+}
+
+table.dataList td {
+    height: 20px;
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+table.dataList td div {
+    overflow: hidden;
+    width: 100%;
+    height: 100%; 
+}
+
+#twoColEven td {
+    width: 50%;
+}
+
+#threeColEven td {
+    width: 33%;
+}
+
+#senderNameCol {
+    width: 25%;
+}
+
+#messageCol {
+    width: 50%;
+}
+
+#dateCol {
+    width: 15%;
+}
+
+#replyCol {
+    width: 10%;
+}
+
+#schoolNameCol {
+    width: 75%;
+}
+
+.basicArea {
+    width: 70%;
+    margin-left: 15%;
+}
+
+.userBioImg {
+    float: right;  
+    width: 30%;
+    padding: 0% 0% 2% 2%;
+}
+
+.clearList {
+    list-style-type: none;
+}
+
+.empty {
+     display: table-cell;
+     width:40%;
+}
+
+.searchBar {
+     display: table-cell;
+     padding-left: 2%;
+     padding-right: 15%;
+}
+
+.searchBox {
+    font-size: 75%; 
+    text-align: right;
+}
+
+.searchLabel {
+    font-size: 75%; 
+}
+
+#unread {
+    font-weight: bold;
+}
+
+#read { }
+
+.error {
+    text-transform: uppercase;
+    color: red;
+}
+
+.clearance {
+    clear:both;
+}
+
+#schoolList {
+    width: 55%;
+}
+
+#msgCountCol {
+    width: 10%;
+}
+
+#userNameCol {
+    width: 30%;
+}
+
+#disclaimer {
+    font-style:italic;
+}
+
+#disclaimer span {
+    font-weight:bold;
+}
