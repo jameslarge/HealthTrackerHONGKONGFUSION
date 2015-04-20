@@ -30,8 +30,12 @@
                 <nav id="mainnav">
                     <ul>
                         <li><a href="home.jsp" class="thispage">Home</a></li>
-                        <li><a href="accountManagement.jsp" class="thispage">Account</a></li> 
-                        <li><a href="LogoutController" class="thispage">Log Out</a></li>                        
+                        <li><a href="GoalsController">Goals</a></li>
+                        <li><a href="PhysicalHealthLogController">Weight</a></li>
+                        <li><a href="ExerciseLogController">Exercise</a></li>
+                        <li><a href="DietLogController">Diet</a></li>
+                        <li><a href="accountManagement.jsp">Account</a></li> 
+                        <li><a href="LogoutController">Log Out</a></li>       
                     </ul>
                 </nav>
             </header>
@@ -73,42 +77,6 @@
                 <p>Body Mass Index: <%=member.calculateBMI()%></p>
                 <p>Average Activity per day: <%=avgActivityPerDay%>mins</p>
                 <p>Average Calories Consumed per day: <%=avgCalsPerDay%></p>
-                
-                <h3>
-                    View Physical Details/Weight Progress
-                </h3>
-                <form name="physical" action="PhysicalHealthLogController" method="get">
-                    <p><input type="submit" value="GoGoPhysical"/>
-                </form>
-                
-                <h3>
-                    View Exercise Details/Progress
-                </h3>
-                <form name="exercise" action="ExerciseLogController" method="get">
-                    <p><input type="submit" value="GoGoExercise"/>
-                </form>
-                
-                <h3>
-                    View Diet Details/Progress
-                </h3>
-                <form name="diet" action="DietLogController" method="get">
-                    <p><input type="submit" value="GoGoDiet"/>
-                </form>
-                
-                 <h3>
-                    View Goal Details/Progress
-                </h3>
-                <form name="goal" action="GoalsController" method="get">
-                    <p><input type="submit" value="GoGoGoals"/>
-                </form>
-                
-                <h3>
-                    LOG OUT
-                </h3>
-                <form name="logout" action="LogoutController" method="get">
-                        <p><input type="submit" value="Logout"/>
-                </form>
-              
             </article>
                 
             <br><br>
