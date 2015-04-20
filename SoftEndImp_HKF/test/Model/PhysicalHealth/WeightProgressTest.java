@@ -6,14 +6,15 @@
 
 package Model.PhysicalHealth;
 
+import Goals.Goal;
 import Model.HKFDate;
 import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -104,6 +105,90 @@ public class WeightProgressTest {
         System.out.println("delete");
         instance.delete();
         System.out.println("END");
+    }
+    
+    /**
+     * Test of updateValue method, of class WeightProgress.
+     */
+    @Test
+    public void testUpdateValue() throws Exception {
+        System.out.println("updateValue");
+        String valueName = "target";
+        String newValue = "6";
+        instance.updateValue(valueName, newValue);
+        int result = Goal.find(instance.getID()).getTarget();
+        assertEquals(6, result);
+    }
+
+    /**
+     * Test of getID method, of class WeightProgress.
+     */
+    @Test
+    public void testGetID() {
+        System.out.println("getID - not testing, simple class");
+    }
+
+    /**
+     * Test of getPhysicalHealthID method, of class WeightProgress.
+     */
+    @Test
+    public void testGetPhysicalHealthID() {
+        System.out.println("getPhysicalHealthID - not testing, simple class");
+    }
+
+    /**
+     * Test of getWeight method, of class WeightProgress.
+     */
+    @Test
+    public void testGetWeight() {
+        System.out.println("getWeight - not testing, simple class");
+    }
+
+    /**
+     * Test of getDate method, of class WeightProgress.
+     */
+    @Test
+    public void testGetDate() {
+        System.out.println("getDate - not testing, simple class");
+    }
+
+    /**
+     * Test of setID method, of class WeightProgress.
+     */
+    @Test
+    public void testSetID() {
+        System.out.println("setID - not testing, simple class");
+    }
+
+    /**
+     * Test of setPhysicalHealthID method, of class WeightProgress.
+     */
+    @Test
+    public void testSetPhysicalHealthID() {
+        System.out.println("setPhysicalHealthID - not testing, simple class");
+    }
+    /**
+     * Test of setWeight method, of class WeightProgress.
+     */
+    @Test
+    public void testSetWeight() {
+        System.out.println("setWeight - not testing, simple class");
+    }
+
+    /**
+     * Test of setDate method, of class WeightProgress.
+     */
+    @Test
+    public void testSetDate() {
+        System.out.println("setDate - not testing, simple class");
+    }
+
+    /**
+     * Test of compareTo method, of class WeightProgress.
+     */
+    @Test
+    public void testCompareTo() {
+        System.out.println("compareTo - not testing, just uses HKFDate compareTo which is already tested");
     }
     
 }
