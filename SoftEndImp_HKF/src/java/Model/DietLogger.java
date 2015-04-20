@@ -88,7 +88,7 @@ public class DietLogger {
        ArrayList<MealProgress> mps = new ArrayList<>();
 
        for (MealProgress mp : mealLog)
-            if (mp.getDate().compareTo(start) >= 0 && mp.getDate().compareTo(end) <= 0)
+            if (mp.getDate().compareToWithoutTime(start) >= 0 && mp.getDate().compareToWithoutTime(end) <= 0)
                mps.add(mp);
 
        return mps;
