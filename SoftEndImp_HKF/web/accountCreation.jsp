@@ -25,7 +25,8 @@
                 <h1>HONG KONG FUSIOOOOON</h1>
                 <nav id="mainnav">
                     <ul>
-                        <li><a href="index.jsp" class="thispage">Index</a></li>                    
+                        <li><a href="index.jsp">Index</a></li>
+                        <li><a href="accountCreation.jsp" class="thispage">Sign Up</a></li>                 
                     </ul>
                 </nav>
             </header>

@@ -295,7 +295,7 @@ public class MealProgress implements Comparable<MealProgress> {
             Connection con = DatabaseAccess.getConnection();
 
             PreparedStatement ps = con.prepareStatement(
-                    "DELETE * FROM mealProgress WHERE (id = ?)");
+                    "DELETE FROM mealProgress WHERE (id = ?)");
             
             ps.setInt(1, ID);
             ps.executeUpdate();

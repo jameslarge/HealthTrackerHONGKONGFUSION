@@ -47,9 +47,13 @@
                 <h1>HONG KONG FUSIOOOOON</h1>
                 <nav id="mainnav">
                     <ul>
-                        <li><a href="home.jsp" class="thispage">Home</a></li>
-                        <li><a href="accountManagement.jsp" class="thispage">Account</a></li> 
-                        <li><a href="LogoutController" class="thispage">Log Out</a></li>   
+                        <li><a href="home.jsp">Home</a></li>
+                        <li><a href="GoalsController" class="thispage">Goals</a></li>
+                        <li><a href="PhysicalHealthLogController">Weight</a></li>
+                        <li><a href="ExerciseLogController">Exercise</a></li>
+                        <li><a href="DietLogController">Diet</a></li>
+                        <li><a href="accountManagement.jsp">Account</a></li> 
+                        <li><a href="LogoutController">Log Out</a></li>       
                     </ul>
                 </nav>
             </header>

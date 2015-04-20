@@ -118,7 +118,7 @@ public class PhysicalHealth {
         
         if (postDateIndex == 0) //date is BEFORE any weightprogresses were entered
             return physicalHealthLog.get(0).getWeight();
-        if (postDateIndex == physicalHealthLog.size()) //date is AFTER any weightprogresses entered
+        if (prevDateIndex == physicalHealthLog.size()) //date is AFTER any weightprogresses entered
             return physicalHealthLog.get(physicalHealthLog.size()-1).getWeight();
         
         

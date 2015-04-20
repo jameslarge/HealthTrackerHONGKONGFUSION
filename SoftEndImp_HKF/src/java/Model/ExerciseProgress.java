@@ -226,7 +226,7 @@ public class ExerciseProgress implements Comparable<ExerciseProgress> {
             Connection con = DatabaseAccess.getConnection();
 
             PreparedStatement ps = con.prepareStatement(
-                    "DELETE * FROM exerciseProgress WHERE (id = ?)");
+                    "DELETE FROM exerciseProgress WHERE (id = ?)");
             
             ps.setInt(1, ID);
             ps.executeUpdate();

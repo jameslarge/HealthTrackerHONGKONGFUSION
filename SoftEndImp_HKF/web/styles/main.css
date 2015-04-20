@@ -46,7 +46,6 @@ body {
 h1, h2,h5,h6{
 	color: #F2250A;
 	font-style: normal;
-	font-weight: 600;
 	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
 }
 
@@ -74,7 +73,7 @@ h6{
     
 }
 #main {
-	width: 58%;
+	width: 33%;
 	margin-left: 2%;
 	float: left;
 }
@@ -176,9 +175,9 @@ a:focus {
 #mainnav a {
 	display: block;
 	float: left;
-	width: 25%;
+	width: 14.285%;
 	text-align: center;
-	background-color: #F2250A;
+	background-color: #D65B4B;
 	color: #FFFFFF;
 	text-transform: uppercase;
 }
@@ -194,11 +193,12 @@ a:focus {
 	background-color: #F2250A;
 	text-decoration: none;
 }
+
 h3 {
 	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, sans-serif;
 	font-style: normal;
-	font-weight: 400;
-	font-size: 70px;
+	font-weight: bold;
+	font-size: 150%;
 }
 h4 {
 	font-style: normal;
@@ -251,15 +251,6 @@ h4 {
 #mainbike #bikeinfophoto img {
 	width: 43%;
 	height: 33%;
-
-
-
-
-
-
-
-
-
 }
 #mainbike h2 {
 	text-align: center;
@@ -427,3 +418,28 @@ color:white;
     color: #43A6CB;
 }
 
+#leftHalf {
+    width: 42%;
+    margin-left: 4%;
+    margin-top: 2%;
+    margin-bottom: 2%; 
+    margin-right: 0%;
+    display: table-cell;
+}
+
+#centre {
+    width: 4%;
+    margin-left: 46%;
+    margin-top: 2%;
+    margin-bottom: 2%; 
+    display: table-cell;
+}
+
+#rightHalf {
+    width: 42%;
+    margin-left: 3.49%;
+    margin-top: 2%;
+    margin-bottom: 2%; 
+    margin-right: 4%;
+    display: table-cell;
+}
