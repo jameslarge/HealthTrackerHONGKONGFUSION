@@ -7,8 +7,9 @@
 package Controllers;
 
 import Model.*;
+import Model.Meal.MealProgress;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -46,6 +47,23 @@ public class DietLogController extends HttpServlet {
         
         DietLogger dietLog = DietLogger.find(member.getUserID());
         session.setAttribute("dietLog", dietLog);
+        
+        String specificDateString = null;
+        
+        try {  //incase parameter doesnt exist
+            specificDateString = request.getParameter("specificDate");
+        } catch (Exception ex) {
+            specificDateString = null;
+        }
+        
+        //by default todays date
+        HKFDate specificDate = specificDateString == null ? new HKFDate() : new HKFDate(specificDateString);
+        HKFDate specificDate2 = specificDateString == null ? new HKFDate() : new HKFDate(specificDateString);
+       
+        
+        ArrayList<MealProgress> meals = dietLog.findProgressesBetweenDates(specificDate2, specificDate);
+        session.setAttribute("specificMeals", meals);
+        
         
         request.getRequestDispatcher("mealProgress.jsp").forward(request, response);
         

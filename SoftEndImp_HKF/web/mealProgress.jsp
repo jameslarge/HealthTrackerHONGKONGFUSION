@@ -4,6 +4,7 @@
     Author     : xmw13bzu
 --%>
 
+<%@page import="java.util.TreeSet"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.Iterator"%>
@@ -16,7 +17,8 @@
 <%@page import ="Model.Meal.*"%>
 
 <%
-    Member member = (Member) session.getAttribute("member"); 
+    Member member = (Member) session.getAttribute("member");
+    //no one is logged in
     if (member == null) {
         //something or other 
     }
@@ -50,7 +52,18 @@
             <article id="main">
                 
                 <%
+                    //get error message (if there is one)
                     String errorMessage = (String) request.getAttribute("errorMessage");
+                    //get diet log
+                    DietLogger dietLog = (DietLogger) session.getAttribute("dietLog"); 
+                    //get list of all available meals
+                    ArrayList<Meal> meals = Meal.findAll();
+                    //get list of all exercises from the chosen date to be displayed in advanced graphs (if there is one)
+                    ArrayList<MealProgress> specificProgresses = (ArrayList<MealProgress>) session.getAttribute("specificMeals");
+                    
+                    
+                     
+                    //display error message if there is one
                     if (errorMessage != null) {
                 %>
                         <p class="error"><%=errorMessage%></p>
@@ -61,15 +74,7 @@
                 <h3>
                     Your General Info
                 </h3>
-                
-                <%
-                    DietLogger dietLog = (DietLogger) session.getAttribute("dietLog"); 
-                %>
-                
-                  <%
-                    ArrayList<Meal> meals = Meal.findAll();
-                %>
-                
+               
                 <p>Username: <%=member.getUsername()%></p>   
                 <p>Email: <%=member.getEmail()%></p>
                 
@@ -105,6 +110,7 @@
 
       // Set a callback to run when the Google Visualization API is loaded.
       google.setOnLoadCallback(startChart);
+      var loadMoreGraphs = <%=!specificProgresses.isEmpty()%>;
 
 
                     
@@ -141,38 +147,29 @@
                         
                         
                           int counter = 0;
-                          HKFDate prevDate = null;
-                          ArrayList<MealProgress> mealProgresses =  dietLog.sortDate();
-                      for (MealProgress mealProg :mealProgresses){
+                          
+                      for (MealProgress mealProg : specificProgresses){
                           
                          
                           
-                          HKFDate date = mealProg.getDate();
-                          
-                          if(counter==0){
-                              prevDate = date;
-                          }
-                          
+                          HKFDate date = mealProg.getDate();                                                                             
                           row.set(0, date);
-                          
                           int mealIndex = mealProg.getMeal().getID();
                           
                           
-                          boolean sameDay = date.compareTo(prevDate)==0;
-                          //if the date is the same modify the values by adding to appropriate fields
-                          if (sameDay){
-                              
+                          
+                                                     
                               //add to whatever is already there (might be 0, might be a value)                                                           
                               Integer valueToStore = Integer.valueOf(mealProg.calcCalories());
                               Integer valueStored = (Integer) row.get(mealIndex);
                                       
                               row.set(mealProg.getMeal().getID(), valueStored + valueToStore);
-                          }
-                          if (!sameDay || counter == mealProgresses.size() - 1){
+                          
+                          if (counter == specificProgresses.size() - 1){
                              
                              //output row to GOOGLE GRAPHS
                              %>   
-                                 data.addRow([new Date(<%=prevDate.getYear()%>,<%=prevDate.getMonthForGraph()%>,<%=prevDate.getDay()%>).toDateString()
+                                 data.addRow([new Date(<%=date.getYear()%>,<%=date.getMonthForGraph()%>,<%=date.getDay()%>).toDateString()
                                      <%
                                      String mealCell;
                                      for(int i = 1; i<=mealSize; i++){
@@ -193,10 +190,7 @@
                              row.set(mealIndex, Integer.valueOf(mealProg.calcCalories()));
                              
                              
-                          }
-                          if(counter!=0){
-                            prevDate = date;
-                          }
+                          }                         
                          counter++;
                         }%>  
                                 
@@ -206,7 +200,7 @@
                                      
 
                       var options = {
-                        title: 'Blabla',                                              
+                        title: 'Calories consumed per meal',                                              
                         width: 900,
                         height: 500,
                         legend: 'none',
@@ -214,7 +208,13 @@
                         
                        
                       };
-                      
+                       var formatter = new google.visualization.NumberFormat(
+                          {pattern: '# kCal'});
+                  
+                                 <% for (int i = 1; i < meals.size(); i++){%>
+                          formatter.format(data, <%=i%>); // Apply formatter to all number columns
+                                                  
+                        <%}%>
                        var chart = new google.visualization.BarChart(document.getElementById('calBreakDown'));
                        
                        //getting the total amount of calories consumed per date
@@ -264,7 +264,7 @@
                           };
 
                           var formatter = new google.visualization.NumberFormat(
-                          {suffix: ' kCal'});
+                          {pattern: '# kCal'});
                           formatter.format(data, 1); // Apply formatter to second column
                           
                        
@@ -277,24 +277,47 @@
                     }
                     
                     function startChart(){
-                      drawCalBreakDown();
+                      if(loadMoreGraphs){
+                          drawCalBreakDown();
+                      }
                       prepareData();
                       prepareChart();
                       drawChart();
                       
                     }
-                    
-                    drawChart();
-                    
-                
-                                       
+                                                           
                 </script>
                                        
                
                 
                  <div id="linechart"></div>
                  <div id="calBreakDown"></div>
-                
+                 
+                <h3>
+                    Select a specific date to look at in detail
+               </h3>                            
+                <%
+                        TreeSet<String> dateSet = new TreeSet<String>();
+                        for (MealProgress mealProg : dietLog.sortDate()) {
+                            dateSet.add(mealProg.getDate().toString());
+                        }
+                %>
+                <form name="chooseDate" action="DietLogController" method="get">
+                    <p>
+                        <select name="specificDate">
+                            <%
+                                for (String date : dateSet) {
+                            %>
+                            <option value="<%=date%>"><%=date%></option>
+                            <%
+                                }
+                            %>
+                        </select>
+                        <input type="submit" value="View"/>
+                    </p>
+                </form>
+                 
+                 
                              
                 <h3>
                     Log new meal 
