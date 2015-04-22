@@ -41,6 +41,8 @@ public class NewUserController extends HttpServlet {
         String surname = request.getParameter("surname");
         String weightString = request.getParameter("weight");
         String heightString = request.getParameter("height");
+        String weightUnit = request.getParameter("wUnit");
+        String heightUnit = request.getParameter("hUnit");
         
         //Validate all the info and make type conversions where needed
         Validator validator = new Validator();
@@ -53,10 +55,21 @@ public class NewUserController extends HttpServlet {
                 "Invalid password entered, must be between 6 and 12 characters long containing only letters, numbers and underscores: " + password, password);
         validator.validateName("Invalid forename entered: " + forename, forename);
         validator.validateName("Invalid surname entered: " + surname, surname);
-       
+        
+        Weight weight;
+        if (weightUnit.equals("imperial")){
+            weight = new Weight(validator.validateWeightImperial("Invalid weight entered: " + weightString+ "." , weightString));
+        }else{
+            weight = new Weight(validator.validateWeightMetric("Invalid weight entered: " + weightString, weightString));
+        }
         //Validates AND CONVERTS TO INT.
-        Weight weight = new Weight(validator.validatePositiveInt("Invalid weight entered: " + weightString, weightString));  
-        int height = validator.validatePositiveInt("Invalid weight entered: " + heightString, heightString);
+        int height;
+        if (heightUnit.equals("imperial")){
+            height = validator.validateHeightImperial("Invalid height entered: " + heightString +  " Please enter weight in X'Y format" , heightString);
+        }else{
+            height = validator.validatePositiveInt("Invalid height entered: " + heightString, heightString);
+        }
+        
             
         if (Member.findByEmail(email) != null)
             validator.appendErrMsg("Account with that email already exists");

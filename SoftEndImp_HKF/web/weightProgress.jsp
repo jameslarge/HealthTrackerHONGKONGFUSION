@@ -22,49 +22,49 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>HONG KONG FUSIOOOOON</title>
+        <title>Hong Kong Fusion Health Tracker</title>
         <link href="styles/main.css" rel="stylesheet" type="text/css">
 
     </head>
 
     <body>
         <div id="wrapper">
+            
+            <footer>
+                <article id="disclaimer">
+                    <span>Disclaimer:</span> This application is not a commercial application and does not provide
+                    insurance. This is a study project that is part of a Computing Science module taught at the
+                    University of East Anglia, Norwich, UK. If you have any questions, please contact the
+                    module coordinator, Joost Noppen, at j.noppen@uea.ac.uk
+                </article>
+            </footer>
+            
             <header id="top">
-                <h1>HONG KONG FUSIOOOOON</h1>
+                <h1>HONG KONG FUSION HEALTH TRACKER</h1>
                 <nav id="mainnav">
                     <ul>
-                        <li><a href="home.jsp" class="thispage">Home</a></li>
-                        <li><a href="accountManagement.jsp" class="thispage">Account</a></li> 
-                        <li><a href="LogoutController" class="thispage">Log Out</a></li>   
+                        <li><a href="home.jsp">Home</a></li>
+                        <li><a href="GoalsController">Goals</a></li>
+                        <li><a href="PhysicalHealthLogController" class="thispage">Weight</a></li>
+                        <li><a href="ExerciseLogController">Exercise</a></li>
+                        <li><a href="DietLogController">Diet</a></li>
+                        <li><a href="accountManagement.jsp">Account</a></li> 
+                        <li><a href="LogoutController">Log Out</a></li>       
                     </ul>
                 </nav>
             </header>
-            <article id="main">
+            
+            <article id="meh">
                 
-                <%
-                    String errorMessage = (String) request.getAttribute("errorMessage");
-                    if (errorMessage != null) {
-                %>
-                        <p class="error"><%=errorMessage%></p>
-                <%
-                    }
-                %>
-                
-                <h3>
-                    Your General Info
-                </h3>
+               
                 
                 <%
                     PhysicalHealth physHealth = (PhysicalHealth) session.getAttribute("physHealth"); 
                 %>
                 
-                <p>Username: <%=member.getUsername()%></p>   
-                <p>Email: <%=member.getEmail()%></p>
-                <p>Height: <%=physHealth.getHeight()%></p>
-                
-                <h3>
-                    Your Weight Log
-                </h3>
+                <h5>
+                    YOUR WEIGHT LOG
+                </h5>
                 
                 <!-- for each weight progress -->
                     <!-- print date : weight --> 
@@ -143,25 +143,39 @@
                 </script>
   
                 <div id="linechart"></div>
-                <button id='b1'>click</button>
-              
-                <h3>
-                    Log new weight 
-                </h3>
-                
+            </article>
+                       
+            <article id="meh">
+                <h5>
+                    LOG NEW WEIGHT
+                </h5>
+            </article>
+            <article id="meh2">
                  <form name="login" action="LogWeightController" method="get">
                     <p>Date:<input type="date" name="date" class="textbox"/></p>
-                    <p>Weight:<input type="number" name="weight" class="textbox"/></p>
+                    <p>Weight:<input type="text" name="weight" class="textbox"/></p>
+                    <p><input type="radio" name="wUnit" value="metric" checked>Metric</input>
+                        <input type="radio" name="wUnit" value="imperial">Imperial</input>
+                    </p>
+                    <h7><b>Weight:</b> if you choose Metric please enter the amount in kg.<br> If you choose Imperial please enter the amount in lbs.</i></h7>
                     <p><input type="submit" value="Enter"/>
                     <input type="reset" value="Reset"/></p>
                 </form>
                 
+                 <%
+                    String errorMessage = (String) request.getAttribute("errorMessage");
+                    if (errorMessage != null) {
+                %>
+                        <p class="error">Error: <%=errorMessage%></p>
+                <%
+                    }
+                %>
             </article>
                 
             <br><br>
             <footer>
                 <p>&copy; Copyright 2015 
-                <a href="admin.html" id="admin">Admin</a></p>
+                </p>
             </footer>        </div>
     </body>
 </html>

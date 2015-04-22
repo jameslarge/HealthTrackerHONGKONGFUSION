@@ -22,7 +22,7 @@ import org.junit.Test;
  */
 public class WeightProgressTest {
     
-    WeightProgress instance = new WeightProgress(1,new Weight(-1), new HKFDate(18,04,2015));
+    WeightProgress instance = new WeightProgress(1,new Weight(-1000), new HKFDate(18,04,2015));
 
     public WeightProgressTest() {
     }
@@ -65,8 +65,7 @@ public class WeightProgressTest {
         int physHealthID = 1;
         int expResult = 2;
         //Know that there is only 2 elements in table with ID of 1
-        int result = WeightProgress.findAll(physHealthID).size();
-        
+        int result = WeightProgress.findAll(physHealthID).size();        
         assertEquals(expResult, result);
     }
 
@@ -78,8 +77,8 @@ public class WeightProgressTest {
         System.out.println("persist");
         int physHealthId = 1;
         instance.persist(physHealthId);
-        testFindAll(); //If this true persist worked
-        testFind(); //If this is true persist worked too
+        int newSize = WeightProgress.findAll(physHealthId).size();
+        assertEquals(2, newSize);
     }
 
     /**
@@ -88,10 +87,10 @@ public class WeightProgressTest {
     @Test
     public void testCalulateBMI() throws Exception {
         System.out.println("calulateBMI");
-        int expResult = -1;
-        int result = instance.calulateBMI();
-        assertEquals(expResult, result);
-        testDelete();
+        double expResult = -1.0;
+        double result = instance.calulateBMI();
+        assertTrue(expResult == result);
+        //testDelete(); //Delete now to prevent data from being deleted too early
     }
 
     /**
@@ -102,7 +101,6 @@ public class WeightProgressTest {
         System.out.println("delete");
         instance.delete();
         assertEquals(-1,WeightProgress.find(1).getWeight().getGrams());
-        System.out.println("END");
     }
     
     /**
@@ -111,11 +109,11 @@ public class WeightProgressTest {
     @Test
     public void testUpdateValue() throws Exception {
         System.out.println("updateValue");
-        String valueName = "target";
-        String newValue = "6";
+        String valueName = "weightDate";
+        String newValue = "2015-04-01";
         instance.updateValue(valueName, newValue);
-        int result = Goal.find(instance.getID()).getTarget();
-        assertEquals(6, result);
+        String result = WeightProgress.find(instance.getID()).getDate().toString();
+        assertEquals("2015-04-01", result);
     }
 
     /**

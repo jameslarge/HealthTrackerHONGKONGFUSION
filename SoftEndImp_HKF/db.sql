@@ -164,7 +164,7 @@ INSERT INTO physicalHealth(heightcm, memberID)
 	VALUES (180, 6);
 
 INSERT INTO weightProgress(physicalHealthID, weightDate, weight)
-	VALUES (1, '2015-04-14', -100);
+	VALUES (1, '2015-04-14', -1);
 INSERT INTO weightProgress(physicalHealthID, weightDate, weight)
 	VALUES (2, '2015-04-14', 86182);
 INSERT INTO weightProgress(physicalHealthID, weightDate, weight)

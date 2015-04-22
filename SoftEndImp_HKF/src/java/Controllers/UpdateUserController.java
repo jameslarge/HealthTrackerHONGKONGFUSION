@@ -7,6 +7,9 @@
 package Controllers;
 
 import Model.Member;
+import Model.PhysicalHealth.Height;
+import Model.PhysicalHealth.PhysicalHealth;
+import Model.PhysicalHealth.Weight;
 import View.Validator;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -58,12 +61,19 @@ public class UpdateUserController extends HttpServlet {
             
             String email = request.getParameter("email");
             String password = request.getParameter("password");
+            String forename = request.getParameter("forename");
+            String surname = request.getParameter("surname");
+            String heightString = request.getParameter("height");
+            String heightUnit = request.getParameter("hUnit");
             
+            //modify EMAIL
             if (!validator.isEmpty(email)) {
                 if (validator.validateEmail("Invalid email entered: " + email, email)) {
                     member.updateValue("email", email);
                 }
             }
+            
+            //modify PASSWORD
             if (!validator.isEmpty(password)) {
                 String errMsg = "Invalid password entered, must be between 6 and 12 characters long "
                             + "containing only letters, numbers and underscores: " + password;
@@ -71,7 +81,35 @@ public class UpdateUserController extends HttpServlet {
                     member.updateValue("password", password);
                 }
             }
+            
+            //MODIFY FORENAME
+            if(!validator.isEmpty(forename)){
+                validator.validateName("Invalid forename entered: " + forename, forename);
+                member.updateValue("forename", forename);
+            }
+            
+            //MODIFY SURNAME
+            if(!validator.isEmpty(surname)){
+                validator.validateName("Invalid surname entered: " + surname, surname);
+                member.updateValue("surname", surname);
+            } 
+            
+            //MODIFY HEIGHT
+            if(!validator.isEmpty(heightString)){
+            int heightCm;
+            if (heightUnit.equals("imperial")){
+                heightCm = validator.validateHeightImperial("Invalid height entered: " + heightString +  " Please enter weight in X'Y format" , heightString);
+            }else{
+            heightCm = validator.validatePositiveInt("Invalid height entered: " + heightString, heightString);
+            }
 
+                PhysicalHealth ph = PhysicalHealth.find(member.getUserID());
+                Height height = new Height(heightCm);
+                ph.setHeight(height);
+                ph.update();
+            }
+            
+            
             member = Member.find(member.getUserID());
             session.setAttribute("member", member);
             

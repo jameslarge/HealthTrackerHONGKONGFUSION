@@ -9,6 +9,7 @@ package Controllers;
 import Goals.*;
 import Model.HKFDate;
 import Model.Member;
+import Model.PhysicalHealth.Weight;
 import View.Validator;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -45,12 +46,27 @@ public class CreateGoalController extends HttpServlet {
               
         //Validate all the info and make type conversions where needed
         Validator validator = new Validator();
-        
+        String weightUnit = request.getParameter("wUnit");
         String goalTypeString = request.getParameter("goalType");
-        int goalType = validator.validatePositiveInt("Invalid goal type entered: " + goalTypeString, goalTypeString);
-        
+        int goalType = validator.validatePositiveInt("Invalid goal type entered: " + goalTypeString, goalTypeString);                  
         String targetString = request.getParameter("target");
-        int target = validator.validatePositiveInt("Invalid target entered: " + targetString, targetString);
+        
+        int target;
+        
+        //weight based goals
+        if(goalType == 0 || goalType ==1){
+            Weight weight;
+            if (weightUnit.equals("imperial")){
+                weight = new Weight(validator.validateWeightImperial("Invalid weight entered: " + targetString+ "." , targetString));
+                target = weight.getGrams();
+                
+            }else{
+                weight = new Weight(validator.validateWeightMetric("Invalid weight entered: " + targetString, targetString));
+                target = weight.getGrams();
+            }
+        }else{
+              target = validator.validatePositiveInt("Invalid target entered: " + targetString, targetString);
+        }
         
         String startDateString = request.getParameter("startDate");
         HKFDate startDate = new HKFDate();

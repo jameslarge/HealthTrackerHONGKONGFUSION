@@ -1,6 +1,9 @@
 
 package View;
 
+import Model.PhysicalHealth.Height;
+import Model.PhysicalHealth.Weight;
+
 /**
  *
  * @author xmw13bzu
@@ -107,7 +110,72 @@ public class Validator {
         
         return result;
     }
-
+    
+    public int validateWeightImperial(String errMsg, String weight){
+        int result = 0;
+        
+        try {
+            result = Integer.parseInt(weight);
+            if (result < 0) 
+                throw new Exception("");
+        } catch (Exception ex) { 
+            appendErrMsg(errMsg);
+            result = 0;
+        }     
+        return Weight.toGramsFromPounds(result);
+        
+    }
+    
+    public int validateWeightMetric(String errMsg, String weight){
+        double result = 0;
+        
+        try {
+            result = Double.parseDouble(weight);
+            if (result < 0) 
+                throw new Exception("");
+        } catch (Exception ex) { 
+            appendErrMsg(errMsg);
+            result = 0;
+        }     
+        return Weight.toGramsFromKilos(result);
+        
+    }
+    
+    public int validateHeightImperial(String errMsg, String height){
+        int feet = 0, inches = 0;
+        
+        if (!isEmpty(height)) {
+            if (height.matches("[0-9]'[0-9]{1,2}")) {
+                String [] parts = height.split("'");
+                
+                try {
+                    feet = Integer.parseInt(parts[0]);
+                    inches = Integer.parseInt(parts[1]);
+                    if (feet < 0 || inches < 0) 
+                        throw new Exception("");
+                } catch (Exception ex) { 
+                    appendErrMsg(errMsg + "saliva");
+                    feet = 0;
+                    inches = 0;
+                }  
+            } 
+            else {
+                appendErrMsg(errMsg + "poop");
+            }
+        }
+        else {
+            appendErrMsg(errMsg + "pee");
+        }
+        
+        return Height.toCentimetersFromImperial(feet, inches);
+        
+    }
+    
+    
+    
+    
+    
+    
     public int validatePositiveInt(String errMsg, String number) {
         int result = 0;
         

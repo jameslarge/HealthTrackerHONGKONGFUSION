@@ -119,10 +119,11 @@ public class GoalLogger {
         DietLogger dl = DietLogger.find(memberID);
         
         for (Goal goal : goalList)
-            completeness.add(Integer.valueOf(goal.checkProgress(ph, dl, el)));
+            completeness.add(Integer.valueOf(goal.checkProgressAsPercentage(ph, dl, el)));
         
         return completeness;
     }
+       
     
     
     @Override

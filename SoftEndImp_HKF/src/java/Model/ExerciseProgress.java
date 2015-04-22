@@ -1,14 +1,11 @@
 package Model;
 
 import Controllers.DatabaseAccess;
-import Model.PhysicalHealth.Weight;
-import Model.PhysicalHealth.WeightProgress;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import Model.HKFDate;
 import javax.servlet.ServletException;
 
 public class ExerciseProgress implements Comparable<ExerciseProgress> {
@@ -16,22 +13,22 @@ public class ExerciseProgress implements Comparable<ExerciseProgress> {
     private Exercise exercise;
     private HKFDate date;
     private int duration;
-    private int amount;
+   
 
-    public ExerciseProgress(int ID, Exercise exercise, HKFDate date, int duration, int amount) {
+    public ExerciseProgress(int ID, Exercise exercise, HKFDate date, int duration) {
         this.ID = ID;
         this.exercise = exercise;
         this.date = date;
         this.duration = duration;
-        this.amount = amount;
+      
     }
     
-    public ExerciseProgress(Exercise exercise, HKFDate date, int duration, int amount) {
+    public ExerciseProgress(Exercise exercise, HKFDate date, int duration) {
         this.ID = -1;
         this.exercise = exercise;
         this.date = date;
         this.duration = duration;
-        this.amount = amount;
+        
     }
 
     public int getID() {
@@ -50,9 +47,7 @@ public class ExerciseProgress implements Comparable<ExerciseProgress> {
         return duration;
     }
 
-    public int getAmount() {
-        return amount;
-    }
+   
 
     public void setID(int ID) {
         this.ID = ID;
@@ -70,9 +65,7 @@ public class ExerciseProgress implements Comparable<ExerciseProgress> {
         this.duration = duration;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
+    
     
     /**
      * Method to find ExerciseProgress using ExerciseProgressID
@@ -94,9 +87,10 @@ public class ExerciseProgress implements Comparable<ExerciseProgress> {
             if (result.next()) {
                 eProgress = new ExerciseProgress(
                         Exercise.find(result.getInt("exerciseID")),
-                        new HKFDate(result.getString("exerciseDate"), result.getString("exerciseStartTime")),
-                        result.getInt("duration"),
-                        result.getInt("amount"));
+                        new HKFDate(result.getString("exerciseDate"), 
+                        result.getString("exerciseStartTime")),
+                        result.getInt("duration")
+                        );
             }
             
             return eProgress;
@@ -128,8 +122,7 @@ public class ExerciseProgress implements Comparable<ExerciseProgress> {
                 ExerciseProgress eProgress = new ExerciseProgress(
                         Exercise.find(result.getInt("exerciseID")),
                         new HKFDate(result.getString("exerciseDate"), result.getString("exerciseStartTime")),
-                        result.getInt("duration"),
-                        result.getInt("amount"));
+                        result.getInt("duration"));
                 
                 epList.add(eProgress);
             }            
@@ -151,16 +144,15 @@ public class ExerciseProgress implements Comparable<ExerciseProgress> {
             Connection con = DatabaseAccess.getConnection();
 
             PreparedStatement ps = con.prepareStatement(
-                    "INSERT INTO exerciseProgress (memberID, exerciseDate, exerciseStartTime, amount, duration, exerciseID) VALUES(?, ?, ?, ?, ?, ?)");
+                    "INSERT INTO exerciseProgress (memberID, exerciseDate, exerciseStartTime, duration, exerciseID) VALUES(?, ?, ?, ?, ?)");
             
             ps.setInt(1, memberID);
 
             //http://stackoverflow.com/questions/530012/how-to-convert-java-util-date-to-java-sql-date
             ps.setString(2, date.toString());
             ps.setString(3, date.timeToString());
-            ps.setInt(4, amount);
-            ps.setInt(5, duration);
-            ps.setInt(6, exercise.getID());
+            ps.setInt(4, duration);
+            ps.setInt(5, exercise.getID());
 
             ps.executeUpdate();
             
@@ -183,7 +175,7 @@ public class ExerciseProgress implements Comparable<ExerciseProgress> {
     public void updateValue(String valueName, String newValue) throws ServletException, SQLException {
         try {
             Connection con = DatabaseAccess.getConnection();
-            PreparedStatement ps = con.prepareStatement("UPDATE goal SET " + valueName + " = ? WHERE id = ?;");
+            PreparedStatement ps = con.prepareStatement("UPDATE exerciseProgress SET " + valueName + " = ? WHERE id = ?;");
             ps.setString(1, newValue);
             ps.setInt(2, ID);
             ps.execute();
@@ -199,11 +191,9 @@ public class ExerciseProgress implements Comparable<ExerciseProgress> {
      * @return Amount of Calories burnt
      */
     public int calculateCals(){
-        if(exercise.getExerciseType() == "Rep"){
-            return exercise.getCalPerUnit() * amount;
-        }else{
-            return exercise.getCalPerUnit() * duration;
-        }
+       
+           return exercise.getCalPerUnit() * duration;
+        
     }
 
     /**

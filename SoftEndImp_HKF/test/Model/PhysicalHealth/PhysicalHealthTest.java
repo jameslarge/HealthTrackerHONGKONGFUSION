@@ -21,9 +21,13 @@ import static org.junit.Assert.*;
  */
 public class PhysicalHealthTest {
     
-    PhysicalHealth instance = new PhysicalHealth(1, -1, new Weight(-1));
+    PhysicalHealth instance;
     
     public PhysicalHealthTest() {
+        instance = new PhysicalHealth();
+        
+        instance.addWeightProgess(new WeightProgress(1,new Weight(20), new HKFDate(18,04,2015)));
+        instance.addWeightProgess(new WeightProgress(2,new Weight(10), new HKFDate(20,04,2015)));
     }
     
     @BeforeClass
@@ -135,19 +139,19 @@ public class PhysicalHealthTest {
      */
     @Test
     public void testFindWeightOnDate() {
-        System.out.println("findWeightOnDate");
-        HKFDate date = new HKFDate(20,04,2015);
-        HKFDate date2 = new HKFDate(18,04,2015);
-        HKFDate date3 = new HKFDate(9,04,2015);
+        System.out.println("findWeightOnDate");  
         
-        PhysicalHealth instance = new PhysicalHealth();
+        Weight ten = new Weight(10);
+        Weight fifteen = new Weight(15);
+        Weight twenty = new Weight(20);
+                
+     //   Weight normal = instance.findWeightOnDate(new HKFDate(19,04,2015));
+     //   Weight before = instance.findWeightOnDate(new HKFDate(15,04,2015));
+        Weight after = instance.findWeightOnDate(new HKFDate(25,04,2015));
         
-        Weight expResult = null;
-        Weight weight1 = new Weight(-1);
-        
-        Weight result = instance.findWeightOnDate(date2);
-        
-        //assertEquals(weight1, result);
+     //   assertEquals(fifteen.toString(), normal.toString());
+     //   assertEquals(twenty.toString(), before.toString());
+        assertEquals(ten.toString(), after.toString());
     }
 
     /**

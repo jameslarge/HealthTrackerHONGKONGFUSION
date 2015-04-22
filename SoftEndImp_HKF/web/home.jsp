@@ -4,6 +4,7 @@
     Author     : xmw13bzu
 --%>
 
+<%@page import="Model.PhysicalHealth.PhysicalHealth"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@page import ="Controllers.*"%>
@@ -12,7 +13,17 @@
 <%
     Member member = (Member) session.getAttribute("member"); 
     final boolean loggedIn = (member != null);
-%>
+
+ 
+                                
+                                ExerciseLogger exLog = ExerciseLogger.find(member.getUserID());
+                                int avgActivityPerDay = exLog.findAverageDailyActivityTime();
+
+                                DietLogger dietLog = DietLogger.find(member.getUserID());
+                                int avgCalsPerDay = dietLog.findAverageDailyCalsConsumed();
+                                
+                                PhysicalHealth health = PhysicalHealth.find(member.getUserID());
+                            %>
 
 <!DOCTYPE html>
 <html>
@@ -25,96 +36,87 @@
 
     <body>
         <div id="wrapper">
+            
+            <footer>
+                <article id="disclaimer">
+                    <span>Disclaimer:</span> This application is not a commercial application and does not provide
+                    insurance. This is a study project that is part of a Computing Science module taught at the
+                    University of East Anglia, Norwich, UK. If you have any questions, please contact the
+                    module coordinator, Joost Noppen, at j.noppen@uea.ac.uk
+                </article>
+            </footer>
+            
+            
             <header id="top">
-                <h1>HONG KONG FUSIOOOOON</h1>
+                <h1>Hong Kong Fusion Health Tracker</h1>
                 <nav id="mainnav">
                     <ul>
                         <li><a href="home.jsp" class="thispage">Home</a></li>
-                        <li><a href="accountManagement.jsp" class="thispage">Account</a></li> 
-                        <li><a href="LogoutController" class="thispage">Log Out</a></li>                        
+                        <li><a href="GoalsController">Goals</a></li>
+                        <li><a href="PhysicalHealthLogController">Weight</a></li>
+                        <li><a href="ExerciseLogController">Exercise</a></li>
+                        <li><a href="DietLogController">Diet</a></li>
+                        <li><a href="accountManagement.jsp">Account</a></li> 
+                        <li><a href="LogoutController">Log Out</a></li>       
                     </ul>
                 </nav>
             </header>
-            <article id="main">
+            
+            
+            <!--<article id="main">-->
+            <div class="divTable">
+              <div class="divRow">
+                  <article class="contentArea" id="leftHalf">
+                       <article class="basicArea">
+                            <%
+                                String errorMessage = (String) request.getAttribute("errorMessage");
+                                if (errorMessage != null) {
+                            %>
+                                    <p class="error">Error: <%=errorMessage%></p>
+                            <%
+                                }
+                            %>
+
+                            <h3>
+                                Your Info:
+                            </h3>
+
+                            <p><b>Username:</b> <%=member.getUsername()%></p>   
+                            <p><b>Email:</b> <%=member.getEmail()%></p>
+                            <p><b>Forename:</b> <%=member.getForename()%></p>
+                            <p><b>Surname:</b> <%=member.getSurname()%></p>
+                            <p><b>Height:</b> <%=health.getHeight()%> cm</p>
+                            <p><b>Current weight:</b> <%=health.getMostRecentWeightProgress().getWeight().toNicelyDisplay()%></p>
                 
-                <%
-                    String errorMessage = (String) request.getAttribute("errorMessage");
-                    if (errorMessage != null) {
-                %>
-                        <p class="error"><%=errorMessage%></p>
-                <%
-                    }
-                %>
-                
-                <h3>
-                    Your Info
-                </h3>
-                
-                <p>Username: <%=member.getUsername()%></p>   
-                <p>Email: <%=member.getEmail()%></p>
-                <p>Forename:  <%=member.getForename()%></p>
-                <p>Surname:  <%=member.getSurname()%></p>              
-                
-                <% 
-                    double bmiHealth = member.calcHealthinessBMI();
-                    double activityHealth = member.calcHealthinessActivity();
-                    double dietHealth = member.calcHealthinessDiet();
+                        </article>
+                    </article>
+
+                    <article id="centre"></article>
                     
-                    ExerciseLogger exLog = ExerciseLogger.find(member.getUserID());
-                    int avgActivityPerDay = exLog.findAverageDailyActivityTime();
-                    
-                    DietLogger dietLog = DietLogger.find(member.getUserID());
-                    int avgCalsPerDay = dietLog.findAverageDailyCalsConsumed();
-                %>
+                    <article class="contentArea" id="rightHalf">
+                         <article class="basicArea">
                 
-                <h3>
-                    Your Health Summary: <%=member.calculateHealthiness(bmiHealth, activityHealth, dietHealth)%>
-                </h3>
-                <p>Body Mass Index: <%=member.calculateBMI()%></p>
-                <p>Average Activity per day: <%=avgActivityPerDay%>mins</p>
-                <p>Average Calories Consumed per day: <%=avgCalsPerDay%></p>
-                
-                <h3>
-                    View Physical Details/Weight Progress
-                </h3>
-                <form name="physical" action="PhysicalHealthLogController" method="get">
-                    <p><input type="submit" value="GoGoPhysical"/>
-                </form>
-                
-                <h3>
-                    View Exercise Details/Progress
-                </h3>
-                <form name="exercise" action="ExerciseLogController" method="get">
-                    <p><input type="submit" value="GoGoExercise"/>
-                </form>
-                
-                <h3>
-                    View Diet Details/Progress
-                </h3>
-                <form name="diet" action="DietLogController" method="get">
-                    <p><input type="submit" value="GoGoDiet"/>
-                </form>
-                
-                 <h3>
-                    View Goal Details/Progress
-                </h3>
-                <form name="goal" action="GoalsController" method="get">
-                    <p><input type="submit" value="GoGoGoals"/>
-                </form>
-                
-                <h3>
-                    LOG OUT
-                </h3>
-                <form name="logout" action="LogoutController" method="get">
-                        <p><input type="submit" value="Logout"/>
-                </form>
-              
-            </article>
+                           
+
+                            <h3>
+                                Your Health Summary: 
+                            </h3>
+                                <p><b>Healthiness:</b> <%=member.calculateHealthiness()%>/10</p>
+                                <p><b>Body Mass Index:</b> <%=String.format("%.2f",member.calculateBMI())%></p>
+                                <p><b>Weight Status:</b> <%=member.getWeightStatus()%></p>
+                            <p><b>AVG Activity per day:</b> <%=avgActivityPerDay%> mins</p>
+                            <p><b>AVG Calories Consumed per day:</b> <%=avgCalsPerDay%> kCal</p>
+                            <h7><b>Healthiness</b> is calculated based on comparing weight status, average activity per day and average calories consumed per day to the healthy standards.</h7>
+                        </article>
+                        
+                    </article>
+                </div>
+           </div>
                 
             <br><br>
             <footer>
                 <p>&copy; Copyright 2015 
-                <a href="admin.html" id="admin">Admin</a></p>
+                </p>
             </footer>        </div>
     </body>
 </html>

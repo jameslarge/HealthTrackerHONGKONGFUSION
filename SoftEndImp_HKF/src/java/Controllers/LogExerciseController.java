@@ -47,12 +47,11 @@ public class LogExerciseController extends HttpServlet {
         
         
         String durationString = request.getParameter("duration");
-        String amountString = request.getParameter("amount");
+        
         String exerciseIDString = request.getParameter("exercise");
         
        
         int duration = validator.validatePositiveInt("Invalid duration time entered: " + durationString, durationString);
-        int amount = validator.validatePositiveInt("Invalid amount entered: " + amountString, amountString);
         int exerciseID = validator.validatePositiveInt("Invalid exercise entered: " + exerciseIDString, exerciseIDString);
         
         //should be  YYYY-MM-DD, i.e is shit and doesnt enforce any formatting 
@@ -70,7 +69,7 @@ public class LogExerciseController extends HttpServlet {
         if (validator.isValid()) {
             Member member = (Member) session.getAttribute("member");
             ExerciseProgress ep = new ExerciseProgress(Exercise.find(exerciseID), 
-                                                date, duration, amount);
+                                                date, duration);
             ep.persist(member.getUserID());
 
             //reload weight log page, refresh data essentially

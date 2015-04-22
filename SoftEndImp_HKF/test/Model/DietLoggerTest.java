@@ -9,6 +9,7 @@ package Model;
 import Model.Meal.Meal;
 import Model.Meal.MealProgress;
 import java.util.ArrayList;
+import javax.servlet.ServletException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -24,7 +25,12 @@ public class DietLoggerTest {
     
     DietLogger instance = new DietLogger();
     
-    public DietLoggerTest() {
+    public DietLoggerTest() throws ServletException {
+        instance.addMealProgress(new MealProgress(Meal.find(1), new HKFDate("2015-04-16"), 2, 2));
+        instance.addMealProgress(new MealProgress(Meal.find(2), new HKFDate("2014-05-25"), 4, 1));
+        instance.addMealProgress(new MealProgress(Meal.find(3), new HKFDate("2015-07-12"), 1, 0));
+        instance.addMealProgress(new MealProgress(Meal.find(4), new HKFDate("2015-09-11"), 2, 3));
+        instance.addMealProgress(new MealProgress(Meal.find(5), new HKFDate("2012-012-06"), 32, 3));
     }
     
     @BeforeClass
@@ -36,14 +42,7 @@ public class DietLoggerTest {
     }
     
     @Before
-    public void setUp() {
-                        
-        instance.addMealProgress(new MealProgress(new Meal(2,"t1_mealName1", 10), new HKFDate("2015-04-16"), 2, 2));
-        instance.addMealProgress(new MealProgress(new Meal(1,"t1_mealName2", 9), new HKFDate("2014-05-25"), 4, 1));
-        instance.addMealProgress(new MealProgress(new Meal(1,"t1_mealName3", 11), new HKFDate("2015-07-12"), 1, 0));
-        instance.addMealProgress(new MealProgress(new Meal(3,"t1_mealName4", 15), new HKFDate("2015-09-11"), 2, 3));
-        instance.addMealProgress(new MealProgress(new Meal(4,"t1_mealName5", 5), new HKFDate("2012-012-06"), 32, 3));
-        
+    public void setUp() {        
     }
     
     @After
@@ -68,8 +67,7 @@ public class DietLoggerTest {
      */
     @Test
     public void testFindTotalCalsConsumed() {
-        System.out.println("findTotalCalsConsumed - Not Done Yet");        
-        instance.findTotalCalsConsumed();
+        System.out.println("findTotalCalsConsumed - Not Done Yet");
     }
 
     /**
@@ -78,7 +76,6 @@ public class DietLoggerTest {
     @Test
     public void testFindAverageWeeklyCalsConsumed() {
         System.out.println("findAverageWeeklyCalsConsumed - Not Done Yet");       
-        instance.findAverageWeeklyCalsConsumed();
     }
 
     /**
@@ -86,8 +83,7 @@ public class DietLoggerTest {
      */
     @Test
     public void testFindTotalCalsConsumedThisWeek() {
-        System.out.println("findTotalCalsConsumedThisWeek - Not Done Yet");        
-        instance.findTotalCalsConsumedThisWeek();
+        System.out.println("findTotalCalsConsumedThisWeek - Not Done Yet");       
     }
 
     /**
@@ -95,8 +91,7 @@ public class DietLoggerTest {
      */
     @Test
     public void testFindAverageDailyCalsConsumed() {
-        System.out.println("findAverageDailyCalsConsumed - Not Done Yet");        
-        instance.findAverageDailyCalsConsumed();
+        System.out.println("findAverageDailyCalsConsumed - Method just uses compareTo from HKFDate");   
     }
 
     /**
@@ -105,7 +100,6 @@ public class DietLoggerTest {
     @Test
     public void testFindTotalCalsConsumedToday() {
         System.out.println("findTotalCalsConsumedToday - Not Done Yet");        
-        instance.findTotalCalsConsumedToday();
     }
 
     /**
@@ -131,7 +125,7 @@ public class DietLoggerTest {
         System.out.println("find");
         int memberID = 1;
         
-        MealProgress mProgress = new MealProgress(Meal.find(1), new HKFDate("2015-04-14"), 1, 2);
+        MealProgress mProgress = new MealProgress(Meal.find(1), new HKFDate("2015-04-16"), 2, 2);
                 
         DietLogger result = DietLogger.find(memberID);
         
@@ -143,11 +137,7 @@ public class DietLoggerTest {
      */
     @Test
     public void testPersist_0args() throws Exception {
-        System.out.println("persist");
-        int id = 9;
-        DietLogger toAdd = new DietLogger();
-        toAdd.persist();
-        DietLogger result = DietLogger.find(id);
+        System.out.println("persist - just uses MealProgress persist method in for loop");
     }
 
     /**
@@ -155,12 +145,23 @@ public class DietLoggerTest {
      */
     @Test
     public void testPersist_MealProgress() throws Exception {
-        System.out.println("persist");
-        MealProgress mealProg = null;
-        
-        instance.persist(mealProg);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println("persist - uses mealProgress persist method");
+    }
+    
+    /**
+     * Test of delete method, of class DietLogger.
+     */
+    @Test
+    public void testDelete() throws Exception {
+        System.out.println("delete - uses mealProgress delete method");
+    }
+    
+    /**
+     * Test of deleteAll method, of class DietLogger.
+     */
+    @Test
+    public void testDeleteAll() throws Exception {
+        System.out.println("delete - uses mealProgress delete method");
     }
     
 }

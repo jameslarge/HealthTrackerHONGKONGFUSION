@@ -369,46 +369,60 @@ public class Member {
     }
     
     
-    public int calculateHealthiness(double bmiHealth, double activityHealth, double dietHealth) throws ServletException {
+    public int calculateHealthiness() throws ServletException {
         double result = 0;
-        
+        double bmiHealth = calcHealthinessBMI();
+        double activityHealth = calcHealthinessActivity();
+        double dietHealth = calcHealthinessDiet();
         double bmiFactor = 5, exTimeFactor = 2.5, calsConsumedFactor = 2.5;
 
         result += bmiHealth * bmiFactor; 
         result += activityHealth * exTimeFactor;
+        
         result += dietHealth * calsConsumedFactor;
         
         return (int) (result + 0.5); //round to nearest integer
     }
     
     public double calcHealthinessBMI() throws ServletException {
-        int bmi = calculateBMI();
+        double bmi = calculateBMI();
         int healthyBMILow = 19, healthyBMIHigh = 25;
         
-        int distFromHealthyBMI = 0, maxDist = 10;
+        double result = 1; //healthy BMI
+        double distFromHealthyBMI = 0, maxDist = 10;
+        
         
         if (bmi < healthyBMILow)
             distFromHealthyBMI = healthyBMILow - bmi;
         else if (bmi > healthyBMIHigh)
             distFromHealthyBMI = bmi - healthyBMIHigh;
-                    
-        return (double)distFromHealthyBMI / (double)maxDist;
+        
+        //BMI IS NOT IN THE HEALTHY REGION (return a number between 0 and 1)
+        if(distFromHealthyBMI!=0){
+            if(distFromHealthyBMI>=maxDist){
+                result = 0;
+            }else{
+                result = 1 - distFromHealthyBMI /maxDist;
+            }
+        }
+        
+        return result;
     }
     
     public double calcHealthinessActivity() throws ServletException {
         ExerciseLogger el = ExerciseLogger.find(userID);
         
-        int dailyCalsBurned = el.findAverageDailyActivityTime();
+        int dailyActivityTime = el.findAverageDailyActivityTime();
         int goodDailyTime = 30;
         int greatDailyTime = goodDailyTime*2;
         
-        if (dailyCalsBurned > greatDailyTime)
+        if (dailyActivityTime > greatDailyTime)
             return 1.0;
-        if (dailyCalsBurned > goodDailyTime) {
-            return (double)dailyCalsBurned / (double)greatDailyTime;
+        if (dailyActivityTime > goodDailyTime) {
+            return (double)dailyActivityTime / (double)greatDailyTime;
         }
         
-        return ((double)dailyCalsBurned / (double)goodDailyTime) * 0.5;
+        return ((double)dailyActivityTime / (double)goodDailyTime) * 0.5;
     }
     
     public double calcHealthinessDiet() throws ServletException {
@@ -418,15 +432,45 @@ public class Member {
         int healthyDailyCalorieConsumption = 2250; //we arnt differentiating between
         //male and female, so...
 
-        int unhealthlyDistance = 1000;
+        int unhealthyDistance = 1000;
         int distance = Math.abs(healthyDailyCalorieConsumption - dailyCalsBurned);
+        double result = 1 - ((double)distance / (double)unhealthyDistance);
+        if(distance> unhealthyDistance){
+            result = 0;
+        }
         
-        return 1 - ((double)distance / (double)unhealthlyDistance);
+        return result;
     }
     
-    public int calculateBMI() throws ServletException {
+    public double calculateBMI() throws ServletException {
         PhysicalHealth ph = PhysicalHealth.find(userID);
         
         return ph.getMostRecentWeightProgress().calulateBMI();
+    }
+    
+    public String getWeightStatus() throws ServletException{
+        
+        double bmi = this.calculateBMI();
+        String result = "";
+        
+        if (bmi < 18.5){
+            result = "Underweight";
+        }else if (bmi < 24.9){
+            result = "Normal";
+        }else if (bmi < 26.9){
+            result = "Overweight";
+        }else if (bmi < 29.9){
+            result = "Obese";
+        }else if (bmi < 34.9){
+            result = "Moderately obese";         
+        }else if (bmi < 39.9){
+            result = "Severely obese";
+        }else{
+            result = "Morbidly obese";
+        }
+        
+        return result;
+        
+        
     }
 }

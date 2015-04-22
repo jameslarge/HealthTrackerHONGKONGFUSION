@@ -7,7 +7,7 @@
 package Model.Meal;
 
 import Model.HKFDate;
-import java.util.ArrayList;
+import javax.servlet.ServletException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -19,11 +19,13 @@ import static org.junit.Assert.*;
  *
  * @author xfu13dcu
  */
-public class MealProgressTest {
+public class MealProgressTest {    
     
-    MealProgress instance = new MealProgress(new Meal("t1_name", 1), new HKFDate(), 10, 1);
+    MealProgress instance;
     
-    public MealProgressTest() {
+    
+    public MealProgressTest() throws ServletException{
+        instance = new MealProgress(Meal.find(1), new HKFDate(), 10, 1);
     }
     
     @BeforeClass
@@ -49,7 +51,7 @@ public class MealProgressTest {
     public void testCalcCalories() {
         System.out.println("calcCalories");
                 
-        int expResult = 10;
+        int expResult = -10;
         int result = instance.calcCalories();
         assertEquals(expResult, result);
     }
@@ -60,8 +62,8 @@ public class MealProgressTest {
     @Test
     public void testFind() throws Exception {
         System.out.println("find");
-        int mpID = 1;
-        int expResult = -1;
+        int mpID = 2;
+        int expResult = 10;
         int result = MealProgress.find(mpID).getAmount();
         assertEquals(expResult, result);
     }
@@ -73,9 +75,8 @@ public class MealProgressTest {
     public void testFindAll() throws Exception {
         System.out.println("findAll");
         int memberID = 1;
-        int expResult = -1;
         int result = MealProgress.findAll(memberID).get(0).getAmount();
-        assertEquals(expResult, result);
+        assertEquals(-1, result);
     }
 
     /**
@@ -84,8 +85,9 @@ public class MealProgressTest {
     @Test
     public void testPersist() throws Exception {
         System.out.println("persist");
-        int memberID = -1;
+        int memberID = 1;
         instance.persist(memberID);
+        testDelete();
     }
 
     /**
@@ -102,18 +104,21 @@ public class MealProgressTest {
         int equal = instance.compareTo(t1);
         int greaterThan = instance.compareTo(t2);
         
-        assertEquals(-1, lessThan);
+        assertEquals(1, lessThan);
         assertEquals(0, equal);
-        assertEquals(1, greaterThan);        
+        assertEquals(-1, greaterThan);        
     }
 
     /**
      * Test of delete method, of class MealProgress.
      */
-    @Test
+    //@Test
     public void testDelete() throws Exception {
         System.out.println("delete");
         instance.delete();
+        //-1 because that is the id of member
+        int tableSize = MealProgress.findAll(-1).size();
+        assertEquals(0, tableSize);
     }
     
 }

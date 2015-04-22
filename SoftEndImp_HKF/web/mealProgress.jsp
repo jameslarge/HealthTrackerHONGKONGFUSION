@@ -4,6 +4,7 @@
     Author     : xmw13bzu
 --%>
 
+<%@page import="java.util.TreeSet"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.Iterator"%>
@@ -16,84 +17,23 @@
 <%@page import ="Model.Meal.*"%>
 
 <%
-    Member member = (Member) session.getAttribute("member"); 
+    
+    Member member = (Member) session.getAttribute("member");
+    String errorMessage = (String) request.getAttribute("errorMessage");
+    //no one is logged in
     if (member == null) {
         //something or other 
     }
-%>
-
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>HONG KONG FUSIOOOOON</title>
-        <link href="styles/main.css" rel="stylesheet" type="text/css">
-
-    </head>
-
-    <body>
-        <div id="wrapper">
-            <header id="top">
-                <h1>HONG KONG FUSIOOOOON</h1>
-                <nav id="mainnav">
-                    <ul>
-                        <li><a href="home.jsp" class="thispage">Home</a></li>
-                        <li><a href="accountManagement.jsp" class="thispage">Account</a></li> 
-                        <li><a href="LogoutController" class="thispage">Log Out</a></li>   
-                    </ul>
-                </nav>
-            </header>
-            <article id="main">
-                
-                <%
-                    String errorMessage = (String) request.getAttribute("errorMessage");
-                    if (errorMessage != null) {
-                %>
-                        <p class="error"><%=errorMessage%></p>
-                <%
-                    }
-                %>
-                
-                <h3>
-                    Your General Info
-                </h3>
-                
-                <%
+    //get diet log
                     DietLogger dietLog = (DietLogger) session.getAttribute("dietLog"); 
-                %>
-                
-                  <%
+                    //get list of all available meals
                     ArrayList<Meal> meals = Meal.findAll();
-                %>
-                
-                <p>Username: <%=member.getUsername()%></p>   
-                <p>Email: <%=member.getEmail()%></p>
-                
-                <h3>
-                    Your Meal Log
-                </h3>
-                
-                <!-- for each exercise progress -->
-                    <!-- print date : exercisename, cals burned --> 
-                <table>
-                    <tr>
-                         <th>Date</th> <th>Meal</th> <th>Calories Consumed</th>
-                    </tr>
-                   
-                <%
-                    for (MealProgress mealProg : dietLog.sortDate()) {
-                %>
-                    <tr>
-                        <td><%=mealProg.getDate()%></td>   
-                        <td><%=mealProg.getMeal().getMealName()%></td>
-                        <td><%=mealProg.calcCalories()%></td>
-                    </tr>
-                <%                        
-                    }
-                %>
-                </table> 
-                          <!--Load the AJAX API-->
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+                    //get list of all exercises from the chosen date to be displayed in advanced graphs (if there is one)
+                    ArrayList<MealProgress> specificProgresses = (ArrayList<MealProgress>) session.getAttribute("specificMeals");
+                    //get list of calories eaten per day
+                    TreeMap<HKFDate, Integer> calEatenPerDay = dietLog.findCalsConsumedPerDay();
+%>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
 
       // Load the Visualization API and the piechart package.
@@ -101,6 +41,7 @@
 
       // Set a callback to run when the Google Visualization API is loaded.
       google.setOnLoadCallback(startChart);
+      var loadMoreGraphs = <%=!specificProgresses.isEmpty()%>;
 
 
                     
@@ -137,38 +78,29 @@
                         
                         
                           int counter = 0;
-                          HKFDate prevDate = null;
-                          ArrayList<MealProgress> mealProgresses =  dietLog.sortDate();
-                      for (MealProgress mealProg :mealProgresses){
+                          
+                      for (MealProgress mealProg : specificProgresses){
                           
                          
                           
-                          HKFDate date = mealProg.getDate();
-                          
-                          if(counter==0){
-                              prevDate = date;
-                          }
-                          
+                          HKFDate date = mealProg.getDate();                                                                             
                           row.set(0, date);
-                          
                           int mealIndex = mealProg.getMeal().getID();
                           
                           
-                          boolean sameDay = date.compareTo(prevDate)==0;
-                          //if the date is the same modify the values by adding to appropriate fields
-                          if (sameDay){
-                              
+                          
+                                                     
                               //add to whatever is already there (might be 0, might be a value)                                                           
                               Integer valueToStore = Integer.valueOf(mealProg.calcCalories());
                               Integer valueStored = (Integer) row.get(mealIndex);
                                       
                               row.set(mealProg.getMeal().getID(), valueStored + valueToStore);
-                          }
-                          if (!sameDay || counter == mealProgresses.size() - 1){
+                          
+                          if (counter == specificProgresses.size() - 1){
                              
                              //output row to GOOGLE GRAPHS
                              %>   
-                                 data.addRow([new Date(<%=prevDate.getYear()%>,<%=prevDate.getMonthForGraph()%>,<%=prevDate.getDay()%>).toDateString()
+                                 data.addRow([new Date(<%=date.getYear()%>,<%=date.getMonthForGraph()%>,<%=date.getDay()%>).toDateString()
                                      <%
                                      String mealCell;
                                      for(int i = 1; i<=mealSize; i++){
@@ -189,10 +121,7 @@
                              row.set(mealIndex, Integer.valueOf(mealProg.calcCalories()));
                              
                              
-                          }
-                          if(counter!=0){
-                            prevDate = date;
-                          }
+                          }                         
                          counter++;
                         }%>  
                                 
@@ -202,7 +131,7 @@
                                      
 
                       var options = {
-                        title: 'Blabla',                                              
+                        title: 'Calories consumed per meal',                                              
                         width: 900,
                         height: 500,
                         legend: 'none',
@@ -210,7 +139,13 @@
                         
                        
                       };
-                      
+                       var formatter = new google.visualization.NumberFormat(
+                          {pattern: '# kCal'});
+                  
+                                 <% for (int i = 1; i < meals.size(); i++){%>
+                          formatter.format(data, <%=i%>); // Apply formatter to all number columns
+                                                  
+                        <%}%>
                        var chart = new google.visualization.BarChart(document.getElementById('calBreakDown'));
                        
                        //getting the total amount of calories consumed per date
@@ -229,7 +164,7 @@
                       
                       
                       <%
-                          TreeMap<HKFDate, Integer> calEatenPerDay = dietLog.findCalsConsumedPerDay();
+                          
                           
                           for (Map.Entry<HKFDate,Integer> entry : calEatenPerDay.entrySet()){
                                 HKFDate date = entry.getKey();
@@ -243,7 +178,7 @@
                     
                     function prepareChart(){
                          options = {
-                             title: 'Calories Eaten Over Time',                                              
+                             title: 'Calories consumed per day',                                              
                             width: 900,
                             height: 500,
                             pointSize: 20,
@@ -260,7 +195,7 @@
                           };
 
                           var formatter = new google.visualization.NumberFormat(
-                          {suffix: ' kCal'});
+                          {pattern: '# kCal'});
                           formatter.format(data, 1); // Apply formatter to second column
                           
                        
@@ -273,50 +208,133 @@
                     }
                     
                     function startChart(){
-                      drawCalBreakDown();
+                      if(loadMoreGraphs){
+                          drawCalBreakDown();
+                      }
                       prepareData();
                       prepareChart();
                       drawChart();
                       
                     }
-                    
-                    drawChart();
-                    
-                
-                                       
+                                                           
                 </script>
-                                       
-               
-                
-                 <div id="linechart"></div>
-                 <div id="calBreakDown"></div>
-                
-                             
-                <h3>
-                    Log new meal 
-                </h3>
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>HONG KONG FUSION HEALTH TRACKER</title>
+        <link href="styles/main.css" rel="stylesheet" type="text/css">
+
+    </head>
+
+    <body>
+        <div id="wrapper">
+            <footer>
+                <article id="disclaimer">
+                    <span>Disclaimer:</span> This application is not a commercial application and does not provide
+                    insurance. This is a study project that is part of a Computing Science module taught at the
+                    University of East Anglia, Norwich, UK. If you have any questions, please contact the
+                    module coordinator, Joost Noppen, at j.noppen@uea.ac.uk
+                </article>
+            </footer>
+            <header id="top">
+                 <h1>HONG KONG FUSION HEALTH TRACKER</h1>
+                <nav id="mainnav">
+                    <ul>
+                        <li><a href="home.jsp">Home</a></li>
+                        <li><a href="GoalsController">Goals</a></li>
+                        <li><a href="PhysicalHealthLogController">Weight</a></li>
+                        <li><a href="ExerciseLogController">Exercise</a></li>
+                        <li><a href="DietLogController" class="thispage">Diet</a></li>
+                        <li><a href="accountManagement.jsp">Account</a></li> 
+                        <li><a href="LogoutController">Log Out</a></li>       
+                    </ul>
+                </nav>
+            </header>
+            <article id="meh">
                 
               
                 
+                <%
+                    
+                    if (specificProgresses.isEmpty()){
+                        //do nothing
+                    }else{
+                        HKFDate today = new HKFDate();
+                        HKFDate obtainedDate = specificProgresses.get(0).getDate();
+                        String finalDateStr = "ON " + obtainedDate.toString();
+                        if(today.compareToWithoutTime(obtainedDate)==0){
+                             finalDateStr = "TODAY";
+                        }
+                            
+                        
+                    //display the graphs%>
+                    
+                    <h5>
+                    CALORIES CONSUMED <%=finalDateStr%>
+                    </h5>
+                        <div id="calBreakDown"></div>
+                                           
+                    <%}%>
+                
+                
+                <h5>
+                YOUR MEAL LOG  
+                </h5>
+                <%  if (!calEatenPerDay.isEmpty()){%>
+                 <div id="linechart"></div>
+                 <h5>
+                    GET A MORE DETAILED VIEW
+               </h5>                            
+                <%
+                        TreeSet<String> dateSet = new TreeSet<String>();
+                        for (MealProgress mealProg : dietLog.sortDate()) {
+                            dateSet.add(mealProg.getDate().toString());
+                        }
+                %>
+                <form name="chooseDate" action="DietLogController" method="get">
+                    <p>
+                        <select name="specificDate">
+                            <%
+                                for (String date : dateSet) {
+                            %>
+                            <option value="<%=date%>"><%=date%></option>
+                            <%
+                                }
+                            %>
+                        </select>
+                        <input type="submit" value="View"/>
+                    </p>
+                </form>
+                 
+                 
+                <%}else{%>
+                <p><i>YOU HAVE NO RECORDED MEALS</i></p>  
+                <%}%> 
+                
+                             
+                <h5>
+                    LOG NEW MEAL
+                </h5>
+                              
                  <form name="login" action="LogMealController" method="get">
                     <p>Date:<input type="date" name="date" class="textbox"/></p>
                     <!--<p>Exercise:<input type="text" name="exercise" class="textbox"/></p>-->
                     <p>Meal: 
-                        <select name="meal">
+                        <select name="meal" class ="textbox">
                             <%
                                 for (Meal meal : meals) {
                             %>
-                                    <option value="<%=meal.getID()%>"><%=meal.getMealName()%></option>
+                                    <option value="<%=meal.getID()%>"><%=meal.getMealName()%> (<%=meal.getCalsPerUnit()%> kCal)</option>
                             <%                        
                                 }
                             %>
                         </select>
                     </p>
-                    
-
-                    
+                                        
                     <p>Meal Type:
-                        <select name="mealType">
+                        <select name="mealType" class ="textbox">
                             <%
                                 for (MealProgress.MealTime type : MealProgress.MealTime.values()) {
                             %>
@@ -331,13 +349,20 @@
                     <p><input type="submit" value="Enter"/>
                     <input type="reset" value="Reset"/></p>
                 </form>
+                        
+                          <%                    
+                    //display error message if there is one
+                    if (errorMessage != null) {
+                %>
+                        <p class="error"><%=errorMessage%></p>
+                <% }%>
                 
             </article>
                 
             <br><br>
             <footer>
                 <p>&copy; Copyright 2015 
-                <a href="admin.html" id="admin">Admin</a></p>
+                </p>
             </footer>        </div>
     </body>
 </html>

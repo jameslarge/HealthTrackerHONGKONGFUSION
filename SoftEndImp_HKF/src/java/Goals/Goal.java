@@ -370,7 +370,7 @@ public class Goal implements Comparable<Goal> {
         return endDate.compareTo(g.endDate);
     }
     
-    public int checkProgress(PhysicalHealth physHealth, DietLogger dietLog, ExerciseLogger exLog) {
+    public int checkProgressAsPercentage(PhysicalHealth physHealth, DietLogger dietLog, ExerciseLogger exLog) {
             double progressPercent = 0;
 
             switch (goalType) {
@@ -383,7 +383,11 @@ public class Goal implements Comparable<Goal> {
                         else {
                             int targetDifference = target - startweight.getGrams();
                             int actualDifference = target - currentWeight.getGrams();
+                            if(targetDifference==actualDifference){
+                                return 0;
+                            }else{
                             progressPercent = 1 - ((double)(actualDifference) / (double)targetDifference);
+                            }
                         }
                         break;
                     }
@@ -396,32 +400,72 @@ public class Goal implements Comparable<Goal> {
                         else {
                             int targetDifference = startweight.getGrams() - target;
                             int actualDifference = currentWeight.getGrams() - target;
-                            progressPercent = (double)actualDifference / (double)targetDifference;
+                            
+                            if(targetDifference==actualDifference){
+                                return 0;
+                            }else{
+                                
+                            progressPercent = 1 - ((double)actualDifference / (double)targetDifference);
+                            }
                         }
                         break;
                     }
                     case CALORIES_BURNED: {
-                        int time = exLog.findCalsBurnedBetweenDates(startDate, endDate);
-                        progressPercent = (double)time / (double)target;
+                        int cals;
+                        
+                        if (startDate.compareToWithoutTime(endDate) == 0) {
+                            cals = exLog.findCalsBurnedOnDate(startDate);
+                        }
+                        else {
+                            cals = exLog.findCalsBurnedBetweenDates(startDate, endDate);
+                        }
+                        
+                        progressPercent = (double)cals / (double)target;
                         break;
                     }
                     case ACTIVITY_TIME: {
-                        int time = exLog.findExerciseTimeBetweenDates(startDate, endDate);
+                        int time;
+                        if (startDate.compareToWithoutTime(endDate) == 0) {
+                            time = exLog.findExerciseTimeOnDate(startDate);
+                        }
+                        else {
+                            time = exLog.findExerciseTimeBetweenDates(startDate, endDate);
+                        }
+                       
                         progressPercent = (double)time / (double)target;
                         break;
                     }
-                    case CALORIES_CONSUMED_HIGH:
-                    case CALORIES_CONSUMED_LOW:  {
-                        int calsConsumed = dietLog.findCalsConsumedBetweenDates(startDate, endDate);
+                    case CALORIES_CONSUMED_HIGH:{
+                        int calsConsumed;
+                        if (startDate.compareToWithoutTime(endDate) == 0) {
+                            calsConsumed = dietLog.findCalsConsumedOnDate(startDate);
+                        }
+                        else {
+                            calsConsumed = dietLog.findCalsConsumedBetweenDates(startDate, endDate);
+                        }
                         progressPercent = (double)calsConsumed / (double)target;
                         break;
                     }
-                        //result interpreted depending on whether target is low (calorie cutting)
-                        //or high (bulking)
-                        //if low, goal is FAILED if 100% is reached
-                        //if high, goal is SUCCEEDED if 100% is reached
+                    case CALORIES_CONSUMED_LOW:  {
+                        int calsConsumed;
+                        if (startDate.compareToWithoutTime(endDate) == 0) {
+                            calsConsumed = dietLog.findCalsConsumedOnDate(startDate);
+                        }
+                        else {
+                            calsConsumed = dietLog.findCalsConsumedBetweenDates(startDate, endDate);
+                        }
+                        if(calsConsumed>target){
+                            progressPercent = 0;
+                        }
+                        progressPercent = 1-((double)calsConsumed / (double)target);
+                        break;
+                    }
+                       
             }
-
+            if(progressPercent >=1){
+                progressPercent = 1;
+            }
             return (int)(progressPercent*100);
     }
 }
+

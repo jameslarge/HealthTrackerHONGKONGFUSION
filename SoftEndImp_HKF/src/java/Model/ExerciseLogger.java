@@ -123,7 +123,7 @@ public class ExerciseLogger {
         ArrayList<ExerciseProgress> eps = new ArrayList<>();
 
         for (ExerciseProgress ep : exerciseLog) {
-            if (ep.getDate().compareTo(start) >= 0 && ep.getDate().compareTo(end) <= 0) {
+            if (ep.getDate().compareToWithoutTime(start) >= 0 && ep.getDate().compareToWithoutTime(end) <= 0) {
                 eps.add(ep);
             }
         }
@@ -135,25 +135,50 @@ public class ExerciseLogger {
         int totalTime = 0;
 
         for (ExerciseProgress ep : exerciseLog) {
-            if (ep.getDate().compareTo(start) >= 0 && ep.getDate().compareTo(end) <= 0) {
+            if (ep.getDate().compareToWithoutTime(start) >= 0 && ep.getDate().compareToWithoutTime(end) <= 0) {
                 totalTime += ep.getDuration();
             }
         }
 
         return totalTime;
     }
+    
+    public int findExerciseTimeOnDate(HKFDate date) {
+        int totalCals = 0;
+
+        for (ExerciseProgress ep : exerciseLog) {
+            if (ep.getDate().compareToWithoutTime(date) == 0) {
+                totalCals += ep.getDuration();
+            }
+        }
+
+        return totalCals;
+    }
 
     public int findCalsBurnedBetweenDates(HKFDate start, HKFDate end) {
         int totalCals = 0;
 
         for (ExerciseProgress ep : exerciseLog) {
-            if (ep.getDate().compareTo(start) >= 0 && ep.getDate().compareTo(start) <= 0) {
+            if (ep.getDate().compareToWithoutTime(start) >= 0 && ep.getDate().compareToWithoutTime(end) <= 0) {
                 totalCals += ep.calculateCals();
             }
         }
 
         return totalCals;
     }
+    
+    public int findCalsBurnedOnDate(HKFDate date) {
+        int totalCals = 0;
+
+        for (ExerciseProgress ep : exerciseLog) {
+            if (ep.getDate().compareToWithoutTime(date) == 0) {
+                totalCals += ep.calculateCals();
+            }
+        }
+
+        return totalCals;
+    }
+
 
     /**
      * Method to Sort information so that Date is in ascending order

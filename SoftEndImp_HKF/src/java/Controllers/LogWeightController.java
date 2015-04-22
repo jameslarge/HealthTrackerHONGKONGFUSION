@@ -45,8 +45,13 @@ public class LogWeightController extends HttpServlet {
         Validator validator = new Validator();
         
         String weightString = request.getParameter("weight");
-        //Validates AND CONVERTS TO INT.
-        Weight weight = new Weight(validator.validatePositiveInt("Invalid weight entered: " + weightString, weightString));  
+        String weightUnit = request.getParameter("wUnit");
+        Weight weight;
+        if (weightUnit.equals("imperial")){
+            weight = new Weight(validator.validateWeightImperial("Invalid weight entered: " + weightString+ "." , weightString));
+        }else{
+            weight = new Weight(validator.validateWeightMetric("Invalid weight entered: " + weightString, weightString));
+        }
         
         //should be  YYYY-MM-DD, i.e is shit and doesnt enforce any formatting 
         //on user in input type=date, deal with it later

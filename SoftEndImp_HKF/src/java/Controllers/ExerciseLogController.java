@@ -41,7 +41,7 @@ public class ExerciseLogController extends HttpServlet {
         if (session == null) 
             throw new ServletException("Attempting to access exercise logs page while no session is active (no user logged in)");
         
-        Member member = (Member) session.getAttribute("member"); //member member member member
+        Member member = (Member) session.getAttribute("member"); //member member member member penis
         
         ExerciseLogger exLog = new ExerciseLogger();
         exLog = ExerciseLogger.find(member.getUserID());
@@ -61,7 +61,7 @@ public class ExerciseLogController extends HttpServlet {
         specificDate2.setHours(0);
         specificDate2.setMinutes(0);
         
-        ArrayList<ExerciseProgress> exercises = exLog.findProgressesBetweenDates(specificDate, specificDate2);
+        ArrayList<ExerciseProgress> exercises = exLog.findProgressesBetweenDates(specificDate2, specificDate);
         session.setAttribute("specificExercises", exercises);
         
         request.getRequestDispatcher("exerciseProgress.jsp").forward(request, response);

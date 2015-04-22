@@ -13,6 +13,10 @@ public class Height {
     public int getCentimetres() {
         return centimetres;
     }
+    
+    public double getMetres(){
+        return (double)centimetres/100;
+    }
 
     public void setCentimetres(int centimetres) {
         this.centimetres = centimetres;
@@ -23,7 +27,7 @@ public class Height {
      * @param feet value in feet
      * @return value in metres
      */
-    public int toMetres(int feet){
+    static public int toMetres(int feet){
         return (int) (feet*0.3048);
     }
     
@@ -40,4 +44,16 @@ public class Height {
     public String toString() { 
         return ""+centimetres;
     }
+    
+    
+    public static int toCentimetersFromImperial(int feet, int inches){
+        int result = 0;
+        
+        result += (int)((inches + feet*12) *2.54);
+        
+        return result;
+        
+    }
+    
+    
 }

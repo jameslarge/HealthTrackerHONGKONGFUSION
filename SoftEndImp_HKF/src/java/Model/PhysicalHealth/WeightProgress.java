@@ -184,7 +184,7 @@ public class WeightProgress implements Comparable<WeightProgress> {
     public void updateValue(String valueName, String newValue) throws ServletException, SQLException {
         try {
             Connection con = DatabaseAccess.getConnection();
-            PreparedStatement ps = con.prepareStatement("UPDATE goal SET " + valueName + " = ? WHERE id = ?;");
+            PreparedStatement ps = con.prepareStatement("UPDATE weightProgress SET " + valueName + " = ? WHERE id = ?;");
             ps.setString(1, newValue);
             ps.setInt(2, ID);
             ps.execute();
@@ -200,11 +200,13 @@ public class WeightProgress implements Comparable<WeightProgress> {
      * @return value of members BMI
      * @throws ServletException 
      */
-    public int calulateBMI() throws ServletException{
+    public double calulateBMI() throws ServletException{
         PhysicalHealth ph = PhysicalHealth.find(physicalHealthID);
-        int height = ph.getHeight().getCentimetres();
-        return (int) (weight.getGrams()/(height * height));
+        double height = ph.getHeight().getMetres();
+        return (weight.getKilos()/(height * height));
     }
+    
+    
     
     /**
      * Method to delete all information related to ID

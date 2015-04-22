@@ -10,6 +10,7 @@ package Model;
 import Model.Meal.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 import java.util.TreeMap;
 import javax.servlet.ServletException;
 
@@ -60,13 +61,17 @@ public class DietLogger {
         //todo
     }
    
-    public int findAverageDailyCalsConsumed() {
+    public int findAverageDailyCalsConsumed() throws ServletException {
         double result = 0;
         
-        for (MealProgress mp : mealLog)
-            result += mp.calcCalories();
+        TreeMap<HKFDate, Integer> calsPerDaySet = findCalsConsumedPerDay();
         
-        return (int) (result/mealLog.size());
+        for (Map.Entry<HKFDate, Integer> entry : calsPerDaySet.entrySet()){
+            result += entry.getValue();
+            
+        }
+                
+        return (int) (result/calsPerDaySet.size());
     }
     
     public void findTotalCalsConsumedToday() {
@@ -77,7 +82,18 @@ public class DietLogger {
         int totalCals = 0;
         
         for (MealProgress mp : mealLog) {
-            if (mp.getDate().compareTo(start) >= 0 && mp.getDate().compareTo(end) <= 0)
+            if (mp.getDate().compareToWithoutTime(start) >= 0 && mp.getDate().compareToWithoutTime(end) <= 0)
+                totalCals += mp.calcCalories();
+        }
+        
+        return totalCals;
+    }
+    
+    public int findCalsConsumedOnDate(HKFDate date) {
+        int totalCals = 0;
+        
+        for (MealProgress mp : mealLog) {
+            if (mp.getDate().compareToWithoutTime(date) == 0)
                 totalCals += mp.calcCalories();
         }
         
@@ -88,7 +104,7 @@ public class DietLogger {
        ArrayList<MealProgress> mps = new ArrayList<>();
 
        for (MealProgress mp : mealLog)
-            if (mp.getDate().compareTo(start) >= 0 && mp.getDate().compareTo(end) <= 0)
+            if (mp.getDate().compareToWithoutTime(start) >= 0 && mp.getDate().compareToWithoutTime(end) <= 0)
                mps.add(mp);
 
        return mps;

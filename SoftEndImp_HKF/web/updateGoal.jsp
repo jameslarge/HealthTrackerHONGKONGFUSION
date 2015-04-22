@@ -36,13 +36,18 @@
 
     <body>
         <div id="wrapper">
+            
             <header id="top">
                 <h1>HONG KONG FUSIOOOOON</h1>
                 <nav id="mainnav">
                     <ul>
-                        <li><a href="home.jsp" class="thispage">Home</a></li>
-                        <li><a href="accountManagement.jsp" class="thispage">Account</a></li> 
-                        <li><a href="LogoutController" class="thispage">Log Out</a></li>                    
+                        <li><a href="home.jsp">Home</a></li>
+                        <li><a href="GoalsController" class="thispage">Goals</a></li>
+                        <li><a href="PhysicalHealthLogController">Weight</a></li>
+                        <li><a href="ExerciseLogController">Exercise</a></li>
+                        <li><a href="DietLogController">Diet</a></li>
+                        <li><a href="accountManagement.jsp">Account</a></li> 
+                        <li><a href="LogoutController">Log Out</a></li>       
                     </ul>
                 </nav>
             </header>
@@ -73,7 +78,7 @@
             <br><br>
             <footer>
                 <p>&copy; Copyright 2015 
-                <a href="admin.html" id="admin">Admin</a></p>
+                </p>
             </footer>        
         </div>
     </body>
